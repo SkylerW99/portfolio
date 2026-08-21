@@ -1,0 +1,53 @@
+import fs from 'node:fs'
+import path from 'node:path'
+import matter from 'gray-matter'
+
+const PROJECTS_DIR = path.join(process.cwd(), 'content/projects')
+const OUT_FILE = path.join(process.cwd(), 'src/content/generated-index.ts')
+
+const REQUIRED_FIELDS = [
+  'title',
+  'slug',
+  'description',
+  'categories',
+  'thumbnail',
+  'date',
+  'featured',
+  'size',
+]
+
+function readProjectFrontmatter(fileName) {
+  const filePath = path.join(PROJECTS_DIR, fileName)
+  const raw = fs.readFileSync(filePath, 'utf8')
+  const { data } = matter(raw)
+
+  for (const field of REQUIRED_FIELDS) {
+    if (!(field in data)) {
+      throw new Error(`${fileName} is missing required frontmatter field "${field}"`)
+    }
+  }
+
+  if (data.slug !== fileName.replace(/\.mdx$/, '')) {
+    throw new Error(
+      `${fileName}: frontmatter slug "${data.slug}" must match the filename ("${fileName.replace(/\.mdx$/, '')}")`,
+    )
+  }
+
+  return data
+}
+
+function buildIndex() {
+  const files = fs.readdirSync(PROJECTS_DIR).filter((f) => f.endsWith('.mdx'))
+  const projects = files
+    .map(readProjectFrontmatter)
+    .sort((a, b) => +new Date(b.date) - +new Date(a.date))
+
+  const header = `// GENERATED FILE — do not edit by hand.\n// Run \`npm run build-index\` (or \`npm run dev\`/\`npm run build\`, which run it automatically)\n// to regenerate this from content/projects/*.mdx\nimport type { ProjectFrontmatter } from './types'\n\n`
+  const body = `export const projects: ProjectFrontmatter[] = ${JSON.stringify(projects, null, 2)}\n`
+
+  fs.mkdirSync(path.dirname(OUT_FILE), { recursive: true })
+  fs.writeFileSync(OUT_FILE, header + body)
+  console.log(`Wrote ${projects.length} project(s) to ${path.relative(process.cwd(), OUT_FILE)}`)
+}
+
+buildIndex()
