@@ -1,0 +1,68 @@
+/* Top nav — static view
+   Uses tokens from designsystem.css (--c-paper, --c-ink, --font-display, .t-nav, .t-meta).
+*/
+
+.top-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.top-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 20px 40px;
+}
+
+/* ---- Brand -------------------------------------------------------------- */
+.top-nav__brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 14px;
+  color: var(--text);
+}
+
+.top-nav__mark {
+  font-family: var(--font-display);
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-weight: var(--fw-regular);
+}
+
+.top-nav__brand-meta {
+  /* .t-meta handles typography; keep separator hairline on the left */
+  padding-left: 14px;
+  border-left: 1px solid var(--border-soft);
+}
+
+/* ---- Links -------------------------------------------------------------- */
+.top-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.top-nav__link {
+  position: relative;
+  color: var(--text);
+  padding: 6px 0;
+}
+
+.top-nav__link:hover { opacity: 1; color: var(--accent); }
+
+
+/* ---- Responsive --------------------------------------------------------- */
+@media (max-width: 900px) {
+  .top-nav__inner { padding: 14px 20px; gap: 16px; }
+  .top-nav__brand-meta { display: none; }
+  .top-nav__links { gap: 18px; }
+  .top-nav__mark { font-size: 22px; }
+  .top-nav__link--cta { padding: 8px 14px; }
+}

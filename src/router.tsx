@@ -1,3 +1,5 @@
+//for routing to different pages
+
 import { createBrowserRouter } from 'react-router-dom'
 import { Component as Landing } from './pages/Landing'
 import { Component as Archive } from './pages/Archive'

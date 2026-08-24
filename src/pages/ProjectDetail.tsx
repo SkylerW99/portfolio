@@ -1,3 +1,6 @@
+
+
+
 import { useEffect, useState, type ComponentType } from 'react'
 import { useParams } from 'react-router-dom'
 import type { ProjectFrontmatter } from '../content/types'
@@ -39,12 +42,10 @@ export function Component() {
   if (notFound) return <p>Project not found.</p>
   if (!project) return <p>Loading…</p>
 
-  const { Body, frontmatter } = project
+  const { Body } = project
 
   return (
-    <article>
-      <h1>{frontmatter.title}</h1>
-      <p>{frontmatter.date}</p>
+    <article className="page-container">
       <Body />
     </article>
   )

@@ -10,8 +10,8 @@ export function ProjectCard({ project, onOpenModal }: ProjectCardProps) {
   const cardBody = (
     <>
       <img src={project.thumbnail} alt="" loading="lazy" />
-      <h3>{project.title}</h3>
-      <p>{project.description}</p>
+      <h3 className="text-primary-col">{project.title}</h3>
+      <p className="body-md">{project.description}</p>
     </>
   )
 
