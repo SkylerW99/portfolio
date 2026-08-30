@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { projects } from '../content/generated-index'
 import { CATEGORY_PARAM, getActiveCategory, useOpenProjectModal } from '../content/filters'
 import { FilterBar } from '../components/FilterBar'
-import { ProjectCard } from '../components/ProjectCard'
+import { ProjectCardText } from '../components/ProjectCard/ProjectCard'
 import { ProjectModal } from '../components/ProjectModal'
 
 export function Component() {

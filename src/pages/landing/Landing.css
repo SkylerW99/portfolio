@@ -1,0 +1,20 @@
+.left-section{
+    position: sticky;
+    top:150px;
+    width:100%;
+    min-width: 500px;
+    height:100vh;
+    gap: 32px;
+}
+
+.right-section{
+    min-height: 300vh;
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+}
+
+.featured-projects-container{
+    display: flex;
+    gap: 56px;
+}

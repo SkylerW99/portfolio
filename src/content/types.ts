@@ -2,6 +2,7 @@ export type ProjectSize = 'large' | 'small'
 
 export interface ProjectFrontmatter {
   title: string
+  id: string
   slug: string
   description: string
   categories: string[]

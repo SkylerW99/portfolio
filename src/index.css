@@ -11,3 +11,42 @@
 .no-margin {
   margin: 0;
 }
+
+.no-padding{
+  padding: 0;
+}
+
+.flex-horizontal{
+  display:flex;
+  flex-direction: row;
+}
+
+.flex-vertical{
+  display:flex;
+  flex-direction: column;
+}
+
+.align-center{
+  align-items: center;
+}
+
+.space-between{
+  justify-content: space-between;
+}
+
+.gap-4{
+  gap: 4px;
+}
+
+.gap-8{
+  gap: 8px;
+}
+
+.gap-12{
+  gap: 12px;
+}
+
+.gap-20{
+  gap: 20px;
+}
+

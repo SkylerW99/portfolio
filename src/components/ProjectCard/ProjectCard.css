@@ -1,0 +1,11 @@
+.thumbnail-image{
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  width: 100%;
+  border: 1px solid var(--border);
+}
+
+.height-150{
+  min-height: 150px;
+}
+

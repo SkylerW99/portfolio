@@ -51,10 +51,10 @@
   --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
 
   /* ---- Type: scale (desktop / mobile) ----------------------------------- */
-  --fs-hero:      112px;  --fs-hero-sm:    56px;
+  --fs-hero:      100px;  --fs-hero-sm:    56px;
   --fs-title:      72px;  --fs-title-sm:   40px;
   --fs-section:    52px;  --fs-section-sm: 32px;
-  --fs-lead:       24px;  --fs-lead-sm:    24px;
+  --fs-lead:       32px;  --fs-lead-sm:    24px;
   --fs-body:       20px;  --fs-body-sm:    16px;
   --fs-eyebrow:    18px;
   --fs-meta:       14px;
@@ -143,13 +143,14 @@ h3 {
   font-family: var(--font-body);
   font-size: var(--fs-lead);
   line-height: var(--lh-snug);
-  font-weight: var(--fw-regular);
+  font-weight: var(--fw-medium);
 }
 
 .body-md {
   font-family: var(--font-body);
   font-size: var(--fs-body);
   line-height: var(--lh-body);
+  font-weight: var(--fw-medium);
   color: var(--text-muted);
 }
 
@@ -157,6 +158,7 @@ h3 {
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
   line-height: var(--lh-body);
+  font-weight: var(--fw-medium);
   color: var(--text-muted);
 }
 
@@ -203,6 +205,10 @@ h3 {
   color: var(--text);
 }
 
+.text-inverse{
+  color: var(--text-inverse);
+}
+
 /* --------------------------------------------------------------------------
    Responsive type
    -------------------------------------------------------------------------- */
@@ -215,4 +221,76 @@ h3 {
     --fs-body:    var(--fs-body-sm);
     --fs-eyebrow: 15px;
   }
+}
+
+/* components */
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+  min-height: 40px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  letter-spacing: var(--ls-meta);
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .35s cubic-bezier(.2,.7,.2,1),
+              color .35s cubic-bezier(.2,.7,.2,1);
+}
+
+.btn:hover { background: var(--c-ink); color: var(--c-cream); }
+
+.btn:focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
+
+.btn-arrow { display: inline-block; transition: transform .35s cubic-bezier(.2,.7,.2,1); }
+.btn:hover .btn-arrow { transform: translate(3px, -3px); }
+
+/* Secondary orange tbutton*/
+.btn-secondary {
+  border-color: transparent;
+  color: var(--accent);
+  padding: 12px 0;
+}
+
+.btn-secondary:hover {
+  background: transparent;
+  color: var(--accent);
+  opacity:0.8;
+}
+
+/* --------------------------------------------------------------------------
+   Progress indicator — horizontal dots
+   -------------------------------------------------------------------------- */
+.dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c-mist-400);
+  transition: background .25s cubic-bezier(.2,.7,.2,1),
+              transform  .25s cubic-bezier(.2,.7,.2,1);
+}
+
+.dot.is-active {
+  width: 20px;
+  border-radius: 4px;
+  background: var(--c-ink);
 }
