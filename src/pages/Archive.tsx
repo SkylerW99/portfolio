@@ -4,12 +4,13 @@ import { projects } from '../content/generated-index'
 import { CATEGORY_PARAM, getActiveCategory, useOpenProjectModal } from '../content/filters'
 import { FilterBar } from '../components/FilterBar'
 import { ProjectCardText } from '../components/ProjectCard/ProjectCard'
-import { ProjectModal } from '../components/ProjectModal'
+import { ProjectModal } from '../components/ProjectModal/ProjectModal'
 
 export function Component() {
   const [searchParams, setSearchParams] = useSearchParams()
   const activeCategory = getActiveCategory(searchParams)
 
+  //get all the project categories from the index
   const categories = useMemo(() => {
     const set = new Set<string>()
     for (const project of projects) {
@@ -18,11 +19,13 @@ export function Component() {
     return Array.from(set).sort()
   }, [])
 
+  //filter the projects inside the current category
   const filteredProjects = useMemo(() => {
     if (!activeCategory) return projects
     return projects.filter((project) => project.categories.includes(activeCategory))
   }, [activeCategory])
 
+  //add or remove category depending on selection
   function handleSelectCategory(category: string | null) {
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev)
@@ -40,7 +43,7 @@ export function Component() {
       <FilterBar categories={categories} active={activeCategory} onSelect={handleSelectCategory} />
       <div className="project-grid">
         {filteredProjects.map((project) => (
-          <ProjectCard key={project.slug} project={project} onOpenModal={handleOpenModal} />
+          <ProjectCardText key={project.slug} project={project} onOpenModal={handleOpenModal} />
         ))}
       </div>
       <ProjectModal />

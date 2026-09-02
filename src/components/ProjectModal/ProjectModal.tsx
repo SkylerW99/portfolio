@@ -1,12 +1,13 @@
+import "./ProjectModal.css"
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { projects } from '../content/generated-index'
-import { PROJECT_PARAM, getOpenProjectSlug } from '../content/filters'
+import { projects } from '../../content/generated-index'
+import { PROJECT_PARAM, getOpenProjectSlug } from '../../content/filters'
 
 export function ProjectModal() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const openSlug = getOpenProjectSlug(searchParams)
-  const project = openSlug ? projects.find((p) => p.slug === openSlug) : undefined
+  const openSlug = getOpenProjectSlug(searchParams) //get the project name from the browser
+  const project = openSlug ? projects.find((p) => p.slug === openSlug) : undefined  //find the project in the index that matches the name in the browser
 
   function close() {
     setSearchParams((prev) => {
@@ -41,8 +42,8 @@ export function ProjectModal() {
         <button type="button" className="modal-close" onClick={close} aria-label="Close">
           ×
         </button>
-        <img src={project.thumbnail} alt="" />
-        <h2>{project.title}</h2>
+        <img className="thumbnail-image" src={project.thumbnail} alt="" />
+        <h3>{project.title}</h3>
         <p>{project.description}</p>
       </div>
     </div>

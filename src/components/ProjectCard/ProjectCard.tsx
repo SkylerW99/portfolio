@@ -3,8 +3,18 @@ import './ProjectCard.css';
 import type { ProjectFrontmatter } from '../../content/types'
 import { ArrowUp } from '../icons/ArrowUp'
 
+interface projectType {
+  project: ProjectFrontmatter,
+  onOpenModal?: (slug: string) => void
+}
+
 //project title and description
-export function ProjectCardText({ project }: { project: ProjectFrontmatter }) {
+export function ProjectCardText({ project }: projectType) {
+
+  function handleSelectCategory(selectedCategory){
+    //handle redirection
+  }
+
   const textContent = (
     <>
       <div className="flex-vertical gap-20">
@@ -20,14 +30,14 @@ export function ProjectCardText({ project }: { project: ProjectFrontmatter }) {
         <div className="flex-horizontal space-between">
           <div className="flex-horizontal gap-8">
             {project.categories.map((category) => (
-              <button key={category} className="btn">{category}</button>
+              <button onClick={()=>handleSelectCategory(category)} key={category} className="btn">{category}</button>
             ))}
           </div>
-          <Link to = {`/work/${project.slug}`}>
-          <button className="btn btn-secondary gap-8">
-            Read Case
-            <ArrowUp stroke="var(--accent)" width="16" height="16" />
-          </button>
+          <Link to={`/work/${project.slug}`}>
+            <button className="btn btn-secondary gap-8">
+              Read Case
+              <ArrowUp stroke="var(--accent)" width="16" height="16" />
+            </button>
           </Link>
         </div>
       </div>
@@ -44,13 +54,11 @@ export function ProjectCardText({ project }: { project: ProjectFrontmatter }) {
   }
 }
 
-export function ProjectCardImage({ project }: { project: ProjectFrontmatter }) {
+export function ProjectCardImage({ project, onOpenModal }: projectType) {
   const imageContent = (
     <>
       <div>
-        <Link to={`/work/${project.slug}`}>
-          <img className="thumbnail-image" src={project.thumbnail} alt="" loading="lazy" />
-        </Link>
+        <img className="thumbnail-image" src={project.thumbnail} alt="" loading="lazy" />
       </div>
     </>
   );
@@ -58,9 +66,25 @@ export function ProjectCardImage({ project }: { project: ProjectFrontmatter }) {
   if (project.size === 'large') {
     return (
       <>
-        {imageContent}
+        <Link to={`/work/${project.slug}`}>
+          {imageContent}
+        </Link>
       </>
     )
+  } else {
+    return (
+      <div className="position-relative container-with-overlay">
+        <button className="no-border no-padding" onClick={() => onOpenModal?.(project.slug)}>
+          <div className="gradient-background"></div>
+          {imageContent}
+        </button>
+        <div className="category-overlay flex-horizontal gap-4">
+          {project.categories.map((category) =>
+            (<p className="t-meta white-color">{category} /</p>)
+          )}
+        </div>
+        <h4 className="text-overlay">{project.title}</h4>
+      </div>
+    )
   }
-
 }

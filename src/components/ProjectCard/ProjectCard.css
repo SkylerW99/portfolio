@@ -1,11 +1,38 @@
 .thumbnail-image{
+  display: block;
   aspect-ratio: 16 / 9;
   object-fit: cover;
   width: 100%;
+}
+
+.container-with-overlay{
   border: 1px solid var(--border);
+  overflow: hidden;
 }
 
 .height-150{
   min-height: 150px;
 }
+
+.text-overlay{
+  position:absolute;
+  bottom: 20px;
+  left: 20px;
+  color: var(--text-inverse);
+}
+
+.category-overlay{
+  position:absolute;
+  bottom: 56px;
+  left: 20px;
+  color: var(--text-inverse); 
+}
+
+.gradient-background {
+  position: absolute;
+  inset:0;
+  cursor:pointer;
+  background: linear-gradient(to top, rgba(13, 13, 12, 0.78) 0%, rgba(13, 13, 12, 0) 55%);
+}
+
 

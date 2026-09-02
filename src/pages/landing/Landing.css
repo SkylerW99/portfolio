@@ -1,20 +1,31 @@
 .left-section{
     position: sticky;
-    top:150px;
     width:100%;
-    min-width: 500px;
-    height:100vh;
+    min-width:440px;
+    height:fit-content;
+    top: 150px;
     gap: 32px;
 }
 
 .right-section{
-    min-height: 300vh;
+    height: 100%;
+    min-width: 560px;
     display: flex;
     flex-direction: column;
     gap: 56px;
 }
 
 .featured-projects-container{
-    display: flex;
-    gap: 56px;
+    display: grid;
+    grid-template-columns: auto auto;
+    gap:56px;
+    align-items:stretch;
+    padding: 64px 0px 64px 0px;    
+    border-bottom: 1px solid var(--border);
+}
+
+.grid-two-column{
+    display:grid;
+    grid-template-columns: auto auto;
+    gap: 24px;
 }

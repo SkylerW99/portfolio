@@ -124,6 +124,16 @@ h2 {
   margin:0;
 }
 
+.h2-italic{
+  font-family: var(--font-display);
+  font-size: var(--fs-title);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-title);
+  font-weight: var(--fw-medium);
+  font-style: italic;
+  margin:0;
+}
+
 h3 {
   font-family: var(--font-display);
   font-size: var(--fs-section);
@@ -137,6 +147,16 @@ h3 {
   font-family: var(--font-display);
   font-style: italic;
   letter-spacing: var(--ls-section);
+  margin:0;
+}
+
+h4 {
+  font-family: var(--font-display);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-section);
+  font-weight: var(--fw-medium);
+  margin:0;
 }
 
 .body-lg {
@@ -144,6 +164,7 @@ h3 {
   font-size: var(--fs-lead);
   line-height: var(--lh-snug);
   font-weight: var(--fw-medium);
+  margin:0;
 }
 
 .body-md {
@@ -152,6 +173,7 @@ h3 {
   line-height: var(--lh-body);
   font-weight: var(--fw-medium);
   color: var(--text-muted);
+  margin:0;
 }
 
 .body-sm {
@@ -160,6 +182,7 @@ h3 {
   line-height: var(--lh-body);
   font-weight: var(--fw-medium);
   color: var(--text-muted);
+  margin:0;
 }
 
 .t-label {
@@ -167,6 +190,7 @@ h3 {
   font-size: var(--fs-body-sm);
   font-weight: var(--fw-semi);
   line-height: var(--lh-snug);
+  margin:0;
 }
 
 .t-eyebrow {
@@ -231,6 +255,7 @@ h3 {
   display: inline-flex;
   align-items: center;
   gap: 12px;
+  height:100%;
   box-sizing: border-box;
   min-height: 40px;
   padding: 12px;

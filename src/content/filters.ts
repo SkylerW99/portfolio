@@ -1,7 +1,8 @@
+// Single source of truth for URL query-param names used across
+// Archive / FilterBar / ProjectModal for smaller project modal
+
 import { useSearchParams } from 'react-router-dom'
 
-// Single source of truth for URL query-param names used across
-// Archive / FilterBar / ProjectModal, so nothing typos "category" vs "categories".
 export const CATEGORY_PARAM = 'category'
 export const PROJECT_PARAM = 'project'
 
@@ -19,8 +20,8 @@ export function useOpenProjectModal() {
   const [, setSearchParams] = useSearchParams()
   return function openModal(slug: string) {
     setSearchParams((prev) => {
-      const next = new URLSearchParams(prev)
-      next.set(PROJECT_PARAM, slug)
+      const next = new URLSearchParams(prev)  //copy the existing the parameters in the URL
+      next.set(PROJECT_PARAM, slug) //attach the slug for the specific project
       return next
     })
   }
