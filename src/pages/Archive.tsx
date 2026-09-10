@@ -1,9 +1,10 @@
+import { TopNav } from "../components/topNav/topNav"
 import { useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { projects } from '../content/generated-index'
 import { CATEGORY_PARAM, getActiveCategory, useOpenProjectModal } from '../content/filters'
 import { FilterBar } from '../components/FilterBar'
-import { ProjectCardText } from '../components/ProjectCard/ProjectCard'
+import { ArchivePageThumbnail } from "../components/ProjectCard/ProjectCard"
 import { ProjectModal } from '../components/ProjectModal/ProjectModal'
 
 export function Component() {
@@ -29,8 +30,12 @@ export function Component() {
   function handleSelectCategory(category: string | null) {
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev)
-      if (category) next.set(CATEGORY_PARAM, category)
-      else next.delete(CATEGORY_PARAM)
+      if (category) {
+        next.set(CATEGORY_PARAM, category)
+      }
+      else {
+        next.delete(CATEGORY_PARAM)
+      }
       return next
     })
   }
@@ -38,13 +43,27 @@ export function Component() {
   const handleOpenModal = useOpenProjectModal()
 
   return (
-    <div>
-      <h1>Archive</h1>
-      <FilterBar categories={categories} active={activeCategory} onSelect={handleSelectCategory} />
-      <div className="project-grid">
+    <div className="page-container">
+      <TopNav />
+
+      {/* Filter Panel */}
+      <section className="flex-vertical gap-64 padding-64">
+        <div className="flex-vertical gap-24">
+        <p className="t-eyebrow no-margin">The archive</p>
+        <h1>Projects by Category</h1>
+        <p className="body-md">All works from UX, code, to creative explorations. Filter by category to narrow it down.</p>
+        </div>
+        <FilterBar categories={categories} active={activeCategory} onSelect={handleSelectCategory} />
+      </section>
+
+      {/* Filtered projects */}
+      <div className="grid-two-column">
+
         {filteredProjects.map((project) => (
-          <ProjectCardText key={project.slug} project={project} onOpenModal={handleOpenModal} />
+          <ArchivePageThumbnail key={project.slug} project={project} onOpenModal={handleOpenModal} />
+
         ))}
+
       </div>
       <ProjectModal />
     </div>

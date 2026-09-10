@@ -24,8 +24,3 @@
     border-bottom: 1px solid var(--border);
 }
 
-.grid-two-column{
-    display:grid;
-    grid-template-columns: auto auto;
-    gap: 24px;
-}

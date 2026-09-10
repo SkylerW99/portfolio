@@ -8,12 +8,8 @@ interface projectType {
   onOpenModal?: (slug: string) => void
 }
 
-//project title and description
+{/* Homepage - text portion of the project, large and small */}
 export function ProjectCardText({ project }: projectType) {
-
-  function handleSelectCategory(selectedCategory){
-    //handle redirection
-  }
 
   const textContent = (
     <>
@@ -30,7 +26,9 @@ export function ProjectCardText({ project }: projectType) {
         <div className="flex-horizontal space-between">
           <div className="flex-horizontal gap-8">
             {project.categories.map((category) => (
-              <button onClick={()=>handleSelectCategory(category)} key={category} className="btn">{category}</button>
+              <Link to = {`/archive/?category=${category}`}>
+              <button key={category} className="btn">{category}</button>
+              </Link>
             ))}
           </div>
           <Link to={`/work/${project.slug}`}>
@@ -44,7 +42,7 @@ export function ProjectCardText({ project }: projectType) {
     </>
   )
 
-  //if it's a large project, return all the text content
+  //if it's a large project, return all the text content, no need to return stuff for small project
   if (project.size === 'large') {
     return (
       <>
@@ -54,6 +52,7 @@ export function ProjectCardText({ project }: projectType) {
   }
 }
 
+{/* Homepage - image portion of the project, large and small */}
 export function ProjectCardImage({ project, onOpenModal }: projectType) {
   const imageContent = (
     <>
@@ -87,4 +86,35 @@ export function ProjectCardImage({ project, onOpenModal }: projectType) {
       </div>
     )
   }
+}
+
+{/* Archive page - project card layout */}
+export function ArchivePageThumbnail({project, onOpenModal}: projectType){
+  const thumbnailLayout = (
+  <>
+  <div className="cursor-pointer solid-border flex-vertical align-center">
+    <img className = "thumbnail-image" src={project.thumbnail} alt="" loading="lazy" />
+    <p className="body-sm">{project.title}</p>
+    <div className="flex-horizontal justify-center">
+    {project.categories.map((category)=>
+    (<p className="t-meta">{category}/</p>)
+    )}
+    </div>
+  </div>
+  </>);
+
+  if (project.size === 'large'){
+    return (
+    <Link to={`/work/${project.slug}`} className="no-fade">
+      {thumbnailLayout}
+    </Link>
+    );
+  } else if (project.size === 'small'){
+    return (
+      <button className="no-border no-padding" onClick={()=>onOpenModal?.(project.slug)}>
+        {thumbnailLayout}
+      </button>
+    );
+  }
+
 }

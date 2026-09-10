@@ -98,6 +98,7 @@ body {
 
 a           { color: var(--accent); text-decoration: none; transition: opacity .25s cubic-bezier(.2,.7,.2,1); }
 a:hover     { opacity: .6; }
+.no-fade:hover{opacity: 1;}
 hr          { border: 0; border-top: 1px solid var(--divider); margin: 0; }
 ::selection { background: var(--accent); color: var(--c-cream); }
 
@@ -274,6 +275,10 @@ h4 {
 }
 
 .btn:hover { background: var(--c-ink); color: var(--c-cream); }
+
+.btn[aria-pressed="true"]{
+  background: var(--c-ink); color: var(--c-cream);
+}
 
 .btn:focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
 

@@ -6,8 +6,9 @@ interface FilterBarProps {
 
 export function FilterBar({ categories, active, onSelect }: FilterBarProps) {
   return (
-    <div className="filter-bar">
+    <div className="flex-horizontal gap-8">
       <button
+        className = "btn"
         type="button"
         aria-pressed={active === null}
         onClick={() => onSelect(null)}
@@ -16,6 +17,7 @@ export function FilterBar({ categories, active, onSelect }: FilterBarProps) {
       </button>
       {categories.map((category) => (
         <button
+          className = "btn"
           key={category}
           type="button"
           aria-pressed={active === category}

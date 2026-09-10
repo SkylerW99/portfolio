@@ -30,6 +30,10 @@
   align-items: center;
 }
 
+.justify-center{
+  justify-content: center;
+}
+
 .space-between{
   justify-content: space-between;
 }
@@ -78,6 +82,10 @@
   border:none;
 }
 
+.solid-border{
+  border: 1px solid var(--border);
+}
+
 .dark-top-border{
   border-top: 1px solid var(--border);
 }
@@ -96,4 +104,14 @@
 
 .position-absolute{
   position: absolute;
+}
+
+.grid-two-column{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.cursor-pointer{
+  cursor: pointer;
 }
