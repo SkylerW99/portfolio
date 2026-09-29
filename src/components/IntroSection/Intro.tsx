@@ -10,6 +10,7 @@ export function Intro(){
             <h1>Skylar Wang</h1>
             <div className="divider-sm"></div>
             <p className="body-lg width-800">is a product designer and software builder who makes softwares feel handmade.</p>
+            </div>
             <button
                 type="button"
                 className="intro-image"
@@ -17,7 +18,6 @@ export function Intro(){
                 onClick={() => console.log('image clicked')}
                 aria-label="Toggle phone preview"
             />
-            </div>
 
             <div className="contact-me-tag">
                 <p className="t-meta text-inverse no-margin">Contact me</p>

@@ -1,0 +1,10 @@
+[
+    {
+        "name": "category 1",
+        "image": "/images/myStack/design.png"
+    },
+    {
+        "name": "category 2",
+        "image": "/images/myStack/code.jpg"
+    }
+]

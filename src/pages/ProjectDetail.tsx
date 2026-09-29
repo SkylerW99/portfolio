@@ -4,6 +4,7 @@
 import { useEffect, useState, type ComponentType } from 'react'
 import { useParams } from 'react-router-dom'
 import type { ProjectFrontmatter } from '../content/types'
+import { TopNav } from '../components/topNav/topNav'
 
 // Non-eager glob: each matched file becomes its own lazily-loaded chunk.
 // Nothing here is downloaded until a specific loader() below is called.
@@ -45,8 +46,11 @@ export function Component() {
   const { Body } = project
 
   return (
-    <article className="page-container">
-      <Body />
-    </article>
+    <>
+      <TopNav />
+      <article className="page-container">
+        <Body />
+      </article>
+    </>
   )
 }

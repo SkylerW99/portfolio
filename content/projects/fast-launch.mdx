@@ -2,7 +2,7 @@
 title: "Fast Launch"
 id: "1"
 slug: "fast-launch"
-description: "A tech-empowered headless cooking experience on GE’s 7’ inch LCD oven screen."
+description: "Built the end-to-end digital onboarding experience for iQ SMB merchant portal."
 categories: ["UX", "Web"]
 thumbnail: "/images/fast-launch/fast-launch-cover-placeholder.png"
 date: "2026-08-24"
@@ -11,16 +11,49 @@ size: "large"
 ---
 
 import { ProjectOverview } from '../../src/components/ProjectOverview/ProjectOverview'
+import { TitleDescriptionLR } from '../../src/components/TitleDescription_LR/TitleDescriptionLR'
+import { SectionHeader } from '../../src/components/SectionHeader/SectionHeader'
+import { FeatureTab } from '../../src/components/FeatureTab/FeatureTab'
+import PlaceholderData from '../../src/json/placeholder.json'
 
 <div className="page-container">
 
 <ProjectOverview
   title="Fast Launch"
-  description="A tech-empowered, headless cooking experience redesigned for GE’s 7-inch LCD wall-oven screen — where the oven calibrates time and temperature for you."
-  projectType = "GE Appliances Co-op Project"
-  team = "1 designer +2 consumer insight co-op + dev team"
-  duration = "08.2022 - 03.2023"
+  description={frontmatter.description}
+  projectType = "Work @Worldpay"
+  team = "2 UX Designers, 1 PM, Dev Team"
+  duration = "07.2024 - 04.2025"
   myRole = "Lead UX Designer"
 />
 
+<TitleDescriptionLR 
+  subtitle="fast launch subtitle"
+  title = "fast launch title"
+  
+  subtitleLeft = "fast launch subtitle left"
+  titleLeft = "fast lunach title left"
+  bodyLeft = "fast launch body text left"
+  imageLeft = "/images/placeholder.png"
+
+  subtitleRight = "fast launch subtitle right"
+  titleRight = "fast lunach title right"
+  bodyRight = "fast launch body text right"
+  imageRight = "/images/placeholder.png"
+/>
+
+<SectionHeader 
+number = "01"
+title = "Section 1"
+/>
+
+<FeatureTab 
+Data = {PlaceholderData}
+/>
+
+
 </div>
+
+
+
+

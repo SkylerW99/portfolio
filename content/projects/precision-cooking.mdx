@@ -2,7 +2,7 @@
 title: "Precision Cooking"
 id: "2"
 slug: "precision-cooking"
-description: "A tech-empowered headless cooking experience on GE’s 7’ inch LCD oven screen."
+description: "Redesigned “Precision cooking” feature on GE wall oven interface with LCD technology."
 categories: ["UX"]
 thumbnail: "/images/precision-cooking/pc-cover.gif"
 date: "2026-08-24"
@@ -15,10 +15,10 @@ import { ProjectOverview } from '../../src/components/ProjectOverview/ProjectOve
 <div className="page-container">
 
 <ProjectOverview
-  title="Precision Cooking"
-  description="A tech-empowered, headless cooking experience redesigned for GE’s 7-inch LCD wall-oven screen — where the oven calibrates time and temperature for you."
-  projectType = "GE Appliances Co-op Project"
-  team = "1 designer +2 consumer insight co-op + dev team"
+  title={frontmatter.title}
+  description={frontmatter.description}
+  projectType = "Work @GE Appliances"
+  team = "1 UX Designer, 1 UX Researcher, Dev Team"
   duration = "08.2022 - 03.2023"
   myRole = "Lead UX Designer"
 />

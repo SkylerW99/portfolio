@@ -1,6 +1,6 @@
 import { TopNav } from "../components/topNav/topNav"
 import { ArrowUp } from "../components/icons/ArrowUp"
-import myStack from '../../public/myStack.json';
+import myStack from '../json/myStack.json'
 import {useState} from "react";
 
 export function Component() {
