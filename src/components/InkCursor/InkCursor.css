@@ -1,0 +1,39 @@
+/* Ink dot cursor — see InkCursor.tsx. The native cursor is hidden only while the
+   component is active (html.ink-cursor-on), and only on fine pointers. */
+
+@media (hover: hover) and (pointer: fine) {
+  html.ink-cursor-on,
+  html.ink-cursor-on * { cursor: none !important; }
+}
+
+.ink-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2000; /* above nav (50), modals (100) and lightbox (200) */
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .2s ease;
+  will-change: transform;
+}
+
+.ink-cursor__dot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--c-ink);
+  box-shadow: 0 0 0 1px rgb(244 242 236 / .55);
+  transform: translate(-50%, -50%);
+  transition:
+    width .35s cubic-bezier(.2,.7,.2,1),
+    height .35s cubic-bezier(.2,.7,.2,1),
+    background .25s ease,
+    scale .15s ease;
+}
+
+.ink-cursor__dot.is-hot  { width: 20px; height: 20px; background: var(--accent); }
+.ink-cursor__dot.is-dark:not(.is-hot) { background: var(--c-cream); box-shadow: 0 0 0 1px rgb(20 21 22 / .4); }
+.ink-cursor__dot.is-down { scale: .7; }

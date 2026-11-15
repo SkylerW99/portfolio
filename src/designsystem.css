@@ -1,13 +1,16 @@
 /* ==========================================================================
    SKYW Design System — Color & Typography
-   v1.0 — tokens extracted from the portfolio site
+   v2.0 — tokens from the redesigned site (design-system.css + Home in the
+   claude.ai design project)
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
    Fonts
-   Mencken is licensed and self-hosted; Georgia is the metric-adjacent fallback.
+   Everything is set in Inter Tight (display + body) with JetBrains Mono for
+   uppercase utility text and the SW logo. Mono is loaded as a variable font
+   (100–800) because the logo mixes 560 and 800 weights.
    -------------------------------------------------------------------------- */
-@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@100..800&display=swap');
 
 :root {
   /* ---- Color: core ------------------------------------------------------ */
@@ -46,16 +49,20 @@
   --accent:         var(--c-rust);
 
   /* ---- Type: families --------------------------------------------------- */
-  --font-display: 'Mencken', 'Mencken Std', Georgia, 'Times New Roman', serif;
+  --font-hero:    'Inter Tight', system-ui, -apple-system, sans-serif;
+  --font-display: 'Inter Tight', system-ui, -apple-system, sans-serif;
   --font-body:    'Inter Tight', system-ui, -apple-system, sans-serif;
   --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
 
   /* ---- Type: scale (desktop / mobile) ----------------------------------- */
-  --fs-hero:      100px;  --fs-hero-sm:    56px;
+  --fs-hero:       88px;  --fs-hero-sm:    56px;
   --fs-title:      72px;  --fs-title-sm:   40px;
   --fs-section:    52px;  --fs-section-sm: 32px;
   --fs-lead:       32px;  --fs-lead-sm:    24px;
-  --fs-body:       20px;  --fs-body-sm:    16px;
+  --fs-body:       20px;  --fs-body-sm:      16px;   /* running copy (design system "t-body") */
+  --fs-bodylg:     24px;  --fs-bodylg-sm:    20px;
+  --fs-bodymd:     18px;  --fs-bodymd-sm:    16px;
+  --fs-bodysm:     16px;  --fs-bodysm-sm:    14px;
   --fs-eyebrow:    18px;
   --fs-meta:       14px;
   --fs-micro:      13px;
@@ -74,6 +81,7 @@
   --ls-eyebrow:  0.2em;
   --ls-meta:     0.14em;
   --ls-tag:      0.12em;
+  --ls-heading: -0.035em;   /* Inter Tight headings on the site shell */
 
   /* ---- Weights ---------------------------------------------------------- */
   --fw-regular: 400;
@@ -90,29 +98,35 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
-  font-size: var(--fs-body);
+  font-size: var(--fs-bodysm);
   line-height: var(--lh-body);
   text-wrap: pretty;
-  -webkit-font-smoothing: antialiased;
+  /* No -webkit-font-smoothing: antialiased — it thins every weight on macOS,
+     and the Home design renders with the browser default. */
 }
 
 a           { color: var(--accent); text-decoration: none; transition: opacity .25s cubic-bezier(.2,.7,.2,1); }
 a:hover     { opacity: .6; }
 .no-fade:hover{opacity: 1;}
+/* Image links zoom (see ProjectCard.css / ProjectDetail.css) and buttons/tags change
+   fill instead of fading, so links that wrap them keep full opacity. */
+a:has(img):hover,
+a:has(button):hover,
+a.btn:hover { opacity: 1; }
 hr          { border: 0; border-top: 1px solid var(--divider); margin: 0; }
 ::selection { background: var(--accent); color: var(--c-cream); }
 
 /* --------------------------------------------------------------------------
    Typography roles
-   Display and title use Mencken; running copy uses Inter Tight;
-   all uppercase utility text uses JetBrains Mono with wide tracking.
+   Headings and running copy use Inter Tight (headings at regular weight with
+   tight tracking); all uppercase utility text uses JetBrains Mono.
    -------------------------------------------------------------------------- */
 h1 {
-  font-family: var(--font-display);
+  font-family: var(--font-hero);
   font-size: var(--fs-hero);
   line-height: var(--lh-display);
   letter-spacing: var(--ls-hero);
-  font-weight: var(--fw-medium);
+  font-weight: var(--fw-regular);
   margin:0;
 }
 
@@ -121,7 +135,7 @@ h2 {
   font-size: var(--fs-title);
   line-height: var(--lh-tight);
   letter-spacing: var(--ls-title);
-  font-weight: var(--fw-medium);
+  font-weight: var(--fw-regular);
   margin:0;
 }
 
@@ -130,7 +144,7 @@ h2 {
   font-size: var(--fs-title);
   line-height: var(--lh-tight);
   letter-spacing: var(--ls-title);
-  font-weight: var(--fw-medium);
+  font-weight: var(--fw-regular);
   font-style: italic;
   margin:0;
 }
@@ -140,7 +154,7 @@ h3 {
   font-size: var(--fs-section);
   line-height: var(--lh-tight);
   letter-spacing: var(--ls-section);
-  font-weight: var(--fw-medium);
+  font-weight: var(--fw-regular);
   margin:0;
 }
 
@@ -156,13 +170,13 @@ h4 {
   font-size: var(--fs-lead);
   line-height: var(--lh-tight);
   letter-spacing: var(--ls-section);
-  font-weight: var(--fw-medium);
+  font-weight: var(--fw-regular);
   margin:0;
 }
 
 .body-lg {
   font-family: var(--font-body);
-  font-size: var(--fs-lead);
+  font-size: var(--fs-bodylg);
   line-height: var(--lh-snug);
   font-weight: var(--fw-medium);
   margin:0;
@@ -170,25 +184,25 @@ h4 {
 
 .body-md {
   font-family: var(--font-body);
-  font-size: var(--fs-body);
+  font-size: var(--fs-bodymd);
   line-height: var(--lh-body);
-  font-weight: var(--fw-medium);
+  font-weight: var(--fw-regular);
   color: var(--text-muted);
   margin:0;
 }
 
 .body-sm {
   font-family: var(--font-body);
-  font-size: var(--fs-body-sm);
+  font-size: var(--fs-bodysm);
   line-height: var(--lh-body);
-  font-weight: var(--fw-medium);
+  font-weight: var(--fw-regular);
   color: var(--text-muted);
   margin:0;
 }
 
 .t-label {
   font-family: var(--font-body);
-  font-size: var(--fs-body-sm);
+  font-size: var(--fs-bodysm);
   font-weight: var(--fw-semi);
   line-height: var(--lh-snug);
   margin:0;
@@ -200,6 +214,15 @@ h4 {
   letter-spacing: var(--ls-eyebrow);
   text-transform: uppercase;
   color: var(--accent);
+}
+
+.t-eyebrow-bold {
+  font-family: var(--font-mono);
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: var(--fw-mono-bd);
 }
 
 .t-meta {
@@ -226,6 +249,59 @@ h4 {
   color: var(--text-meta);
 }
 
+.t-hero {
+  font-family: var(--font-hero);
+  font-size: var(--fs-hero);
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-hero);
+}
+
+.t-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-title);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-title);
+}
+
+.t-section {
+  font-family: var(--font-display);
+  font-size: var(--fs-section);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-section);
+}
+
+.t-display-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  letter-spacing: var(--ls-section);
+}
+
+.t-lead {
+  font-family: var(--font-body);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-snug);
+  font-weight: var(--fw-regular);
+}
+
+.t-body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+}
+
+.t-body-sm {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+}
+
+/* On dark fields */
+.on-dark              { color: var(--text-inverse); }
+.on-dark .t-meta,
+.on-dark .t-tag       { color: var(--c-cloud); }
+
 .text-primary-col{
   color: var(--text);
 }
@@ -244,6 +320,9 @@ h4 {
     --fs-section: var(--fs-section-sm);
     --fs-lead:    var(--fs-lead-sm);
     --fs-body:    var(--fs-body-sm);
+    --fs-bodylg:  var(--fs-bodylg-sm);
+    --fs-bodymd:  var(--fs-bodymd-sm);
+    --fs-bodysm:  var(--fs-bodysm-sm);
     --fs-eyebrow: 15px;
   }
 }
@@ -256,25 +335,28 @@ h4 {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  height:100%;
   box-sizing: border-box;
-  min-height: 40px;
-  padding: 12px;
+  min-height: 48px;
+  padding: 16px 22px;
   border: 1px solid var(--border);
   border-radius: 0;
   background: transparent;
   color: var(--text);
   font-family: var(--font-mono);
   font-size: var(--fs-meta);
+  font-weight: var(--fw-regular);
   letter-spacing: var(--ls-meta);
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
   transition: background .35s cubic-bezier(.2,.7,.2,1),
-              color .35s cubic-bezier(.2,.7,.2,1);
+              color .35s cubic-bezier(.2,.7,.2,1),
+              opacity .35s cubic-bezier(.2,.7,.2,1);
 }
 
-.btn:hover { background: var(--c-ink); color: var(--c-cream); }
+/* Plain .btn behaves like .btn--primary: outlined, inverts on hover */
+.btn:hover,
+.btn--primary:hover { background: var(--c-ink); color: var(--c-cream); }
 
 .btn[aria-pressed="true"]{
   background: var(--c-ink); color: var(--c-cream);
@@ -285,6 +367,61 @@ h4 {
 .btn-arrow { display: inline-block; transition: transform .35s cubic-bezier(.2,.7,.2,1); }
 .btn:hover .btn-arrow { transform: translate(3px, -3px); }
 
+/* ---- Variants (design system v2) -------------------------------------- */
+.btn--accent { border-color: var(--accent); color: var(--accent); }
+.btn--accent:hover { background: var(--accent); color: var(--c-cream); }
+
+.btn--text { min-height: 0; padding: 0; border: 0; color: var(--accent); }
+.btn--text:hover { background: transparent; color: var(--accent); opacity: .6; }
+
+.btn--quiet { border-color: var(--border-soft); color: var(--text-meta); }
+.btn--quiet:hover { background: transparent; border-color: var(--border); color: var(--text); }
+
+.btn--on-dark { border-color: var(--c-cloud); color: var(--c-cream); }
+.btn--on-dark:hover { background: var(--c-cream); color: var(--c-void); }
+
+/* Square icon button (arrows, close) */
+.btn--icon {
+  gap: 0;
+  width: 32px;
+  height: 32px;
+  min-height: 0;
+  padding: 0;
+  justify-content: center;
+  font-size: 16px;
+  letter-spacing: 0;
+}
+.btn--icon.btn--filled { background: var(--c-ink); color: var(--c-paper); }
+.btn--icon.btn--filled:hover { opacity: .75; }
+
+.btn--sm { min-height: 40px; padding: 11px 16px; font-size: var(--fs-micro); }
+.btn--lg { min-height: 60px; padding: 21px 30px; font-size: 16px; }
+
+.btn[disabled],
+.btn--disabled {
+  border-color: var(--border-soft);
+  color: var(--c-mist-400);
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Tag / pill: reads as a button, acts as a label */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-tag);
+  text-transform: uppercase;
+  color: var(--text-meta);
+}
+
+/* Group buttons and tags with gap, never with margins */
+.btn-group { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.tag-group { display: flex; flex-wrap: wrap; gap: 8px; }
+
 /* Secondary orange tbutton*/
 .btn-secondary {
   border-color: transparent;
@@ -292,11 +429,14 @@ h4 {
   padding: 12px 0;
 }
 
+.btn-secondary svg { transition: transform .35s cubic-bezier(.2,.7,.2,1); }
+
+/* No fade: the arrow nudges up-right instead */
 .btn-secondary:hover {
   background: transparent;
   color: var(--accent);
-  opacity:0.8;
 }
+.btn-secondary:hover svg { transform: translate(3px, -3px); }
 
 /* --------------------------------------------------------------------------
    Progress indicator — horizontal dots

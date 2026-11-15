@@ -1,0 +1,255 @@
+/* Case-study layout primitives, used by content/projects/*.mdx bodies.
+   Typography comes from designsystem.css; this file only handles layout. */
+
+.case-study {
+  box-sizing: border-box;
+  padding: 64px 48px 72px;
+}
+
+/* Anchored sections (e.g. "Jump to Output") land below the sticky top nav. */
+.case-study [id] { scroll-margin-top: 72px; }
+
+/* Sticky top bar (CaseStudyBar in ProjectDetail.tsx) */
+.case-bar {
+  --ls-meta: .12em;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 12px 10px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+.case-bar .g { color: var(--text-meta); }
+.case-bar .btn--filled:hover { opacity: .75; }
+@media (max-width: 1023px) { .case-bar__meta { display: none; } }
+
+/* ---- Vertical rhythm ---------------------------------------------------- */
+.cs-section { margin-top: 160px; }   /* before a numbered SectionHeader */
+.cs-block   { margin-top: 64px; }   /* between blocks inside a section */
+.cs-lead    { margin-top: 56px; }   /* first block after a SectionHeader */
+.cs-gap-sm  { margin-top: 32px; }
+.cs-gap-xs  { margin-top: 24px; }
+
+/* ---- Text --------------------------------------------------------------- */
+.cs-intro {
+  max-width: 760px;
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Rounded highlight used in the design-brief statement */
+.cs-pill {
+  background: #c9761f;
+  color: #fff;
+  padding: 2px 14px;
+  border-radius: 40px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.cs-brief { line-height: 1.4; max-width: 1180px; text-wrap: pretty; }
+
+/* ---- Media -------------------------------------------------------------- */
+.cs-media { overflow: hidden; }
+.cs-media img { width: 100%; height: auto; display: block; }
+.case-study .cs-media img { cursor: zoom-in; transition: transform .6s cubic-bezier(.2,.7,.2,1); }   /* opens in the Lightbox (see ProjectDetail.tsx) */
+.case-study .cs-media img:hover { transform: scale(1.02); }   /* .cs-media clips the zoom */
+.case-study .cs-media img:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
+.cs-media--dark { background: var(--bg-inverse); }
+
+/* Small right-aligned caption under a media block */
+.cs-caption { margin: 12px 0 0; text-align: right; text-transform: none; letter-spacing: .04em; }
+
+/* Media wider/taller than its slot: scroll inside the frame instead of shrinking it */
+.cs-scroll-x { overflow-x: auto; }
+.cs-scroll-x img { width: auto; max-width: none; height: 570px; }
+.cs-scroll-y { max-height: 560px; overflow-y: auto; border: 1px solid var(--divider); }
+
+/* Grey stand-in for a visual that hasn't been made yet */
+.cs-placeholder {
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--c-mist-200);
+  color: var(--text-meta);
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  letter-spacing: var(--ls-meta);
+  text-transform: uppercase;
+  text-align: center;
+}
+.cs-placeholder--wide { min-height: 540px; }
+
+.video-embed {
+  background: var(--bg-inverse);
+  aspect-ratio: 16 / 9;
+}
+
+.video-embed iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* ---- Grids -------------------------------------------------------------- */
+.cs-grid-2,
+.cs-grid-3,
+.cs-split {
+  display: grid;
+  gap: 32px;
+  align-items:start;
+}
+
+.cs-grid-2 { grid-template-columns: 1fr 1fr; }
+.cs-grid-3 { grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.cs-grid-2.cs-gap-wide { gap: 48px; }
+
+/* Text on the left, media on the right */
+.cs-split { grid-template-columns: 1fr 1.4fr; gap: 64px;}
+.cs-split--even { grid-template-columns: 1fr 1fr; }
+.cs-split--wide { grid-template-columns: 1fr 1.6fr; }
+.cs-split--wide-left { grid-template-columns: 1.4fr 1fr; }   /* media on the left */
+
+/* ---- Cards -------------------------------------------------------------- */
+.cs-card {
+  border: 1px solid var(--border);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* No border; text sits flush with the column edges */
+.cs-card--plain { border: none; padding: 0; }
+.cs-card--stretch { align-self: stretch; }   /* equal heights across a grid row */
+
+/* Brand mark at the top of a card */
+.cs-logo { height: 32px; width: auto; align-self: flex-start; object-fit: contain; }
+
+/* Inline line icon (24px) in a .cs-card--icon */
+.cs-card--icon > img.cs-card__glyph { width: 24px; height: 24px; margin-top: 6px; }
+
+/* Numbered workflow: circled step number, title, one-line outcome */
+.cs-steps { list-style: none; margin: 0; padding: 0; counter-reset: step; display: flex; flex-direction: column; gap: 20px; }
+.cs-steps li {
+  counter-increment: step;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 52px;
+  min-height: 32px;
+}
+.cs-steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  color: var(--text-meta);
+}
+.cs-steps li:not(:last-child)::after {   /* connector to the next step */
+  content: '';
+  position: absolute;
+  left: 16px;
+  top: 38px;
+  bottom: -16px;
+  border-left: 1px solid var(--border-soft);
+}
+.cs-steps strong { font-family: var(--font-body); font-size: var(--fs-bodymd); font-weight: 500; color: var(--text); }
+.cs-steps span { font-size: var(--fs-bodysm); color: var(--text-muted); }
+
+/* Pros / cons list with a leading icon */
+.cs-checklist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; font-size: var(--fs-bodymd); color: var(--text-muted); }
+.cs-checklist li { display: flex; align-items: center; gap: 12px; }
+.cs-checklist img { width: 20px; height: 20px; flex-shrink: 0; }
+
+/* Body-text lists */
+.cs-list { margin: 0; padding-left: 1.4em; display: flex; flex-direction: column; gap: 8px; }
+.cs-list ol { margin: 8px 0 0; padding-left: 1.4em; display: flex; flex-direction: column; gap: 8px; }
+
+/* Row of chip-style links (e.g. jump to each feature) */
+.cs-chips { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* Metric with a rule beneath, stacked in a column */
+.cs-metric { display: flex; flex-direction: column; gap: 8px; padding-bottom: 20px; border-bottom: 1px solid var(--divider); }
+
+.cs-card--icon { flex-direction: row; gap: 24px; align-items: flex-start; }
+.cs-card--icon > img { width: 72px; height: 72px; object-fit: contain; flex-shrink: 0; }
+.cs-card--icon > div { display: flex; flex-direction: column; gap: 14px; }
+
+/* Icon card, dark variation: light icon on a dark strip, text on paper */
+/* align-self: stretch overrides the grid's align-items:start, so cards in a row share a height */
+.cs-card--icon-dark { flex-direction: row; gap: 0; padding: 0; align-items: stretch; align-self: stretch; overflow: hidden; }
+.cs-card--icon-dark .cs-card__icon {
+  flex: 0 0 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-inverse);
+}
+.cs-card--icon-dark .cs-card__icon img { width: 72px; height: 72px; object-fit: contain; display: block; }
+.cs-card--icon-dark .cs-card__body { flex: 1; min-width: 0; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.cs-card--icon-dark .body-md { opacity: .8; }
+/* For dark-line icons that have no light version: flip them to light on the dark strip */
+.cs-card__icon--invert img { filter: invert(1); }
+
+/* Row-style link with a trailing arrow, used for prototype links and "more works" */
+.cs-link-card {
+  border-top: 1px solid var(--border);
+  padding: 18px 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 17px;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.cs-link-card span { color: var(--accent); }
+
+.cs-underline-link {
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 4px;
+  align-self: flex-start;
+}
+
+/* ---- Responsive --------------------------------------------------------- */
+@media (max-width: 900px) {
+  .case-study { padding: 40px 20px 56px; }
+  .cs-section { margin-top: 104px; }
+  .cs-block   { margin-top: 48px; }
+  .cs-lead    { margin-top: 40px; }
+
+  .cs-grid-2,
+  .cs-grid-3,
+  .cs-split,
+  .cs-split--even,
+  .cs-split--wide,
+  .cs-split--wide-left { grid-template-columns: 1fr; gap: 32px; }
+
+  .cs-scroll-x img { height: 380px; }
+  .cs-placeholder { min-height: 240px; }
+
+  .cs-card--icon > img { width: 56px; height: 56px; }
+  .cs-card--icon-dark .cs-card__icon { flex-basis: 80px; }
+  .cs-card--icon-dark .cs-card__icon img { width: 56px; height: 56px; }
+}

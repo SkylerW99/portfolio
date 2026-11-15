@@ -1,0 +1,59 @@
+/* Contact modal — layout follows the "Contact me" dialog in the Portfolio design.
+   Panel, backdrop and close button come from ProjectModal.css. */
+
+.contact-modal {
+  width: min(520px, 100%);
+  padding: 40px;
+}
+
+.contact-modal__title {
+  font-size: 44px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+
+.contact-modal__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.contact-modal__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--divider);
+  color: var(--text);
+  text-decoration: none;
+  transition: color .2s ease;
+}
+
+.contact-modal__list li:last-child .contact-modal__row { border-bottom: none; }
+
+.contact-modal__row:hover { color: var(--accent); opacity: 1; }
+.contact-modal__row:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
+
+.contact-modal__label {
+  font-family: var(--font-display);
+  font-size: 30px;
+  line-height: 1.1;
+}
+
+.contact-modal__value {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: none;
+  letter-spacing: .1em;
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+
+@media (max-width: 600px) {
+  .contact-modal { padding: 28px 24px; }
+  .contact-modal__title { font-size: 36px; }
+  .contact-modal__label { font-size: 24px; }
+}

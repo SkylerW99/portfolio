@@ -1,17 +1,19 @@
 interface SectionHeaderProps {
     number: string
     title: string
+    subtitle?: string
 }
 
-export function SectionHeader({number, title}: SectionHeaderProps){
+export function SectionHeader({number, title, subtitle}: SectionHeaderProps){
 
     return (
-        <div className="flex-vertical gap-8">
+        <div className="flex-vertical gap-20">
             <div className="flex-horizontal gap-8">
-            <h2>{number}.</h2>
-            <h2>{title}</h2>
+            <h3 className="accent-color">{number}.</h3>
+            <h3>{title}</h3>
             </div>
-            <hr />
+            {subtitle && <p className="t-meta no-margin">{subtitle}</p>}
+            <hr className="dark-top-border" />
         </div>
     )
 }

@@ -2,7 +2,7 @@
    Design tokens and typography are defined in designsystem.css. */
 
 .page-container {
-  width: min(1440px,100%);
+  width: min(1200px,100%);
   margin-inline: auto;
   display: flex;
   flex-direction: column;

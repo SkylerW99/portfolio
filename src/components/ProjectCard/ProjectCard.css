@@ -1,38 +1,98 @@
-.thumbnail-image{
+/* Project cards (Work / Art strip / Archive). Hover zooms the cover, never fades. */
+
+.thumbnail-image {
   display: block;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .6s cubic-bezier(.2,.7,.2,1);
 }
 
-.container-with-overlay{
+/* ---- Bordered card (Work + Archive) ------------------------------------ */
+.pcard {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0;
   border: 1px solid var(--border);
-  overflow: hidden;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+a.pcard:hover, .pcard:hover { opacity: 1; }
+.pcard:hover .thumbnail-image,
+.artcard:hover .thumbnail-image { transform: scale(1.06); }
+.pcard:focus-visible, .artcard:focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
+.pcard--static { cursor: default; }
+.pcard--static:hover .thumbnail-image { transform: none; }
+
+.pcard__head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  min-width: 0;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.pcard__head--sm { gap: 10px; padding: 14px 16px; }
+.pcard__num { font-size: 15px; }
+.pcard__head--sm .pcard__num { font-size: var(--fs-meta); }
+.pcard__title { font-size: 28px; line-height: 1.1; letter-spacing: -.025em; }
+.pcard__title--sm { font-size: 22px; line-height: 1.15; letter-spacing: -.02em; }
+
+.pcard__cover { display: block; width: 100%; overflow: hidden; background: #111; }
+
+/* Striped stand-in when a project has no cover yet */
+.pcard__ph {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 16px;
+  background: repeating-linear-gradient(135deg, var(--c-mist-200) 0 8px, var(--c-paper) 8px 16px);
 }
 
-.height-150{
-  min-height: 150px;
+.pcard__foot {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
 }
+.pcard__foot--sm { gap: 10px; padding: 14px 16px; }
+.pcard__desc { font-size: 18px; line-height: 1.45; color: var(--text-muted); }
+.pcard__desc--sm { font-size: 17px; }
+.pcard__meta { display: flex; justify-content: space-between; gap: 12px; }
+.pcard__meta > span:last-child { white-space: nowrap; }
+.pcard__kind--case { color: #8a4a10; }
 
-.text-overlay{
-  position:absolute;
-  bottom: 20px;
-  left: 20px;
-  color: var(--text-inverse);
+/* ---- Art strip card ----------------------------------------------------- */
+.artcard {
+  flex: 0 0 400px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
 }
+.artcard__img { display: block; overflow: hidden; border: 1px solid var(--border); }
+.artcard__cap { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.artcard__title { font-size: 22px; line-height: 1.15; letter-spacing: -.02em; }
+.artcard__cap .t-meta { white-space: nowrap; }
 
-.category-overlay{
-  position:absolute;
-  bottom: 56px;
-  left: 20px;
-  color: var(--text-inverse); 
+@media (max-width: 1023px) {
+  .artcard { flex-basis: 340px; }
 }
-
-.gradient-background {
-  position: absolute;
-  inset:0;
-  cursor:pointer;
-  background: linear-gradient(to top, rgba(13, 13, 12, 0.78) 0%, rgba(13, 13, 12, 0) 55%);
+@media (max-width: 767px) {
+  .pcard__title { font-size: 22px; }
+  .artcard { flex-basis: 78vw; }
 }
-
-

@@ -40,9 +40,16 @@ function readProjectFrontmatter(fileName) {
 
 function buildIndex() {
   const files = fs.readdirSync(PROJECTS_DIR).filter((f) => f.endsWith('.mdx'))
+  // `order` (ascending) sets the curated Work / Archive order; anything without it
+  // falls after, newest first. Drafts never reach the site.
   const projects = files
     .map(readProjectFrontmatter)
-    .sort((a, b) => +new Date(b.date) - +new Date(a.date))
+    .filter((p) => !p.draft)
+    .sort((a, b) => {
+      const ao = a.order ?? Infinity, bo = b.order ?? Infinity
+      if (ao !== bo) return ao - bo
+      return +new Date(b.date) - +new Date(a.date)
+    })
 
   const header = `// GENERATED FILE — do not edit by hand.\n// Run \`npm run build-index\` (or \`npm run dev\`/\`npm run build\`, which run it automatically)\n// to regenerate this from content/projects/*.mdx\nimport type { ProjectFrontmatter } from './types'\n\n`
   const body = `export const projects: ProjectFrontmatter[] = ${JSON.stringify(projects, null, 2)}\n`

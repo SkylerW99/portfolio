@@ -2,26 +2,381 @@
 title: "Precision Cooking"
 id: "2"
 slug: "precision-cooking"
-description: "Redesigned “Precision cooking” feature on GE wall oven interface with LCD technology."
-categories: ["UX"]
-thumbnail: "/images/precision-cooking/pc-cover.gif"
+description: "Redesigned “Precision cooking” feature on GE wall oven interface."
+categories: ["UX", "Embedded UI"]
+thumbnail: "/images/precision-cooking/pc-hero.png"
 date: "2026-08-24"
 featured: true
 size: "large"
+year: 2023
+order: 4
+summary: "A tech-empowered headless cooking experience on GE\u2019s 7-inch LCD oven screen."
 ---
 
+import { Link } from 'react-router-dom'
 import { ProjectOverview } from '../../src/components/ProjectOverview/ProjectOverview'
+import { SectionHeader } from '../../src/components/SectionHeader/SectionHeader'
+import { VideoEmbed } from '../../src/components/mdx/VideoEmbed'
+import { ParameterMatrix } from '../../src/components/ParameterMatrix/ParameterMatrix'
+
+export const img = (name) => `/images/precision-cooking/${name}`
+export const vimeo = (id, hash, autoplay = true) =>
+  `https://player.vimeo.com/video/${id}?h=${hash}&title=0&byline=0&portrait=0` +
+  (autoplay ? '&autoplay=1&muted=1&loop=1&autopause=0' : '')
 
 <div className="page-container">
 
 <ProjectOverview
   title={frontmatter.title}
   description={frontmatter.description}
-  projectType = "Work @GE Appliances"
-  team = "1 UX Designer, 1 UX Researcher, Dev Team"
-  duration = "08.2022 - 03.2023"
-  myRole = "Lead UX Designer"
+  projectType="@ GE Appliances Internship Project · Shipped to Dev Team"
+  team="1 designer + 2 consumer insight co-ops + dev team"
+  duration="08.2022 - 03.2023"
+  myRole='Lead UX Designer'
 />
 
+<div className="cs-media cs-media--dark cs-block">
+  <img src={img('header.png')} alt="Precision Cooking redesign on a GE wall oven screen" />
 </div>
 
+{/* ---- Summary ---- */}
+
+<div className="cs-split--even cs-split cs-block">
+  <div style={{ alignSelf: 'flex-start' }}>
+    <h3>Overview</h3>
+  </div>
+  <div className="flex-vertical gap-20">
+  <p className="body-md">Redesigned “Precision cooking” feature on GE wall oven interface. </p>
+  <p className="body-md"> As the main designer, I started from conception to hand-off with 5 iterations and 3 rounds of usability tests. Worked closely with engineering team, I revamped this feature to accommodate a variety of cooking tasks across 120+ ingredients.</p>
+   <a href="#output" className="btn no-fade" style={{ alignSelf: 'flex-start' }}>Jump to Output ↓</a>
+  </div>
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro">
+    <h4>What is “Precision Cooking” mode?</h4>
+    <p className="t-meta no-margin">Explained in 10 seconds</p>
+  </div>
+  <VideoEmbed title="Precision Cooking explained" src={vimeo('913185162', '0c78ebb214', false)} />
+</div>
+
+<div className="cs-grid-2 cs-gap-wide cs-block">
+  <div className="cs-card">
+    <p className="t-eyebrow-bold accent-color no-margin">Problem</p>
+    <p className="body-md">The average time spent on precision cooking feature from finding the food item to start cooking was <strong className="accent-color">13+ minutes</strong>, indicating it was confusing and hard to use.</p>
+  </div>
+  <div className="cs-card">
+    <p className="t-eyebrow-bold accent-color no-margin">Outcome</p>
+    <p className="body-md">Time spent navigating this feature decreased by 70%, and 100% of the users with varied cooking experience successfully completed all the cooking tasks assigned.</p>
+  </div>
+</div>
+
+<div className="cs-media cs-media--dark cs-gap-sm">
+  <img src={img('before-after.gif')} alt="Before and after the redesign" />
+</div>
+
+{/* ---- 01 ---- */}
+
+<div id="why-redesign" className="cs-section">
+  <SectionHeader number="01" title="Why redesign?" subtitle="Understand the current state" />
+</div>
+
+<div className="cs-split--even cs-split cs-block">
+  <div className="flex-vertical gap-20">
+    <p className="body-lg">1. Inefficient Food Item Search</p>
+    <p className="body-md"> Our current LCD system does not support a search function. The users have to go through a deep menu and swipe several times to find the right food among 120+ options.</p>
+  </div>
+     <div className="cs-media"><img src={img('food-search.png')} alt="Food item menu on the oven screen" /></div>
+</div>
+
+<div className="cs-media cs-gap-xs"><img src={img('food-search-diagram.png')} alt="Diagram of the deep food menu" /></div>
+
+<div className="cs-split--even cs-split cs-block">
+  <div className="flex-vertical gap-20">
+    <p className="body-lg">2. No Error Recovery / Exit</p>
+    <p className="body-md">When they select the food parameters (size, quantity, thickness), the linear pathway only allows them to move forward without any backward option. If they misstep, they have to start over. For complex items, more than 10 taps are required before start.</p>
+  </div>
+  <VideoEmbed title="Original linear parameter flow" src={vimeo('843139236', '63b08ded36')} />
+</div>
+
+<div className="cs-split--even cs-split cs-block">
+  <div className="cs-media"><img src={img('mandatory-vs-optional.png')} alt="Mandatory vs. optional steps" /></div>
+  <div className="flex-vertical gap-20">
+    <p className="body-lg">3. No clear distinction between mandatory & optional steps</p>
+    <p className="body-md">Food items have different properties. For example, setting a timer is required for baked goods, but is optional for meats and veggies. However, the “timer” is placed at the same visual hierarchy, which confused the users.</p>
+  </div>
+</div>
+
+{/* ---- 02 ---- */}
+
+<div id="for-who" className="cs-section">
+  <SectionHeader number="02" title="Who are we designing for?" subtitle="Understand the target users" />
+</div>
+
+<div className="cs-lead">
+  <div className="cs-split--even cs-split cs-block">
+    <p className="body-md">“Precision cooking” feature existed on “GE Profile” smart ovens, which is a high-end brand that targets feature seekers, who are the “pioneer of Firsts”.</p>
+    <div className="cs-media"><img src={img('target-users.png')} alt="Target users: feature seekers" /></div>
+
+  </div>
+
+  <div className="cs-intro cs-gap-sm">
+    <p className="body-md">The brand team interviewed 50 feature seekers, and here’s their thoughts about precision cooking.</p>
+  </div>
+  <div className="cs-grid-2 cs-gap-wide">
+    <div className="cs-card cs-card--icon-dark">
+      <div className="cs-card__icon cs-card__icon--invert"><img src={img('icon-beginner.png')} alt="" /></div>
+      <div className="cs-card__body">
+        <h4><span className="accent-color">80%</span> Beginner home cook</h4>
+        <p className="body-md">“I wish it could just automate everything for me. I just need to input how I want the food to be done.”</p>
+      </div>
+    </div>
+    <div className="cs-card cs-card--icon-dark">
+      <div className="cs-card__icon cs-card__icon--invert"><img src={img('icon-experienced.png')} alt="" /></div>
+      <div className="cs-card__body">
+        <h4><span className="accent-color">20%</span> Gourmet home cook</h4>
+        <p className="body-md">“It would be nice if I could use the suggested time and temp as reference, and still be able to change them.”</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{/* ---- 03 ---- */}
+
+<div id="design-opportunities" className="cs-section">
+  <SectionHeader number="03" title="Identifying Opportunities" subtitle="Does our competitors’ product have similar features? What did they do better?" />
+</div>
+
+<div className="cs-lead">
+  <div className="cs-intro">
+    <h4>I got some good insights from competitors’ products.</h4>
+  </div>
+  <div className="cs-grid-3">
+    <div className="cs-card cs-card--plain">
+      <h4 className="accent-color">1.</h4>
+      <p className="body-md">Some of them have progress indicators during food parameter selection, which is good to let the users keep track of the steps.</p>
+    </div>
+    <div className="cs-card cs-card--plain">
+      <h4 className="accent-color">2.</h4>
+      <p className="body-md">They have some similar problems with small LCD screen: too much scrolling / paginations for large number of food items.</p>
+    </div>
+    <div className="cs-card cs-card--plain">
+      <h4 className="accent-color">3.</h4>
+      <p className="body-md">Brava has images & animations on the food selection pages and cooking instructions, which is helpful for first timer users.</p>
+    </div>
+  </div>
+  <div className="cs-media cs-gap-sm"><img src={img('competitors.png')} alt="Competitors’ products" /></div>
+</div>
+
+{/* ---- 04 ---- */}
+
+<div id="brief" className="cs-section">
+  <SectionHeader number="04" title="Design Brief" />
+</div>
+
+<div className="cs-lead">
+  <h3 className="cs-brief">How to redesign the “precision cooking” feature to deliver <span className="cs-pill">an intuitive streamlined experience</span> that caters to <span className="cs-pill">both beginner and seasoned home cooks?</span></h3>
+</div>
+
+{/* ---- 05 ---- */}
+
+<div id="explorations" className="cs-section">
+  <SectionHeader number="05" title="Explore Potential Solutions" subtitle="What are the possible ways to address the problems?" />
+</div>
+
+<div className="cs-lead">
+  <div className="cs-intro">
+    <p className="body-md">To come up with a streamlined progress indication solution, I revisited all the possible parameters in each food category.</p>
+  </div>
+  <ParameterMatrix />
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro">
+    <p className="body-md">Then I sketched out a few possible solutions, and our team collectively picked the “left-side” navigation layout that has more space, and potential to be repurposed.</p>
+  </div>
+  <div className="cs-media"><img src={img('sketches.png')} alt="Layout sketches" /></div>
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro">
+    <p className="body-md">Since the majority of our users are beginners, and we want to attract them to try this feature, I changed the copy to a friendly tone of voice, with more visual guidance.</p>
+  </div>
+  <div className="cs-media"><img src={img('beef-sketch.png')} alt="Beef flow sketch with friendlier copy" /></div>
+</div>
+
+{/* ---- 06 ---- */}
+
+<div id="testing" className="cs-section">
+  <SectionHeader number="06" title="Testing & Iterations" />
+</div>
+
+<div className="cs-lead">
+  <div className="cs-split--even cs-split cs-block">
+    <p className="body-md">We conducted 3 rounds of testing. Each round we assigned 10 participants cooking tasks and observed how they went about them.</p>
+    <div className="cs-media"><img src={img('user-testing.jpg')} alt="Usability testing session" /></div>
+  </div>
+</div>
+
+<div className="cs-block">
+  <div className="flex-vertical gap-20">
+    <p className="t-eyebrow">Round 1</p>
+    <p className="t-label accent-color" style={{ fontSize: 18 }}>Task: Bake a beef tenderloin to medium-rare.</p>
+    <a className="t-eyebrow cs-underline-link" target="_blank" rel="noreferrer" href="https://www.figma.com/proto/fMwKzDyg7BEgd1tN5jG3zM/2023-ROUX_-User-Testing-Prototypes?page-id=0%3A1&type=design&node-id=1-17469&viewport=1000%2C-399%2C0.06&t=NZm8eNK4Y4UaW4aj-1&scaling=scale-down&starting-point-node-id=1%3A17469&show-proto-sidebar=1&mode=design">Figma prototype link ↗</a>
+  </div>
+  <VideoEmbed title="Round 1 prototype" src={vimeo('844231543', '4106f5a5dc')} />
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro">
+    <p className="t-meta accent-color no-margin">The biggest usability problem</p>
+    <h4>Confusing Navigation</h4>
+    <p className="body-md">60% of the users don’t know how to use the left-side navigation without the “next” button for the food parameter inputs. The sequence indication is not clear.</p>
+  </div>
+  <div className="cs-media"><img src={img('usability-issue-1.jpg')} alt="Usability issue: confusing navigation" /></div>
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro">
+    <p className="t-meta accent-color no-margin">The unexpected problem</p>
+    <h4>“PC” feature is hard to locate.</h4>
+    <p className="body-md">50% of the users struggled to find “Precision Cooking” at start. While the other cooking modes are on the right, PC was placed on the left with a long intro paragraph. It looks like an advertisement to users.</p>
+  </div>
+  <div className="cs-media"><img src={img('usability-issue-2.jpg')} alt="Usability issue: feature hard to locate" /></div>
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro">
+    <h4>More testing with different food items</h4>
+    <p className="body-md">We implemented the design changes, and tested more cooking tasks with different food ingredients. Through these rounds, we established a solid design pattern that suits 125 food items.</p>
+  </div>
+  <div className="cs-media"><img src={img('other-rounds.gif')} alt="Prototypes from later testing rounds" /></div>
+
+  <p className="t-meta cs-gap-sm">Figma prototype links</p>
+  <div className="cs-grid-3">
+    <a className="cs-link-card" target="_blank" rel="noreferrer" href="https://www.figma.com/proto/fMwKzDyg7BEgd1tN5jG3zM/2023-ROUX_-User-Testing-Prototypes?page-id=5%3A2&type=design&node-id=1-59701&viewport=129%2C3470%2C0.16&t=q3vypA3wQW2h7BFn-1&scaling=scale-down&starting-point-node-id=1%3A59701&show-proto-sidebar=1&mode=design">Cook an 8oz Salmon to medium doneness<span>↗</span></a>
+    <a className="cs-link-card" target="_blank" rel="noreferrer" href="https://www.figma.com/proto/fMwKzDyg7BEgd1tN5jG3zM/2023-ROUX_-User-Testing-Prototypes?page-id=5%3A3&type=design&node-id=5-2991&viewport=1060%2C752%2C0.04&t=mgMTo6ytdxa74DCg-1&scaling=scale-down&starting-point-node-id=5%3A2991&show-proto-sidebar=1&mode=design">Bake 1 rack of Cookie to 375F<span>↗</span></a>
+    <a className="cs-link-card" target="_blank" rel="noreferrer" href="https://www.figma.com/proto/fMwKzDyg7BEgd1tN5jG3zM/2023-ROUX_-User-Testing-Prototypes?page-id=5%3A3&type=design&node-id=5-6945&viewport=1060%2C752%2C0.04&t=mgMTo6ytdxa74DCg-1&scaling=scale-down&starting-point-node-id=5%3A6945&show-proto-sidebar=1&mode=design">Cook 2 of 1’’ filet mignon to med well doneness<span>↗</span></a>
+  </div>
+</div>
+
+{/* ---- 07 ---- */}
+
+<div id="results" className="cs-section">
+  <SectionHeader number="07" title="Evaluate the Results" subtitle="What’s improved?" />
+</div>
+
+<div className="cs-grid-2 cs-gap-wide cs-lead">
+  <div className="cs-card cs-card--icon-dark">
+    <div className="cs-card__icon"><img src={img('icon-efficiency-light.png')} alt="" /></div>
+    <div className="cs-card__body">
+      <h4>70% more efficiency</h4>
+      <p className="body-md">Time spent navigating this feature decreased by 70%, with an average of 2 mins 23 secs.</p>
+    </div>
+  </div>
+  <div className="cs-card cs-card--icon-dark">
+    <div className="cs-card__icon"><img src={img('icon-success-light.png')} alt="" /></div>
+    <div className="cs-card__body">
+      <h4>100% success rate</h4>
+      <p className="body-md">100% of the users completed the cooking tasks correctly, and feel confident when pressing “start”.</p>
+    </div>
+  </div>
+</div>
+
+{/* ---- 08 ---- */}
+
+<div id="output" className="cs-section">
+  <SectionHeader number="08" title="Final Design" />
+</div>
+
+<div className="cs-split cs-split--wide cs-lead">
+  <div className="flex-vertical gap-20">
+    <h4>Enter “Precision Cooking” </h4>
+    <p className="body-md">The process of choosing food items is condensed to a single screen.</p>
+  </div>
+  <VideoEmbed title="Entering Precision Cooking mode" src={vimeo('844263926', '55e80e4546')} />
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro"><h4>Customize your food</h4></div>
+  <div className="cs-grid-2">
+    <div className="flex-vertical gap-12">
+      <p className="t-meta accent-color no-margin">Cookies</p>
+      <VideoEmbed title="Customizing cookies" src={vimeo('914178385', '29e36ca0f1')} />
+    </div>
+    <div className="flex-vertical gap-12">
+      <p className="t-meta accent-color no-margin">Filet Mignon</p>
+      <VideoEmbed title="Customizing filet mignon" src={vimeo('844269486', '91d16096b4')} />
+    </div>
+  </div>
+</div>
+
+<div className="cs-grid-2 cs-block">
+  <div className="flex-vertical gap-24">
+    <h4>View / Skip cooking tips before start</h4>
+    <VideoEmbed title="Cooking tips before start" src={vimeo('914190903', 'b89dc278cf')} />
+  </div>
+  <div className="flex-vertical gap-24">
+    <h4>See real-time cooking updates</h4>
+    <VideoEmbed title="Real-time cooking updates" src={vimeo('844270952', '124c11f2c1')} />
+  </div>
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro"><h4>Componentize the System</h4></div>
+  <div className="cs-media"><img src={img('system-components.jpg')} alt="System components" /></div>
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro"><h4>How to Use the Template?</h4></div>
+  <VideoEmbed title="Using the template" src={vimeo('914192875', 'fb36a15f79')} />
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro"><h4>Color & Typography</h4></div>
+  <div className="cs-media"><img src={img('color-typography.jpg')} alt="Color and typography specs" /></div>
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro"><h4>Different color themes for other GE brands</h4></div>
+  <VideoEmbed title="Color themes for other GE brands" src={vimeo('844453925', 'c9ae952823')} />
+</div>
+
+<div className="cs-media cs-media--dark cs-block">
+  <img src={img('oven-demo.png')} alt="Final design on a wall oven" />
+</div>
+
+{/* ---- 09 ---- */}
+
+<div id="reflection" className="cs-section">
+  <SectionHeader number="09" title="Additional Thoughts" />
+</div>
+
+<div className="cs-lead">
+  <div className="cs-intro">
+    <h4>Manage Scope Creep</h4>
+    <p className="body-md">“Precision Cooking” is interconnected to other oven features in the LCD system. I also worked on other design improvements such as nav bar, icons, timer setting, and color accessibility with other designers. There are other areas that we want to revisit, but didn’t focus on this time.</p>
+  </div>
+  <div className="cs-media"><img src={img('nav-bar-iterations.jpg')} alt="Nav bar iterations" /></div>
+</div>
+
+<div className="cs-split--even cs-split cs-block">
+  <div className="flex-vertical gap-20">
+    <h4>Ergonomics in the kitchen</h4>
+    <p className="body-md">People might look at the oven screen from a far distance. The primary actions need to be very distinct, with large text and simple hierarchy. Testing minimum readable text size is crucial.</p>
+  </div>
+  <div className="cs-media"><img src={img('kitchen.jpeg')} alt="Wall oven in a kitchen" /></div>
+</div>
+
+{/* ---- More works ---- */}
+
+<div className="cs-section">
+  <div className="cs-intro"><h3>More Works @GE</h3></div>
+  <div className="cs-grid-3">
+    <Link className="cs-link-card" to="/work/smartHQ-design-system">SmartHQ IoT App Design System<span>→</span></Link>
+    <a className="cs-link-card" target="_blank" rel="noreferrer" href="https://www.ziyijpg.com/ar-commissioning">AR Commissioning<span>↗</span></a>
+    <a className="cs-link-card" target="_blank" rel="noreferrer" href="https://www.ziyijpg.com/smarthq-onboarding-experience">SmartHQ Onboarding Experience<span>↗</span></a>
+  </div>
+</div>
+
+</div>

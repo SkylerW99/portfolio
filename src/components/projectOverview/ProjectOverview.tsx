@@ -39,11 +39,11 @@ export function ProjectOverview({
                 <p className="body-sm">{duration}</p>
                 </div>
 
-                 <div>
+                <div>
                 <p className="t-eyebrow">My Role</p>
                 <p className="body-sm">{myRole}</p>
                 </div>
-
+            
             </div>
         </section>
     )

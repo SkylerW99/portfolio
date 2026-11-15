@@ -1,120 +1,76 @@
-import { Link } from 'react-router-dom'
-import './ProjectCard.css';
-import type { ProjectFrontmatter } from '../../content/types'
-import { ArrowUp } from '../icons/ArrowUp'
+// Project cards for the redesigned shell:
+//   WorkCard    — Home → Work grid (case studies; "Coming soon" when unpublished)
+//   ArtCard     — Home → Art & tech strip (opens the art pop-up)
+//   ArchiveCard — Archive grid (case study link, or the art pop-up)
 
-interface projectType {
-  project: ProjectFrontmatter,
-  onOpenModal?: (slug: string) => void
+import { Link } from 'react-router-dom'
+import './ProjectCard.css'
+import type { ProjectFrontmatter } from '../../content/types'
+import { cardText, isCaseStudy, tagLine } from '../../content/projects'
+
+function Cover({ project, ratio }: { project: ProjectFrontmatter; ratio: '16/10' | '4/3' }) {
+  return (
+    <span className="pcard__cover" style={{ aspectRatio: ratio }}>
+      {project.thumbnail
+        ? <img className="thumbnail-image" src={project.thumbnail} alt="" loading="lazy" />
+        : <span className="pcard__ph"><span className="t-meta">Cover / {project.status === 'coming-soon' ? 'In progress' : project.title}</span></span>}
+    </span>
+  )
 }
 
-{/* Homepage - text portion of the project, large and small */}
-export function ProjectCardText({ project }: projectType) {
-
-  const textContent = (
+export function WorkCard({ project, num }: { project: ProjectFrontmatter; num: string }) {
+  const body = (
     <>
-      <div className="flex-vertical gap-20">
-        <div className="gap-4">
-          <div className="flex-horizontal space-between">
-            <p className="t-meta">{project.id}</p>
-            <p className="t-meta">{new Date(project.date).getFullYear()}</p>
-          </div>
-          <hr />
-        </div>
-        <h2 className="text-primary-col height-150">{project.title}</h2>
-        <p className="body-md no-padding">{project.description}</p>
-        <div className="flex-horizontal space-between">
-          <div className="flex-horizontal gap-8">
-            {project.categories.map((category) => (
-              <Link to = {`/archive/?category=${category}`}>
-              <button key={category} className="btn">{category}</button>
-              </Link>
-            ))}
-          </div>
-          <Link to={`/work/${project.slug}`}>
-            <button className="btn btn-secondary gap-8">
-              Read Case
-              <ArrowUp stroke="var(--accent)" width="16" height="16" />
-            </button>
-          </Link>
-        </div>
-      </div>
+      <span className="pcard__head">
+        <span className="t-meta pcard__num">{num}</span>
+        <span className="pcard__title">{project.title}</span>
+      </span>
+      <Cover project={project} ratio="16/10" />
+      <span className="pcard__foot">
+        <span className="pcard__desc">{cardText(project)}</span>
+        <span className="t-nav pcard__meta">
+          <span className="g">{tagLine(project)}</span>
+          {!isCaseStudy(project) && <span className="g">Coming soon</span>}
+        </span>
+      </span>
     </>
   )
-
-  //if it's a large project, return all the text content, no need to return stuff for small project
-  if (project.size === 'large') {
-    return (
-      <>
-        {textContent}
-      </>
-    )
-  }
+  return isCaseStudy(project)
+    ? <Link to={`/work/${project.slug}`} className="pcard">{body}</Link>
+    : <div className="pcard pcard--static">{body}</div>
 }
 
-{/* Homepage - image portion of the project, large and small */}
-export function ProjectCardImage({ project, onOpenModal }: projectType) {
-  const imageContent = (
+export function ArtCard({ project, onOpen }: { project: ProjectFrontmatter; onOpen: (slug: string) => void }) {
+  return (
+    <button type="button" className="artcard" onClick={() => onOpen(project.slug)} aria-haspopup="dialog">
+      <span className="artcard__img"><Cover project={project} ratio="4/3" /></span>
+      <span className="artcard__cap">
+        <span className="artcard__title">{project.title}</span>
+        <span className="t-meta">{project.strip}</span>
+      </span>
+    </button>
+  )
+}
+
+export function ArchiveCard({ project, num, onOpen }: { project: ProjectFrontmatter; num: string; onOpen: (slug: string) => void }) {
+  const isCase = isCaseStudy(project)
+  const body = (
     <>
-      <div>
-        <img className="thumbnail-image" src={project.thumbnail} alt="" loading="lazy" />
-      </div>
+      <span className="pcard__head pcard__head--sm">
+        <span className="t-meta pcard__num">{num}</span>
+        <span className="pcard__title pcard__title--sm">{project.title}</span>
+      </span>
+      <Cover project={project} ratio="4/3" />
+      <span className="pcard__foot pcard__foot--sm">
+        <span className="pcard__desc pcard__desc--sm">{cardText(project)}</span>
+        <span className="t-tag pcard__meta">
+          <span>{tagLine(project)}</span>
+          <span className={isCase ? 'pcard__kind--case' : 'text-primary-col'}>{isCase ? 'Case study ↗' : 'View ↗'}</span>
+        </span>
+      </span>
     </>
-  );
-
-  if (project.size === 'large') {
-    return (
-      <>
-        <Link to={`/work/${project.slug}`}>
-          {imageContent}
-        </Link>
-      </>
-    )
-  } else {
-    return (
-      <div className="position-relative container-with-overlay">
-        <button className="no-border no-padding" onClick={() => onOpenModal?.(project.slug)}>
-          <div className="gradient-background"></div>
-          {imageContent}
-        </button>
-        <div className="category-overlay flex-horizontal gap-4">
-          {project.categories.map((category) =>
-            (<p className="t-meta white-color">{category} /</p>)
-          )}
-        </div>
-        <h4 className="text-overlay">{project.title}</h4>
-      </div>
-    )
-  }
-}
-
-{/* Archive page - project card layout */}
-export function ArchivePageThumbnail({project, onOpenModal}: projectType){
-  const thumbnailLayout = (
-  <>
-  <div className="cursor-pointer solid-border flex-vertical align-center">
-    <img className = "thumbnail-image" src={project.thumbnail} alt="" loading="lazy" />
-    <p className="body-sm">{project.title}</p>
-    <div className="flex-horizontal justify-center">
-    {project.categories.map((category)=>
-    (<p className="t-meta">{category}/</p>)
-    )}
-    </div>
-  </div>
-  </>);
-
-  if (project.size === 'large'){
-    return (
-    <Link to={`/work/${project.slug}`} className="no-fade">
-      {thumbnailLayout}
-    </Link>
-    );
-  } else if (project.size === 'small'){
-    return (
-      <button className="no-border no-padding" onClick={()=>onOpenModal?.(project.slug)}>
-        {thumbnailLayout}
-      </button>
-    );
-  }
-
+  )
+  return isCase
+    ? <Link to={`/work/${project.slug}`} className="pcard">{body}</Link>
+    : <button type="button" className="pcard" onClick={() => onOpen(project.slug)} aria-haspopup="dialog">{body}</button>
 }

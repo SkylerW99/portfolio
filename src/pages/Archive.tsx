@@ -1,71 +1,62 @@
-import { TopNav } from "../components/topNav/topNav"
+// Archive view: every project, filterable by category (?category=) — case studies
+// link to their page, everything else opens the art pop-up (?project=).
+
 import { useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { projects } from '../content/generated-index'
+import './landing/Landing.css'
 import { CATEGORY_PARAM, getActiveCategory, useOpenProjectModal } from '../content/filters'
-import { FilterBar } from '../components/FilterBar'
-import { ArchivePageThumbnail } from "../components/ProjectCard/ProjectCard"
+import { isCaseStudy, pad2, projects } from '../content/projects'
+import { FEATURED_FILTER, FilterBar } from '../components/FilterBar'
+import { ArchiveCard } from '../components/ProjectCard/ProjectCard'
 import { ProjectModal } from '../components/ProjectModal/ProjectModal'
+
+// Curated filter order from the design; any other category in the content is appended.
+const CATEGORY_ORDER = ['UX', 'Design System', 'Accessibility', 'AR/VR', 'AI/ML', 'Visual Design', 'Motion', 'Creative Coding', 'Web Dev', 'Game Dev', 'pComp']
 
 export function Component() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const activeCategory = getActiveCategory(searchParams)
+  const active = getActiveCategory(searchParams)
+  const openModal = useOpenProjectModal()
 
-  //get all the project categories from the index
   const categories = useMemo(() => {
-    const set = new Set<string>()
-    for (const project of projects) {
-      for (const category of project.categories) set.add(category)
-    }
-    return Array.from(set).sort()
+    const used = new Set(projects.flatMap((p) => p.categories))
+    return [...CATEGORY_ORDER.filter((c) => used.has(c)), ...[...used].filter((c) => !CATEGORY_ORDER.includes(c)).sort()]
   }, [])
 
-  //filter the projects inside the current category
-  const filteredProjects = useMemo(() => {
-    if (!activeCategory) return projects
-    return projects.filter((project) => project.categories.includes(activeCategory))
-  }, [activeCategory])
+  const visible = useMemo(() => {
+    if (!active) return projects
+    if (active === FEATURED_FILTER) return projects.filter((p) => p.featured)
+    return projects.filter((p) => p.categories.includes(active))
+  }, [active])
 
-  //add or remove category depending on selection
-  function handleSelectCategory(category: string | null) {
+  function handleSelect(category: string | null) {
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev)
-      if (category) {
-        next.set(CATEGORY_PARAM, category)
-      }
-      else {
-        next.delete(CATEGORY_PARAM)
-      }
+      if (category) next.set(CATEGORY_PARAM, category)
+      else next.delete(CATEGORY_PARAM)
       return next
     })
   }
 
-  const handleOpenModal = useOpenProjectModal()
-
   return (
-    <div className="page-container">
-      <TopNav />
-
-      {/* Filter Panel */}
-      <section className="flex-vertical gap-64 padding-64">
-        <div className="flex-vertical gap-24">
-        <p className="t-eyebrow no-margin">The archive</p>
-        <h1>Projects by Category</h1>
-        <p className="body-md">All works from UX, code, to creative explorations. Filter by category to narrow it down.</p>
+    <>
+      <div className="arch-head">
+        <div className="arch-head__intro">
+          <h2 className="feed-title">Archive</h2>
+          <p>A running archive of product work, creative coding, generative motion, AR, games and visual work.</p>
         </div>
-        <FilterBar categories={categories} active={activeCategory} onSelect={handleSelectCategory} />
-      </section>
-
-      {/* Filtered projects */}
-      <div className="grid-two-column">
-
-        {filteredProjects.map((project) => (
-          <ArchivePageThumbnail key={project.slug} project={project} onOpenModal={handleOpenModal} />
-
-        ))}
-
+        <span className="t-nav g">{visible.length} of {projects.length} projects</span>
       </div>
-      <ProjectModal />
-    </div>
+
+      <FilterBar categories={categories} active={active} onSelect={handleSelect} />
+
+      <div className="grid-arch">
+        {visible.map((p) => (
+          <ArchiveCard key={p.slug} project={p} num={pad2(projects.indexOf(p) + 1)} onOpen={openModal} />
+        ))}
+      </div>
+
+      <ProjectModal list={visible.filter((p) => !isCaseStudy(p))} section="Archive" />
+    </>
   )
 }

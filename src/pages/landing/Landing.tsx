@@ -1,97 +1,53 @@
+// Home feed (right side of the shell): Work grid, then the Art & tech strip.
+// Small projects open the art pop-up via ?project=slug.
+
 import './Landing.css'
-import { useMemo, useEffect, useRef, useState } from 'react'
-import { projects } from '../../content/generated-index'
+import { useEffect, useRef } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { useOpenProjectModal } from '../../content/filters'
-import { ProjectCardText } from '../../components/ProjectCard/ProjectCard'
-import { ProjectCardImage } from '../../components/ProjectCard/ProjectCard'
+import { pad2, stripProjects, workProjects } from '../../content/projects'
+import { ArtCard, WorkCard } from '../../components/ProjectCard/ProjectCard'
 import { ProjectModal } from '../../components/ProjectModal/ProjectModal'
-import { TopNav } from '../../components/topNav/topNav'
-import { Intro } from '../../components/IntroSection/Intro'
-import { ArrowUp } from '../../components/icons/ArrowUp'
-import { Footer } from '../../components/Footer/footer'
 
 export function Component() {
-  const handleOpenModal = useOpenProjectModal() //
-  const featuredLargeProjects = useMemo(() => projects.filter((project) => project.featured && project.size === "large"), [])
-  const featuredSmallProjects = useMemo(() => projects.filter((project) => project.featured && project.size === "small"), [])
-  const [activeIndex, setActiveIndex] = useState<number>(0);
-  const blockRefs = useRef<(HTMLDivElement | null)[]>([])
+  const openModal = useOpenProjectModal()
+  const { hash } = useLocation()
+  const stripRef = useRef<HTMLDivElement>(null)
 
-  //listen to scrolling progress
+  // Arriving from another view via the nav (/#art): scroll to that section.
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            const index = Number(entry.target.getAttribute('data-index'))
-            setActiveIndex(index)
-          }
-        }
-      },
-      { rootMargin: '-33% 0px -33% 0px', threshold: 0 }
-    )
+    if (!hash) return
+    document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [hash])
 
-    blockRefs.current.forEach((el) => el && observer.observe(el))
-
-    return () => observer.disconnect()
-  }, [])
+  const scrollStrip = (dx: number) => stripRef.current?.scrollBy({ left: dx, behavior: 'smooth' })
 
   return (
-    <div className="page-container">
-      <TopNav />
-      <Intro />
-      {/* Featured Projects */}
-      <section className="flex-vertical gap-64">
-        <section className="featured-projects-container">
-          <div className="left-section flex-vertical">
-            <ProjectCardText project={featuredLargeProjects[activeIndex]} />
-            <ul className="dots">
-              {featuredLargeProjects.map((project, i) => (
-                <li key={project.slug} className={`dot ${i === activeIndex ? 'is-active' : ''}`} />
-              ))}
-            </ul>
-          </div>
-          <div className="right-section">
-            {featuredLargeProjects.map((project, i) => (
-              <div
-                ref={(el) => { blockRefs.current[i] = el }}
-                data-index={i}
-              >
-                <ProjectCardImage key={project.slug} project={project} />
-              </div>
-            ))}
-          </div>
-        </section>
+    <>
+      <div id="work" className="feed-head">
+        <h2 className="feed-title">Work</h2>
+        <span className="t-nav g">Featured UX case studies</span>
+      </div>
+      <div className="grid-works">
+        {workProjects.map((p, i) => <WorkCard key={p.slug} project={p} num={pad2(i + 1)} />)}
+      </div>
 
-      {/* Art and Tech */}
-        <section className="flex-vertical gap-40">
-          <div className="flex-horizontal space-between align-center">
-            <div className="flex-vertical gap-12">
-              <div className="gap-0 flex-vertical">
-                <p className="t-meta accent-color">Art & Tech</p>
-                <h3>Code, Interactivity & Form</h3>
-              </div>
-              <p className="body-sm">Checkout my latest web development, creative coding, and interactive art work.</p>
-            </div>
-            <button className="btn">More Works
-              <ArrowUp width="16" height="16" />
-            </button>
-          </div>
-          <div className="grid-two-column">
-            {featuredSmallProjects.map((project) => (
-              <ProjectCardImage key={project.slug} project={project} onOpenModal={handleOpenModal} />
-            ))}
-          </div>
-        </section>
+      <div id="art" className="art-head">
+        <div className="feed-head">
+          <h2 className="feed-title">Art &amp; Tech</h2>
+          <span className="t-nav g">Code, interactivity &amp; form</span>
+        </div>
+        <div className="art-head__actions">
+          <Link to="/archive" className="t-nav text-primary-col">Open the archive ↗</Link>
+          <button type="button" className="btn btn--icon" onClick={() => scrollStrip(-420)} aria-label="Scroll art projects left">←</button>
+          <button type="button" className="btn btn--icon btn--filled" onClick={() => scrollStrip(420)} aria-label="Scroll art projects right">→</button>
+        </div>
+      </div>
+      <div ref={stripRef} className="art-strip">
+        {stripProjects.map((p) => <ArtCard key={p.slug} project={p} onOpen={openModal} />)}
+      </div>
 
-      {/* Footer */}
-        <section className="gap-64 dark-top-border padding-64">
-          <Footer />
-        </section>
-      </section>
-
-
-        <ProjectModal />
-    </div>
+      <ProjectModal list={stripProjects} section="Art & tech" />
+    </>
   )
 }

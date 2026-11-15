@@ -52,3 +52,57 @@
   from { opacity: 0; transform: translateY(8px) scale(.98); }
   to   { opacity: 1; transform: translateY(0)   scale(1);   }
 }
+
+/* ==========================================================================
+   Art pop-up (ProjectModal) — frame from Popup.css
+   The .modal-* rules above are still used by ContactModal.
+   ========================================================================== */
+.artpop.popup__box {
+  width: 1120px;
+  height: auto;
+  max-height: calc(100vh - 64px);
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+}
+.artpop .popup__media { background: var(--c-void); }
+.artpop__media { display: flex; flex-direction: column; height: 100%; }
+.artpop__img { position: relative; flex: 1; min-height: 420px; overflow: hidden; }
+.artpop__img img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.artpop__ph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+  background: repeating-linear-gradient(135deg, #1d1e1f 0 8px, var(--c-ink) 8px 16px);
+}
+.artpop__ph .t-meta { color: #a9adb0; }
+.artpop__thumbs { display: flex; gap: 8px; padding: 12px; background: var(--c-ink); }
+.artpop__thumbs button {
+  width: 72px;
+  height: 54px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid transparent;
+  background: none;
+  opacity: .55;
+  cursor: pointer;
+}
+.artpop__thumbs button[aria-pressed="true"] { border-color: var(--c-paper); opacity: 1; }
+.artpop__thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.artpop .popup__body { padding: 28px 24px; gap: 22px; }
+.artpop__intro { display: flex; flex-direction: column; gap: 12px; }
+.artpop__title { font-size: 44px; line-height: 1; letter-spacing: var(--ls-heading); }
+.artpop__sub { margin: 0; font-size: var(--fs-body); line-height: 1.45; color: var(--text-muted); }
+.artpop__meta { margin: 0; font-size: var(--fs-micro); border-bottom: 1px solid var(--border); }
+.artpop__meta > div { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid rgba(20, 21, 22, .25); }
+.artpop__meta dd { margin: 0; text-align: right; }
+.artpop__para { display: flex; flex-direction: column; gap: 8px; }
+.artpop__para .t-meta { font-size: var(--fs-micro); }
+.artpop__para p { margin: 0; font-size: 18px; line-height: 1.55; color: var(--text-muted); }
+.artpop .popup__foot .artpop__next { justify-content: flex-end; text-align: right; }
+
+@media (max-width: 1023px) {
+  .artpop.popup__box { max-height: none; }
+  .artpop__img { min-height: 0; }
+}

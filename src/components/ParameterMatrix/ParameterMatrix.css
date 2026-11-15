@@ -1,0 +1,192 @@
+/* Precision Cooking — food parameter matrix (dark card) */
+
+.param-matrix {
+  --pm-ease: all .28s cubic-bezier(.2,.7,.2,1);
+  --pm-muted: #8b8f92;
+  --pm-dim: #5a5e62;
+  --pm-highlight: rgba(255,255,255,.06);
+  --pm-columns: 40px minmax(180px,1.4fr) repeat(5,minmax(56px,1fr));
+
+  background: #121314;
+  color: var(--c-paper);
+  padding: 56px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 48px;
+  align-items: flex-start;
+}
+
+.param-matrix .param-matrix__muted { color: var(--pm-muted); }
+.param-matrix p { margin: 0; }
+
+.param-matrix__table {
+  flex: 1 1 520px;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.param-matrix__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+
+/* ---- Grid rows ---------------------------------------------------------- */
+.param-matrix__row {
+  display: grid;
+  grid-template-columns: var(--pm-columns);
+  align-items: center;
+  min-width: 560px;
+}
+
+.param-matrix__row--head {
+  align-items: end;
+  margin-bottom: 8px;
+}
+
+.param-matrix__cat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 6px;
+  border: 0;
+  border-radius: 10px 10px 0 0;
+  background: transparent;
+  color: var(--c-paper);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.25;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  transition: var(--pm-ease);
+}
+
+.param-matrix__cat[data-active="true"] { background: var(--pm-highlight); }
+.param-matrix__cat[data-dim="true"]    { color: var(--pm-dim); }
+.param-matrix__cat[data-dim="true"] .param-matrix__chip { opacity: .35; }
+.param-matrix__cat:focus-visible { outline: 1px solid var(--accent); outline-offset: -1px; }
+
+.param-matrix__chip {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transition: var(--pm-ease);
+}
+
+.param-matrix__num {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--pm-muted);
+  transition: var(--pm-ease);
+}
+
+.param-matrix__label {
+  font-size: 20px;
+  padding-right: 12px;
+  transition: var(--pm-ease);
+}
+
+.param-matrix__label .param-matrix__muted { font-size: 15px; }
+
+.param-matrix__row[data-dim="true"] .param-matrix__num   { color: #45484b; }
+.param-matrix__row[data-dim="true"] .param-matrix__label { color: var(--pm-dim); }
+
+.param-matrix__cell {
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--pm-ease);
+}
+
+.param-matrix__cell[data-active="true"] { background: var(--pm-highlight); }
+
+/* ---- Dots --------------------------------------------------------------- */
+.param-matrix__dot {
+  display: inline-block;
+  flex-shrink: 0;
+  border-radius: 50%;
+  box-sizing: border-box;
+  transition: var(--pm-ease);
+}
+
+.param-matrix__dot--required {
+  width: var(--dot-size);
+  height: var(--dot-size);
+  background: var(--dot-color);
+}
+
+.param-matrix__dot--optional {
+  width: calc(var(--dot-size) - 4px);
+  height: calc(var(--dot-size) - 4px);
+  border: 2px solid var(--dot-color);
+}
+
+.param-matrix__dot--none {
+  width: 4px;
+  height: 4px;
+  background: #3a3d40;
+}
+
+/* ---- Side panel --------------------------------------------------------- */
+.param-matrix__side {
+  flex: 0 1 260px;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-top: 6px;
+}
+
+.param-matrix__legend {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 18px;
+  font-size: 17px;
+}
+
+.param-matrix__legend span {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.param-matrix__readout { min-height: 300px; }
+
+.param-matrix__readout h4 { transition: var(--pm-ease); }
+
+.param-matrix__readout .t-meta { margin: 10px 0 22px; }
+
+.param-matrix__readout ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.param-matrix__readout li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+}
+
+.param-matrix__readout li span:nth-child(2) { flex: 1; }
+
+.param-matrix__readout li span:last-child {
+  font-family: var(--font-mono);
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .param-matrix { padding: 28px 20px; }
+  .param-matrix__readout { min-height: 0; }
+}

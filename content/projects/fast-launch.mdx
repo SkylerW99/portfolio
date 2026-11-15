@@ -3,57 +3,409 @@ title: "Fast Launch"
 id: "1"
 slug: "fast-launch"
 description: "Built the end-to-end digital onboarding experience for iQ SMB merchant portal."
-categories: ["UX", "Web"]
-thumbnail: "/images/fast-launch/fast-launch-cover-placeholder.png"
+categories: ["UX", "Payments"]
+thumbnail: "/images/fast-launch/demo.png"
 date: "2026-08-24"
 featured: true
 size: "large"
+year: 2025
+order: 1
+summary: "An onboarding experience with guided steps and self-service tools in the merchant portal."
 ---
 
-import { ProjectOverview } from '../../src/components/ProjectOverview/ProjectOverview'
-import { TitleDescriptionLR } from '../../src/components/TitleDescription_LR/TitleDescriptionLR'
+import { ProjectOverview } from '../../src/components/projectOverview/ProjectOverview'
 import { SectionHeader } from '../../src/components/SectionHeader/SectionHeader'
-import { FeatureTab } from '../../src/components/FeatureTab/FeatureTab'
-import PlaceholderData from '../../src/json/placeholder.json'
+
+export const img = (name) => `/images/fast-launch/${name}`
 
 <div className="page-container">
 
 <ProjectOverview
-  title="Fast Launch"
+  title={frontmatter.title}
   description={frontmatter.description}
-  projectType = "Work @Worldpay"
-  team = "2 UX Designers, 1 PM, Dev Team"
-  duration = "07.2024 - 04.2025"
-  myRole = "Lead UX Designer"
+  projectType="Work @Worldpay"
+  team="2 Designers, 1 PM, Dev Team"
+  duration="07.2024 - 04.2025"
+  myRole="Lead UX Designer"
 />
 
-<TitleDescriptionLR 
-  subtitle="fast launch subtitle"
-  title = "fast launch title"
-  
-  subtitleLeft = "fast launch subtitle left"
-  titleLeft = "fast lunach title left"
-  bodyLeft = "fast launch body text left"
-  imageLeft = "/images/placeholder.png"
-
-  subtitleRight = "fast launch subtitle right"
-  titleRight = "fast lunach title right"
-  bodyRight = "fast launch body text right"
-  imageRight = "/images/placeholder.png"
-/>
-
-<SectionHeader 
-number = "01"
-title = "Section 1"
-/>
-
-<FeatureTab 
-Data = {PlaceholderData}
-/>
-
-
+<div className="cs-media cs-block">
+  <img src={img('cover.png')} alt="Fast Launch onboarding widget: application status tracker and setup items in the iQ portal" />
 </div>
 
+{/* ---- Summary ---- */}
 
+<div className="cs-split--even cs-split cs-block">
+  <div style={{ alignSelf: 'flex-start' }}>
+    <h3>Project Summary</h3>
+  </div>
+  <div className="flex-vertical gap-20">
+    <p className="body-md">Built a digital onboarding experience for iQ SMB merchant portal, including: an application tracker, 4 setup experiences, holistic site experience, and cross-channel communication strategy.</p>
+    <p className="body-md">I worked on the E2E experience, including product strategy, discovery, design, user testing, and final handoff.</p>
+    <a href="#output" className="btn no-fade" style={{ alignSelf: 'flex-start' }}>Jump to Output ↓</a>
+  </div>
+</div>
 
+<div className="cs-grid-2 cs-gap-wide cs-block">
+  <div className="cs-card">
+    <p className="t-eyebrow-bold accent-color no-margin">Problem</p>
+    <p className="body-md">After contract signing with Worldpay, prospective merchants have no visibility around their application status, and required steps for initial setup.</p>
+  </div>
+  <div className="cs-card">
+    <p className="t-eyebrow-bold accent-color no-margin">Solution</p>
+    <p className="body-md">Build a digital post-signing experience within Worldpay iQ portal to improve transparency, and accelerate initial setup.</p>
+  </div>
+</div>
 
+<div className="cs-gap-sm">
+  <div className="cs-media cs-media--dark"><img src={img('solution-demo.png')} alt="Fast Launch solution demo: the iQ password setup screen after application submission" /></div>
+  <p className="t-meta cs-caption">Fast Launch Solution Video Demo</p>
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro"><h4>Impact</h4></div>
+  <div className="cs-grid-3">
+    <div className="cs-card cs-card--stretch">
+      <p className="t-meta no-margin">Time to Revenue</p>
+      <h4 className="accent-color">23 Days → 10.9 Days</h4>
+      <p className="body-md">The average time between when the user submitted their application till settling their first $100 dropped from 23 days to 10.9 days.</p>
+    </div>
+    <div className="cs-card cs-card--stretch">
+      <p className="t-meta no-margin">Business Value</p>
+      <h4 className="accent-color">↑ 9 million annual revenue</h4>
+      <p className="body-md">Enabling new merchants to activate 1 day earlier could generate ~$750K in incremental annual revenue, which converts to 9 million from Fast Launch.</p>
+    </div>
+    <div className="cs-card cs-card--stretch">
+      <p className="t-meta no-margin">iQ Portal Activation</p>
+      <h4 className="accent-color">43% → 60%</h4>
+      <p className="body-md">More newly boarded merchants become active users for iQ portal.</p>
+    </div>
+  </div>
+</div>
+
+{/* ---- 01 ---- */}
+
+<div id="background" className="cs-section">
+  <SectionHeader number="01" title="Project Background" subtitle="Understand the current state" />
+</div>
+
+<div className="cs-split--even cs-split cs-lead">
+  <div>
+    <div className="cs-media cs-scroll-y"><img src={img('onboarding-flow-today.png')} alt="Flow chart of today's merchant onboarding workflow, from starting a business to activation" /></div>
+    <p className="t-meta cs-caption">Scroll to bottom to view the onboarding workflow today</p>
+  </div>
+  <div className="flex-vertical gap-24">
+    <h4>Current state analysis</h4>
+    <p className="body-md">Today, the onboarding process is confusing in 3 ways:</p>
+    <ol className="body-md cs-list">
+      <li>Before submission and approval, they cannot track their application status.</li>
+      <li>If more documents are needed, they will be requested via email, which raises timing delays and security concerns.</li>
+      <li>Initial setup actions are communicated through separate emails without enough details and guidance. Merchants depend on WP’s referral partners and support team to finish the actions.</li>
+    </ol>
+    <p className="body-lg accent-color">Every merchant who got stuck in the onboarding process causes loss in business revenue for both the merchants and Worldpay, support burden, and erosion of trust.</p>
+  </div>
+</div>
+
+{/* ---- 02 ---- */}
+
+<div id="competitors" className="cs-section">
+  <SectionHeader number="02" title="Competitor Analysis" subtitle="How do our competitors onboard merchants?" />
+</div>
+
+<div className="cs-lead">
+  <div className="cs-intro">
+    <p className="body-md">The merchant onboarding workflows differ by underlying business models. In the SMB space, our competitors (e.g: Square, Stripe) use PayFac business model that allows the merchants to transact while conducting underwriting progressively, but Worldpay puts all the underwriting upfront and releases all the transaction capabilities at once.</p>
+  </div>
+  <div className="cs-media"><img src={img('competitor-research.png')} alt="Square and Stripe onboarding screens: test mode preview, bank details to unlock payouts, and setup while underwriting runs" /></div>
+</div>
+
+<div className="cs-grid-2 cs-gap-wide cs-block">
+  <div className="cs-card cs-card--stretch">
+    <img className="cs-logo" src={img('logo-square-stripe.png')} alt="Square and Stripe" />
+    <h4>PayFac Model</h4>
+    <p className="body-md">Progressive underwriting occurs at different stages of the merchant's business lifecycle, enabling instant access to tools.</p>
+    <p className="t-meta no-margin cs-gap-xs">Merchant workflow (Stripe)</p>
+    <ol className="cs-steps">
+      <li><strong>Create Account</strong><span>Access to portal test mode</span></li>
+      <li><strong>Provide Business Details</strong><span>Accept customer’s payment</span></li>
+      <li><strong>Provide Identity Info</strong><span>Money moves forward to settlement</span></li>
+      <li><strong>Provide Bank Details</strong><span>Money reaches merchant’s bank</span></li>
+      <li><strong>[Conditional] Doc Requested</strong><span>Full activation with uncapped payouts</span></li>
+    </ol>
+    <p className="t-meta no-margin cs-gap-xs">Pros</p>
+    <ul className="cs-checklist">
+      <li><img src={img('icon-circle-check.svg')} alt="" />Instant sign up and access to dashboard</li>
+      <li><img src={img('icon-circle-check.svg')} alt="" />Faster activation for processing payments</li>
+    </ul>
+    <p className="t-meta no-margin cs-gap-xs">Cons</p>
+    <ul className="cs-checklist">
+      <li><img src={img('icon-circle-x.svg')} alt="" />Abrupt account freezes and fund holds</li>
+      <li><img src={img('icon-circle-x.svg')} alt="" />Doesn't fit complex or high-risk merchants</li>
+    </ul>
+  </div>
+  <div className="cs-card cs-card--stretch">
+    <img className="cs-logo" src={img('logo-worldpay.png')} alt="Worldpay" />
+    <h4>Traditional Acquirer Model</h4>
+    <p className="body-md">All information collected upfront during application before any access is granted, leading to a more stable but slower start.</p>
+    <p className="t-meta no-margin cs-gap-xs">Merchant workflow</p>
+    <ol className="cs-steps">
+      <li><strong>Submit full application</strong><span>KYC, Bank, and Business info submitted upfront</span></li>
+      <li><strong>Waiting for underwriting</strong><span>Waiting for approval or doc requests</span></li>
+      <li><strong>Full activation</strong><span>Full access to iQ portal + all transaction capabilities</span></li>
+    </ol>
+    <p className="t-meta no-margin cs-gap-xs">Pros</p>
+    <ul className="cs-checklist">
+      <li><img src={img('icon-circle-check.svg')} alt="" />Stable boarding process with lower freeze risk</li>
+      <li><img src={img('icon-circle-check.svg')} alt="" />Get full capability and high limits at once</li>
+    </ul>
+    <p className="t-meta no-margin cs-gap-xs">Cons</p>
+    <ul className="cs-checklist">
+      <li><img src={img('icon-circle-x.svg')} alt="" />Slower onboarding with more upfront input</li>
+      <li><img src={img('icon-circle-x.svg')} alt="" />Heavy reliance on sales and partner support</li>
+    </ul>
+  </div>
+</div>
+
+{/* ---- 03 ---- */}
+
+<div id="problem" className="cs-section">
+  <SectionHeader number="03" title="Problem Statement" />
+</div>
+
+<div className="cs-card cs-card--icon cs-lead">
+  <img className="cs-card__glyph" src={img('icon-users.svg')} alt="" />
+  <div>
+    <h4 className="accent-color">User Problem</h4>
+    <p className="body-md">Merchant onboarding is fragmented across email threads and relies heavily on manual support, creating friction for new merchants and load on internal teams.</p>
+  </div>
+</div>
+
+<div className="cs-grid-2 cs-gap-wide cs-block">
+  <div className="flex-vertical gap-20">
+    <h4>Design brief</h4>
+    <p className="body-md">Under the acquirer business model, how can we digitalize merchant boarding process to enable faster activation, while maintaining the underwriting gate and customized merchant support?</p>
+  </div>
+  <div className="flex-vertical gap-20">
+    <h4>Product strategy</h4>
+    <p className="body-md">Provide a unified digital experience starting from the application stage to full activation for a streamlined merchant experience, while keeping our unique strength of comprehensive underwriting and customized support.</p>
+    <p className="body-md"><strong>Phase 1 (Now):</strong> Enhance the post-application boarding experience and accelerate time-to-revenue.<br /><strong>Phase 2 (Future):</strong> Enhance the application experience to reduce the friction in the application stage.</p>
+  </div>
+</div>
+
+{/* ---- 04 ---- */}
+
+<div id="design" className="cs-section">
+  <SectionHeader number="04" title="Design" />
+</div>
+
+<div className="cs-lead">
+  <div className="cs-intro"><h4>Mapping the iQ portal access to application statuses</h4></div>
+  <div className="cs-media cs-scroll-x"><img src={img('status-flowchart.png')} alt="Application status flow chart: pre-approval review, pending doc upload, approval and rejection paths" /></div>
+  <p className="t-meta cs-caption">Scroll to right to view the application status progression</p>
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro">
+    <h4>Split the massive onboarding project to 5 features</h4>
+  </div>
+  <div className="cs-chips">
+    <a className="btn no-fade" href="#feature-1">1. Onboarding widget</a>
+    <a className="btn no-fade" href="#feature-2">2. Site experience</a>
+    <a className="btn no-fade" href="#feature-3">3. Payment setup Appointment</a>
+    <a className="btn no-fade" href="#feature-3">4. Track device order</a>
+    <a className="btn no-fade" href="#feature-3">5. Payment Credentials Info</a>
+  </div>
+  <p className="body-md cs-gap-xs">Communicate the application status, required actions, and display the initial setup items as they become available.</p>
+  <div className="cs-media cs-gap-xs"><img src={img('onboarding-widget.png')} alt="Onboarding widget wireframe on the iQ dashboard: application tracker and can-do setup items" /></div>
+</div>
+
+{/* ---- 05 ---- */}
+
+<div id="feature-1" className="cs-section">
+  <SectionHeader number="05" title="Application Tracker" subtitle="Feature 1" />
+</div>
+
+<div className="cs-lead">
+  <div className="cs-intro"><h4>Design Explorations</h4></div>
+  <div className="cs-media"><img src={img('tracker-v1.png')} alt="Application tracker, version 1: application status beside a What's Next list of setup items" /></div>
+  <p className="t-meta cs-caption">Version 1</p>
+</div>
+
+<div className="cs-split--even cs-split cs-block">
+  <div className="cs-media"><img src={img('tracker-testing.png')} alt="Remote user testing session on the application tracker prototype" /></div>
+  <div className="flex-vertical gap-20">
+    <h4>User Testing and Feedbacks</h4>
+    <ul className="body-md cs-list">
+      <li><strong>8 / 10 participants prefer option 1 with all info displayed at once.</strong></li>
+      <li>The side-by-side placement of application status and setup items are proven to be clear and effective.</li>
+      <li>The merchants are able to understand the implication of “provisional approval” stage, where they can accept payment but cannot receive the fund. However, most of them are risk averse, and prefer to start transacting after full approval to avoid fund withhold.</li>
+      <li>Among all the site features, they are most curious about the “Virtual Terminal” page, which is a great opportunity to provide more education and guidance while they are waiting for approval.</li>
+    </ul>
+  </div>
+</div>
+
+{/* ---- 06 ---- */}
+
+<div id="feature-2" className="cs-section">
+  <SectionHeader number="06" title="Site Experience" subtitle="Feature 2" />
+</div>
+
+<div className="cs-lead">
+  <div className="cs-intro">
+    <h4>Pre-Approval Experience</h4>
+    <p className="body-md">Provide a test mode for the users to access all the pages, with education and guidance on each one.</p>
+  </div>
+  <div className="cs-media"><img src={img('site-v1.png')} alt="Pre-approval site experience, version 1: setup guide with application status, setup items, and a pre-live mode banner" /></div>
+  <p className="t-meta cs-caption">Version 1</p>
+</div>
+
+<div className="cs-split--even cs-split cs-block">
+  <div className="cs-media"><img src={img('site-testing.png')} alt="Remote user testing session on the pre-approval site experience" /></div>
+  <div className="flex-vertical gap-20">
+    <h4>User Testing and Feedbacks</h4>
+    <p className="body-md">To our surprise, although I spent more effort on option 1 and created more elaborate visuals and guides, option 2 is preferred by 8/10 users for the same reason. Before knowing the application outcome, the merchants don’t want to explore the site deeply in case of rejection.</p>
+    <p className="body-md">They want to focus more on keeping track of the application status and get fully activated as soon as possible. In option 2, a light preview through tooltip is enough for them in this stage.</p>
+  </div>
+</div>
+
+{/* ---- 07 ---- */}
+
+<div id="feature-3" className="cs-section">
+  <SectionHeader number="07" title="Setup Items" subtitle="Feature 3 - 5" />
+</div>
+
+<div className="cs-split cs-split--wide-left cs-lead">
+  <div className="cs-placeholder">Payment Credentials page</div>
+  <div className="flex-vertical gap-20">
+    <h4>Access the payment credentials</h4>
+    <p className="body-md">Merchants and our internal support team can access the payment gateway credentials for initial setup.</p>
+    <p className="body-md">If the merchants work with third-party payment provider, they can access their VAR sheet PDF from the portal and learn what to do with it.</p>
+  </div>
+</div>
+
+<div className="cs-split cs-block">
+  <div className="flex-vertical gap-20">
+    <h4>Track your device order</h4>
+    <p className="body-md">After we ship out the merchants’ terminal device, they can track the delivery status on the portal.</p>
+  </div>
+  <div className="cs-placeholder">Device Order Tracking</div>
+</div>
+
+<div className="cs-split cs-split--wide-left cs-block">
+  <div className="cs-placeholder">Book a payment setup appointment</div>
+  <div className="flex-vertical gap-20">
+    <h4>Book a payment setup appointment</h4>
+    <p className="body-md">If the merchants need additional support for setting up their terminal device or payment gateway, they can book and edit appointments through the iQ portal.</p>
+  </div>
+</div>
+
+<div className="cs-split cs-block">
+  <div className="flex-vertical gap-20">
+    <h4>Tree Testing</h4>
+    <p className="body-md">As we add new pages for device order tracking and payment credentials to the portal, we conducted tree testing to validate the page naming, and the info architecture. We gave the merchants 3 tasks, each corresponding to one of the initial setup scenarios.</p>
+    <p className="body-md">For example, the task 1 scenario is - “As a newly boarded merchant, you recently ordered a card reader from Worldpay. Now you want to check when it will arrive and see what’s included in your package. Where would you go?” The success criteria is user finds the “Device Order” Page.</p>
+    <p className="body-md">The key metric for the testing is to measure the time-to-completion, success rate, and learnability.</p>
+  </div>
+  <div className="cs-media"><img src={img('tree-testing.png')} alt="Tree testing session: a participant navigating the portal menu to find the Device Order page" /></div>
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro"><h4>Takeaway & Iterations</h4></div>
+  <ol className="body-md cs-list">
+    <li>Info Architecture: The participants are able to locate the new pages under the “manage account” quickly. It tested well.</li>
+    <li>
+      <span>Naming:</span>
+      <ol type="a">
+        <li>The “Device Order” page name is straightforward, with nearly 100% success rate for findability.</li>
+        <li>The “Payment Software” page name is a bit unclear and failed to indicate it contains the gateway configuration data, with only 66% of the users successfully locating it. Therefore, I changed the name to “Payment Setup” to see if naming the page by use case would improve the findability, and it tested well in the second round.</li>
+      </ol>
+    </li>
+  </ol>
+</div>
+
+{/* ---- 08 ---- */}
+
+<div id="output" className="cs-section">
+  <SectionHeader number="08" title="Final Design" subtitle="Connecting all the features into a holistic experience" />
+</div>
+
+<div className="cs-lead">
+  <div className="cs-intro"><p className="body-md">Interact with the prototype below.</p></div>
+  {/* TODO: embed the final prototype here */}
+  <div className="cs-placeholder cs-placeholder--wide">Embed the prototype here</div>
+  <p className="t-meta cs-caption">* We had our site-wide rebrand with design tokens, so the final look and feel is different from the initial designs.</p>
+</div>
+
+{/* ---- 09 ---- */}
+
+<div id="impact" className="cs-section">
+  <SectionHeader number="09" title="Impact & Feedback Tracking" />
+</div>
+
+<div className="cs-split cs-lead">
+  <div className="flex-vertical gap-24">
+    <div className="cs-metric">
+      <p className="body-md"><strong>Time to Revenue (TTR): 23 Days → 10.9 Days</strong></p>
+      <p className="body-md">The average time between when the user submitted their application till settling their first $100 dropped from 23 days to 10.9 days.</p>
+    </div>
+    <div className="cs-metric">
+      <p className="body-md"><strong>Business Revenue: 9 million increase</strong></p>
+      <p className="body-md">Enabling new merchants to activate 1 day earlier could generate ~$750K in incremental annual revenue, which converts to 9 million from Fast Launch.</p>
+    </div>
+    <div className="cs-metric">
+      <p className="body-md"><strong>iQ portal activation: 43% → 60%</strong></p>
+      <p className="body-md">More newly boarded merchants become active users for iQ portal.</p>
+    </div>
+    {/* TODO: "Metrics 4" from the Figma draft */}
+  </div>
+  <div>
+    {/* TODO: screenshot of the Pendo Fast Launch dashboard */}
+    <div className="cs-placeholder">Pendo Fast Launch dashboard</div>
+    <p className="t-meta cs-caption">Continuous user feedback tracking</p>
+  </div>
+</div>
+
+{/* TODO: "Quotes" block — add a user quote from Pendo */}
+
+{/* ---- 10 ---- */}
+
+<div id="future" className="cs-section">
+  <SectionHeader number="10" title="Future Phase Opportunities" />
+</div>
+
+<div className="cs-split cs-lead">
+  <div className="flex-vertical gap-20">
+    <h4>1. Reduce the friction for payment gateway setup</h4>
+    <p className="body-md">Merchants have different payment gateway integrations, some using WP Express gateway, some using their party partners like Authorize.net that requires them to provide VAR sheet to their own provider. The knowledge is kinda abstract and we could explore ways to offer customized experience and reduce the back-n-forth communication in the process.</p>
+  </div>
+  <div className="cs-placeholder">Payment gateway setup</div>
+</div>
+
+<div className="cs-split cs-split--wide-left cs-block">
+  <div className="cs-placeholder">Self-serve device setup</div>
+  <div className="flex-vertical gap-20">
+    <h4>2. Self-serve device setup</h4>
+    <p className="body-md">We don’t have accessible instructions for card reader setup therefore we offer the human assistance by appointment.</p>
+    <p className="body-md">We could explore breaking down the most common device setup instructions into steps to enable self serve setup, while keeping the human assistance option available if the merchants need it.</p>
+  </div>
+</div>
+
+<div className="cs-split cs-block">
+  <div className="flex-vertical gap-20">
+    <h4>3. Bridge the gap between contract signing and portal registration</h4>
+    <p className="body-md">In the current state, the merchants still rely heavily on the sales team for negotiating the rates and finish the contract signing through Docusign, and 57% of merchants never register for the portal afterwards. Although the number dropped to 30% after the Fast Launch release, there is still a significant experience gap between the contract signing and portal registration.</p>
+    <p className="body-md">We are also working on a separate initiative to move the application process into the portal, and communicating the value of the portal early on in the E2E workflow.</p>
+  </div>
+  <div className="cs-placeholder">Contract signing to portal registration</div>
+</div>
+
+<div className="cs-split cs-split--wide-left cs-block">
+  <div className="cs-placeholder">More intuitive device tracking</div>
+  <div className="flex-vertical gap-20">
+    <h4>4. More intuitive device tracking</h4>
+    <p className="body-md">Due to the current technical constraint, our merchants still need to go from the portal to UPS site to track their device shipment status.</p>
+    <p className="body-md">To reduce the friction, in future phase, we will explore leveraging the UPS API and host all the tracking information within the portal.</p>
+  </div>
+</div>
+
+</div>
