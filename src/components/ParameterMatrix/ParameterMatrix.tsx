@@ -139,7 +139,7 @@ export function ParameterMatrix() {
                                         <Dot
                                             kind={kind}
                                             color={cat.color}
-                                            size={22}
+                                            size={20}
                                             style={{
                                                 opacity: dim ? (kind === 'none' ? 0.35 : 0.14) : 1,
                                                 transform: lit && kind !== 'none' ? 'scale(1.18)' : 'scale(1)',
@@ -158,8 +158,8 @@ export function ParameterMatrix() {
                 <div>
                     <p className="t-meta param-matrix__muted">Action required?</p>
                     <div className="param-matrix__legend">
-                        <span><Dot kind="required" color="#e7e9ea" size={20} />Yes</span>
-                        <span><Dot kind="optional" color="#e7e9ea" size={20} />Optional / No</span>
+                        <span><Dot kind="required" color="#e7e9ea" size={16} />Yes</span>
+                        <span><Dot kind="optional" color="#e7e9ea" size={16} />Optional / No</span>
                     </div>
                 </div>
                 <Readout activeCategory={activeCategory} hoveredRow={hoveredRow} />
@@ -199,7 +199,7 @@ function Readout({ activeCategory, hoveredRow }: { activeCategory: CategoryKey |
             <ul>
                 {items.map((item) => (
                     <li key={item.label}>
-                        <Dot kind={item.kind} color={item.color} size={14} />
+                        <Dot kind={item.kind} color={item.color} size={12} />
                         <span>{item.label}</span>
                         <span className="param-matrix__muted">{item.kind === 'required' ? 'Yes' : 'Optional'}</span>
                     </li>

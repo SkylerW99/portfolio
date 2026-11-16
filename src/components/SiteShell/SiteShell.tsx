@@ -97,7 +97,7 @@ export function Component() {
 
       {/* ---- Compact bar (tablet / mobile only) ---- */}
       <div className="mbar">
-        <Logo size={32} onClick={() => scrollToSection('work')} />
+        <Logo size={28} onClick={() => scrollToSection('work')} />
         <nav className="t-nav mnav" aria-label="Site">
           {nav.map((n) => (
             <button key={n.key} type="button" className="navb" aria-current={active === n.key ? 'page' : undefined} onClick={() => go(n.key)}>
@@ -121,13 +121,13 @@ export function Component() {
           {collapsed && (
             <div className="rail">
               <button type="button" className="btn btn--icon rail__expand" onClick={toggleCollapsed} aria-label="Expand side panel">→</button>
-              <Logo size={34} vertical />
+              <Logo size={28} vertical />
             </div>
           )}
 
           <div className="pbody" hidden={collapsed}>
             <div className="ptop">
-              <Logo size={56} onClick={() => scrollToSection('work')} />
+              <Logo size={36} onClick={() => scrollToSection('work')} />
               <button type="button" className="btn btn--icon collapse-btn" onClick={toggleCollapsed} aria-label="Collapse side panel">←</button>
             </div>
 

@@ -15,6 +15,8 @@ summary: "An onboarding experience with guided steps and self-service tools in t
 
 import { ProjectOverview } from '../../src/components/projectOverview/ProjectOverview'
 import { SectionHeader } from '../../src/components/SectionHeader/SectionHeader'
+import { VideoEmbed } from '../../src/components/mdx/VideoEmbed'
+import { HScroll } from '../../src/components/mdx/HScroll'
 
 export const img = (name) => `/images/fast-launch/${name}`
 
@@ -30,7 +32,7 @@ export const img = (name) => `/images/fast-launch/${name}`
 />
 
 <div className="cs-media cs-block">
-  <img src={img('cover.png')} alt="Fast Launch onboarding widget: application status tracker and setup items in the iQ portal" />
+  <img src={img('Hero fast launch.png')} alt="Fast Launch in the iQ portal: approved-merchant setup items on the dashboard, beside the application status tracker moving from document needed to under review" />
 </div>
 
 {/* ---- Summary ---- */}
@@ -46,38 +48,38 @@ export const img = (name) => `/images/fast-launch/${name}`
   </div>
 </div>
 
-<div className="cs-grid-2 cs-gap-wide cs-block">
-  <div className="cs-card">
+<div className="cs-grid-2 cs-divided cs-block">
+  <div className="cs-card cs-card--plain">
     <p className="t-eyebrow-bold accent-color no-margin">Problem</p>
     <p className="body-md">After contract signing with Worldpay, prospective merchants have no visibility around their application status, and required steps for initial setup.</p>
   </div>
-  <div className="cs-card">
+  <div className="cs-card cs-card--plain">
     <p className="t-eyebrow-bold accent-color no-margin">Solution</p>
     <p className="body-md">Build a digital post-signing experience within Worldpay iQ portal to improve transparency, and accelerate initial setup.</p>
   </div>
 </div>
 
 <div className="cs-gap-sm">
-  <div className="cs-media cs-media--dark"><img src={img('solution-demo.png')} alt="Fast Launch solution demo: the iQ password setup screen after application submission" /></div>
+  <VideoEmbed title="Fast Launch solution video demo (LinkedIn post)" src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7399114825164980225?compact=1" ratio="504 / 399" />
   <p className="t-meta cs-caption">Fast Launch Solution Video Demo</p>
 </div>
 
 <div className="cs-block">
-  <div className="cs-intro"><h4>Impact</h4></div>
-  <div className="cs-grid-3">
-    <div className="cs-card cs-card--stretch">
+  <div className="cs-intro"><h3>Impact</h3></div>
+  <div className="cs-grid-3 cs-divided">
+    <div className="cs-card cs-card--plain">
       <p className="t-meta no-margin">Time to Revenue</p>
-      <h4 className="accent-color">23 Days → 10.9 Days</h4>
+      <h4>23 Days → <span className="accent-color">10.9</span> Days</h4>
       <p className="body-md">The average time between when the user submitted their application till settling their first $100 dropped from 23 days to 10.9 days.</p>
     </div>
-    <div className="cs-card cs-card--stretch">
+    <div className="cs-card cs-card--plain">
       <p className="t-meta no-margin">Business Value</p>
-      <h4 className="accent-color">↑ 9 million annual revenue</h4>
+      <h4>↑ <span className="accent-color">9 million</span> annual revenue</h4>
       <p className="body-md">Enabling new merchants to activate 1 day earlier could generate ~$750K in incremental annual revenue, which converts to 9 million from Fast Launch.</p>
     </div>
-    <div className="cs-card cs-card--stretch">
+    <div className="cs-card cs-card--plain">
       <p className="t-meta no-margin">iQ Portal Activation</p>
-      <h4 className="accent-color">43% → 60%</h4>
+      <h4>43% → <span className="accent-color">60%</span></h4>
       <p className="body-md">More newly boarded merchants become active users for iQ portal.</p>
     </div>
   </div>
@@ -121,7 +123,10 @@ export const img = (name) => `/images/fast-launch/${name}`
 
 <div className="cs-grid-2 cs-gap-wide cs-block">
   <div className="cs-card cs-card--stretch">
-    <img className="cs-logo" src={img('logo-square-stripe.png')} alt="Square and Stripe" />
+    <div className="cs-logos">
+      <img className="cs-logo" src={img('square.png')} alt="Square" />
+      <img className="cs-logo" src={img('stripe.png')} alt="Stripe" />
+    </div>
     <h4>PayFac Model</h4>
     <p className="body-md">Progressive underwriting occurs at different stages of the merchant's business lifecycle, enabling instant access to tools.</p>
     <p className="t-meta no-margin cs-gap-xs">Merchant workflow (Stripe)</p>
@@ -144,7 +149,9 @@ export const img = (name) => `/images/fast-launch/${name}`
     </ul>
   </div>
   <div className="cs-card cs-card--stretch">
-    <img className="cs-logo" src={img('logo-worldpay.png')} alt="Worldpay" />
+    <div className="cs-logos">
+      <img className="cs-logo cs-logo--wordmark" src={img('worldpay.png')} alt="Worldpay" />
+    </div>
     <h4>Traditional Acquirer Model</h4>
     <p className="body-md">All information collected upfront during application before any access is granted, leading to a more stable but slower start.</p>
     <p className="t-meta no-margin cs-gap-xs">Merchant workflow</p>
@@ -172,19 +179,17 @@ export const img = (name) => `/images/fast-launch/${name}`
   <SectionHeader number="03" title="Problem Statement" />
 </div>
 
-<div className="cs-card cs-card--icon cs-lead">
-  <img className="cs-card__glyph" src={img('icon-users.svg')} alt="" />
-  <div>
-    <h4 className="accent-color">User Problem</h4>
+<div className="cs-stack cs-stack--flow cs-lead">
+  <div className="flex-vertical gap-20">
+    <h4>User Problem</h4>
     <p className="body-md">Merchant onboarding is fragmented across email threads and relies heavily on manual support, creating friction for new merchants and load on internal teams.</p>
   </div>
-</div>
-
-<div className="cs-grid-2 cs-gap-wide cs-block">
+  <div className="cs-flow-arrow" aria-hidden="true">↓</div>
   <div className="flex-vertical gap-20">
     <h4>Design brief</h4>
     <p className="body-md">Under the acquirer business model, how can we digitalize merchant boarding process to enable faster activation, while maintaining the underwriting gate and customized merchant support?</p>
   </div>
+  <div className="cs-flow-arrow" aria-hidden="true">↓</div>
   <div className="flex-vertical gap-20">
     <h4>Product strategy</h4>
     <p className="body-md">Provide a unified digital experience starting from the application stage to full activation for a streamlined merchant experience, while keeping our unique strength of comprehensive underwriting and customized support.</p>
@@ -200,41 +205,74 @@ export const img = (name) => `/images/fast-launch/${name}`
 
 <div className="cs-lead">
   <div className="cs-intro"><h4>Mapping the iQ portal access to application statuses</h4></div>
-  <div className="cs-media cs-scroll-x"><img src={img('status-flowchart.png')} alt="Application status flow chart: pre-approval review, pending doc upload, approval and rejection paths" /></div>
-  <p className="t-meta cs-caption">Scroll to right to view the application status progression</p>
+  <div className="cs-media"><img src={img('status-flowchart.png')} alt="Application status flow chart: pre-approval review, pending doc upload, approval and rejection paths" /></div>
 </div>
 
 <div className="cs-block">
-  <div className="cs-intro">
-    <h4>Split the massive onboarding project to 5 features</h4>
-  </div>
-  <div className="cs-chips">
-    <a className="btn no-fade" href="#feature-1">1. Onboarding widget</a>
-    <a className="btn no-fade" href="#feature-2">2. Site experience</a>
-    <a className="btn no-fade" href="#feature-3">3. Payment setup Appointment</a>
-    <a className="btn no-fade" href="#feature-3">4. Track device order</a>
-    <a className="btn no-fade" href="#feature-3">5. Payment Credentials Info</a>
-  </div>
-  <p className="body-md cs-gap-xs">Communicate the application status, required actions, and display the initial setup items as they become available.</p>
-  <div className="cs-media cs-gap-xs"><img src={img('onboarding-widget.png')} alt="Onboarding widget wireframe on the iQ dashboard: application tracker and can-do setup items" /></div>
+<HScroll title="Split the massive onboarding project to 5 features">
+  <figure className="cs-feature">
+    <div className="cs-media"><img src={img('feature 1.png')} alt="Onboarding widget on the iQ dashboard: application tracker beside can-do setup items" /></div>
+    <figcaption className="flex-vertical gap-12">
+      <h4>1. Onboarding widget</h4>
+      <p className="body-md">Communicate the application status, required actions, and display the initial setup items as they become available.</p>
+    </figcaption>
+  </figure>
+  <figure className="cs-feature">
+    <div className="cs-media"><img src={img('feature 2.png')} alt="The iQ portal dashboard with full navigation available while the application is reviewed" /></div>
+    <figcaption className="flex-vertical gap-12">
+      <h4>2. Site experience</h4>
+      <p className="body-md">Provide a test mode for the users to access all the pages, with education and guidance on each one.</p>
+    </figcaption>
+  </figure>
+  <figure className="cs-feature">
+    <div className="cs-media"><img src={img('feature 3.png')} alt="Side panel for booking a payment setup appointment with an advisor" /></div>
+    <figcaption className="flex-vertical gap-12">
+      <h4>3. Payment setup appointment</h4>
+      <p className="body-md">If the merchants need additional support for setting up their terminal device or payment gateway, they can book and edit appointments through the iQ portal.</p>
+    </figcaption>
+  </figure>
+  <figure className="cs-feature">
+    <div className="cs-media"><img src={img('feature 4.png')} alt="My Terminal Devices page showing an order’s shipment status and details" /></div>
+    <figcaption className="flex-vertical gap-12">
+      <h4>4. Track device order</h4>
+      <p className="body-md">After we ship out the merchants’ terminal device, they can track the delivery status on the portal.</p>
+    </figcaption>
+  </figure>
+  <figure className="cs-feature">
+    <div className="cs-media"><img src={img('feature 5.png')} alt="Payment Setup page listing payment software providers, terminal IDs and VAR sheets" /></div>
+    <figcaption className="flex-vertical gap-12">
+      <h4>5. Payment credentials info</h4>
+      <p className="body-md">Merchants and our internal support team can access the payment gateway credentials for initial setup. If the merchants work with a third-party payment provider, they can access their VAR sheet PDF from the portal and learn what to do with it.</p>
+    </figcaption>
+  </figure>
+</HScroll>
 </div>
 
-{/* ---- 05 ---- */}
+{/* ---- 04 · Application Tracker ---- */}
 
-<div id="feature-1" className="cs-section">
-  <SectionHeader number="05" title="Application Tracker" subtitle="Feature 1" />
+<div id="feature-1" className="cs-subsection">
+  <p className="t-meta no-margin">Feature 1</p>
+  <h3>Application Tracker</h3>
 </div>
 
 <div className="cs-lead">
-  <div className="cs-intro"><h4>Design Explorations</h4></div>
-  <div className="cs-media"><img src={img('tracker-v1.png')} alt="Application tracker, version 1: application status beside a What's Next list of setup items" /></div>
-  <p className="t-meta cs-caption">Version 1</p>
+  <div className="cs-intro"><h4 className="cs-h-sm">Design Explorations</h4></div>
+  <div className="cs-grid-2">
+    <figure className="cs-figure">
+      <div className="cs-media"><img src={img('tracker-v1.png')} alt="Application tracker, version 1: application status beside a What's Next list of setup items" /></div>
+      <figcaption className="t-meta cs-caption">Version 1</figcaption>
+    </figure>
+    <figure className="cs-figure">
+      <div className="cs-media"><img src={img('tracker-v2.jpg')} alt="Application tracker, version 2: application status beside a tabbed Next Steps panel for notifications, terminal shipment and processing credentials" /></div>
+      <figcaption className="t-meta cs-caption">Version 2</figcaption>
+    </figure>
+  </div>
 </div>
 
 <div className="cs-split--even cs-split cs-block">
   <div className="cs-media"><img src={img('tracker-testing.png')} alt="Remote user testing session on the application tracker prototype" /></div>
   <div className="flex-vertical gap-20">
-    <h4>User Testing and Feedbacks</h4>
+    <h4 className="cs-h-sm">User Testing and Feedbacks</h4>
     <ul className="body-md cs-list">
       <li><strong>8 / 10 participants prefer option 1 with all info displayed at once.</strong></li>
       <li>The side-by-side placement of application status and setup items are proven to be clear and effective.</li>
@@ -244,15 +282,16 @@ export const img = (name) => `/images/fast-launch/${name}`
   </div>
 </div>
 
-{/* ---- 06 ---- */}
+{/* ---- 04 · Site Experience ---- */}
 
-<div id="feature-2" className="cs-section">
-  <SectionHeader number="06" title="Site Experience" subtitle="Feature 2" />
+<div id="feature-2" className="cs-subsection">
+  <p className="t-meta no-margin">Feature 2</p>
+  <h3>Site Experience</h3>
 </div>
 
 <div className="cs-lead">
   <div className="cs-intro">
-    <h4>Pre-Approval Experience</h4>
+    <h4 className="cs-h-sm">Pre-Approval Experience</h4>
     <p className="body-md">Provide a test mode for the users to access all the pages, with education and guidance on each one.</p>
   </div>
   <div className="cs-media"><img src={img('site-v1.png')} alt="Pre-approval site experience, version 1: setup guide with application status, setup items, and a pre-live mode banner" /></div>
@@ -262,46 +301,22 @@ export const img = (name) => `/images/fast-launch/${name}`
 <div className="cs-split--even cs-split cs-block">
   <div className="cs-media"><img src={img('site-testing.png')} alt="Remote user testing session on the pre-approval site experience" /></div>
   <div className="flex-vertical gap-20">
-    <h4>User Testing and Feedbacks</h4>
+    <h4 className="cs-h-sm">User Testing and Feedbacks</h4>
     <p className="body-md">To our surprise, although I spent more effort on option 1 and created more elaborate visuals and guides, option 2 is preferred by 8/10 users for the same reason. Before knowing the application outcome, the merchants don’t want to explore the site deeply in case of rejection.</p>
     <p className="body-md">They want to focus more on keeping track of the application status and get fully activated as soon as possible. In option 2, a light preview through tooltip is enough for them in this stage.</p>
   </div>
 </div>
 
-{/* ---- 07 ---- */}
+{/* ---- 04 · Setup Items ---- */}
 
-<div id="feature-3" className="cs-section">
-  <SectionHeader number="07" title="Setup Items" subtitle="Feature 3 - 5" />
+<div id="feature-3" className="cs-subsection">
+  <p className="t-meta no-margin">Feature 3 - 5</p>
+  <h3>Setup Items</h3>
 </div>
 
-<div className="cs-split cs-split--wide-left cs-lead">
-  <div className="cs-placeholder">Payment Credentials page</div>
+<div className="cs-split cs-lead">
   <div className="flex-vertical gap-20">
-    <h4>Access the payment credentials</h4>
-    <p className="body-md">Merchants and our internal support team can access the payment gateway credentials for initial setup.</p>
-    <p className="body-md">If the merchants work with third-party payment provider, they can access their VAR sheet PDF from the portal and learn what to do with it.</p>
-  </div>
-</div>
-
-<div className="cs-split cs-block">
-  <div className="flex-vertical gap-20">
-    <h4>Track your device order</h4>
-    <p className="body-md">After we ship out the merchants’ terminal device, they can track the delivery status on the portal.</p>
-  </div>
-  <div className="cs-placeholder">Device Order Tracking</div>
-</div>
-
-<div className="cs-split cs-split--wide-left cs-block">
-  <div className="cs-placeholder">Book a payment setup appointment</div>
-  <div className="flex-vertical gap-20">
-    <h4>Book a payment setup appointment</h4>
-    <p className="body-md">If the merchants need additional support for setting up their terminal device or payment gateway, they can book and edit appointments through the iQ portal.</p>
-  </div>
-</div>
-
-<div className="cs-split cs-block">
-  <div className="flex-vertical gap-20">
-    <h4>Tree Testing</h4>
+    <h4 className="cs-h-sm">Tree Testing</h4>
     <p className="body-md">As we add new pages for device order tracking and payment credentials to the portal, we conducted tree testing to validate the page naming, and the info architecture. We gave the merchants 3 tasks, each corresponding to one of the initial setup scenarios.</p>
     <p className="body-md">For example, the task 1 scenario is - “As a newly boarded merchant, you recently ordered a card reader from Worldpay. Now you want to check when it will arrive and see what’s included in your package. Where would you go?” The success criteria is user finds the “Device Order” Page.</p>
     <p className="body-md">The key metric for the testing is to measure the time-to-completion, success rate, and learnability.</p>
@@ -310,7 +325,7 @@ export const img = (name) => `/images/fast-launch/${name}`
 </div>
 
 <div className="cs-block">
-  <div className="cs-intro"><h4>Takeaway & Iterations</h4></div>
+  <div className="cs-intro"><h4 className="cs-h-sm">Takeaway & Iterations</h4></div>
   <ol className="body-md cs-list">
     <li>Info Architecture: The participants are able to locate the new pages under the “manage account” quickly. It tested well.</li>
     <li>
@@ -323,10 +338,10 @@ export const img = (name) => `/images/fast-launch/${name}`
   </ol>
 </div>
 
-{/* ---- 08 ---- */}
+{/* ---- 05 ---- */}
 
 <div id="output" className="cs-section">
-  <SectionHeader number="08" title="Final Design" subtitle="Connecting all the features into a holistic experience" />
+  <SectionHeader number="05" title="Final Design" subtitle="Connecting all the features into a holistic experience" />
 </div>
 
 <div className="cs-lead">
@@ -336,10 +351,10 @@ export const img = (name) => `/images/fast-launch/${name}`
   <p className="t-meta cs-caption">* We had our site-wide rebrand with design tokens, so the final look and feel is different from the initial designs.</p>
 </div>
 
-{/* ---- 09 ---- */}
+{/* ---- 06 ---- */}
 
 <div id="impact" className="cs-section">
-  <SectionHeader number="09" title="Impact & Feedback Tracking" />
+  <SectionHeader number="06" title="Impact & Feedback Tracking" />
 </div>
 
 <div className="cs-split cs-lead">
@@ -367,10 +382,10 @@ export const img = (name) => `/images/fast-launch/${name}`
 
 {/* TODO: "Quotes" block — add a user quote from Pendo */}
 
-{/* ---- 10 ---- */}
+{/* ---- 07 ---- */}
 
 <div id="future" className="cs-section">
-  <SectionHeader number="10" title="Future Phase Opportunities" />
+  <SectionHeader number="07" title="Future Phase Opportunities" />
 </div>
 
 <div className="cs-split cs-lead">

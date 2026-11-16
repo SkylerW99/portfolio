@@ -2,13 +2,13 @@
    Panel, backdrop and close button come from ProjectModal.css. */
 
 .contact-modal {
-  width: min(520px, 100%);
-  padding: 40px;
+  width: min(432px, 100%);
+  padding: 32px;
 }
 
 .contact-modal__title {
-  font-size: 44px;
-  padding-bottom: 18px;
+  font-size: 36px;
+  padding-bottom: 16px;
   border-bottom: 1px solid var(--border);
   margin-bottom: 8px;
 }
@@ -23,8 +23,8 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  gap: 16px;
-  padding: 18px 0;
+  gap: 12px;
+  padding: 16px 0;
   border-bottom: 1px solid var(--divider);
   color: var(--text);
   text-decoration: none;
@@ -38,14 +38,14 @@
 
 .contact-modal__label {
   font-family: var(--font-display);
-  font-size: 30px;
+  font-size: 24px;
   line-height: 1.1;
 }
 
 .contact-modal__value {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   text-transform: none;
   letter-spacing: .1em;
   overflow-wrap: anywhere;
@@ -53,7 +53,7 @@
 }
 
 @media (max-width: 600px) {
-  .contact-modal { padding: 28px 24px; }
-  .contact-modal__title { font-size: 36px; }
-  .contact-modal__label { font-size: 24px; }
+  .contact-modal { padding: 24px 20px; }
+  .contact-modal__title { font-size: 28px; }
+  .contact-modal__label { font-size: 20px; }
 }

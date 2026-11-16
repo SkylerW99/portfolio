@@ -25,7 +25,7 @@ export function Component() {
   return (
     <>
       <div id="work" className="feed-head">
-        <h2 className="feed-title">Work</h2>
+        <h2 className="feed-title feed-title--sm">Work</h2>
         <span className="t-nav g">Featured UX case studies</span>
       </div>
       <div className="grid-works">
@@ -34,13 +34,13 @@ export function Component() {
 
       <div id="art" className="art-head">
         <div className="feed-head">
-          <h2 className="feed-title">Art &amp; Tech</h2>
+          <h2 className="feed-title feed-title--sm">Art &amp; Tech</h2>
           <span className="t-nav g">Code, interactivity &amp; form</span>
         </div>
         <div className="art-head__actions">
           <Link to="/archive" className="t-nav text-primary-col">Open the archive ↗</Link>
-          <button type="button" className="btn btn--icon" onClick={() => scrollStrip(-420)} aria-label="Scroll art projects left">←</button>
-          <button type="button" className="btn btn--icon btn--filled" onClick={() => scrollStrip(420)} aria-label="Scroll art projects right">→</button>
+          <button type="button" className="btn btn--icon" onClick={() => scrollStrip(-348)} aria-label="Scroll art projects left">←</button>
+          <button type="button" className="btn btn--icon btn--filled" onClick={() => scrollStrip(348)} aria-label="Scroll art projects right">→</button>
         </div>
       </div>
       <div ref={stripRef} className="art-strip">

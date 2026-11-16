@@ -9,65 +9,65 @@
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  padding: 12px 16px;
+  padding: 12px 12px;
   font-size: var(--fs-micro);
   background: var(--c-ink);
   color: var(--c-paper);
 }
 .about__caption span:last-child { color: #c3c6c8; }
 
-.about .popup__body { padding: 28px 28px 36px; }
+.about .popup__body { padding: 24px 24px 28px; }
 
-.about__intro { display: flex; flex-direction: column; gap: 14px; }
-.about__name { font-size: 40px; line-height: 1.1; letter-spacing: var(--ls-heading); }
+.about__intro { display: flex; flex-direction: column; gap: 12px; }
+.about__name { font-size: 32px; line-height: 1.1; letter-spacing: var(--ls-heading); }
 .about__name [lang="zh"] { letter-spacing: 0; white-space: nowrap; }
 .about__lead { margin: 0; font-size: var(--fs-body); line-height: 1.4; }
-.about__p { margin: 0; font-size: 17px; line-height: 1.55; color: var(--text-muted); }
+.about__p { margin: 0; font-size: 16px; line-height: 1.55; color: var(--text-muted); }
 
-.about__section { display: flex; flex-direction: column; gap: 16px; }
+.about__section { display: flex; flex-direction: column; gap: 12px; }
 .about__section--tight { gap: 12px; }
 .about__section--list { gap: 4px; }
 
 .about__head {
   display: flex;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
   font-size: var(--fs-micro);
   padding-bottom: 8px;
   border-bottom: 1px solid var(--border);
 }
 
-.about__group { display: flex; flex-direction: column; gap: 18px; }
+.about__group { display: flex; flex-direction: column; gap: 16px; }
 .about__group > .t-meta { font-size: var(--fs-micro); }
 
 .about__role { display: flex; flex-direction: column; gap: 8px; }
-.about__role-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
-.about__role-title { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; min-width: 0; }
+.about__role-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.about__role-title { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; min-width: 0; }
 .about__role-title .t-meta,
 .about__role-when { font-size: var(--fs-micro); }
 .about__role-name { font-size: var(--fs-body); letter-spacing: -.015em; }
 .about__role-when { white-space: nowrap; text-align: right; }
-.about__points { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
-.about__points li { display: grid; grid-template-columns: 16px minmax(0, 1fr); font-size: 15px; line-height: 1.5; color: var(--text-muted); }
+.about__points { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.about__points li { display: grid; grid-template-columns: 12px minmax(0, 1fr); font-size: 12px; line-height: 1.5; color: var(--text-muted); }
 .about__points li > span:first-child { color: var(--accent); }
 
-.about__skill { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; padding: 6px 0; font-size: 16px; line-height: 1.5; }
+.about__skill { display: grid; grid-template-columns: 124px minmax(0, 1fr); gap: 12px; padding: 4px 0; font-size: 12px; line-height: 1.5; }
 .about__skill .t-meta { font-size: var(--fs-micro); line-height: 1.6; }
 
 .about__row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 4px 16px;
-  padding: 10px 0;
+  gap: 4px 12px;
+  padding: 8px 0;
   border-bottom: 1px solid rgba(20, 21, 22, .15);
 }
 .about__row .t-meta { font-size: var(--fs-micro); text-align: right; }
-.about__row-title { font-size: 17px; }
-.about__row-sub { font-size: 15px; color: var(--text-muted); }
+.about__row-title { font-size: 16px; }
+.about__row-sub { font-size: 12px; color: var(--text-muted); }
 .about__row-sub--full { grid-column: 1 / -1; }
 .about__row .about__row-note { font-size: 12px; }
 
-.about__signoff { margin: 0; font-size: 28px; line-height: 1.1; letter-spacing: -.03em; }
+.about__signoff { margin: 0; font-size: 24px; line-height: 1.1; letter-spacing: -.03em; }
 .about__signoff em { color: #8a4a10; }
 
 @media (max-width: 1023px) {

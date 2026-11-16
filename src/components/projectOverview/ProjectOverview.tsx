@@ -26,22 +26,22 @@ export function ProjectOverview({
 
                 <div>
                 <p className="t-eyebrow">Project Type</p>
-                <p className="body-sm">{projectType}</p>
+                <p className="body-md">{projectType}</p>
                 </div>
 
                 <div>
                 <p className="t-eyebrow">Team</p>
-                <p className="body-sm">{team}</p>
+                <p className="body-md">{team}</p>
                 </div>
 
                 <div>
                 <p className="t-eyebrow">Duration</p>
-                <p className="body-sm">{duration}</p>
+                <p className="body-md">{duration}</p>
                 </div>
 
                 <div>
                 <p className="t-eyebrow">My Role</p>
-                <p className="body-sm">{myRole}</p>
+                <p className="body-md">{myRole}</p>
                 </div>
             
             </div>

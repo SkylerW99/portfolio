@@ -58,13 +58,13 @@ export function ContactModal({ open, onClose }: Props) {
           <li>
             <a className="contact-modal__row" href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">
               <span className="contact-modal__label">LinkedIn</span>
-              <span className="t-meta contact-modal__value">{linkedinHandle}<ArrowUp width="16" height="16" /></span>
+              <span className="t-meta contact-modal__value">{linkedinHandle}<ArrowUp width="12" height="12" /></span>
             </a>
           </li>
           <li>
             <a className="contact-modal__row" href={RESUME_URL} target="_blank" rel="noopener noreferrer">
               <span className="contact-modal__label">Résumé</span>
-              <span className="t-meta contact-modal__value">PDF<ArrowUp width="16" height="16" /></span>
+              <span className="t-meta contact-modal__value">PDF<ArrowUp width="12" height="12" /></span>
             </a>
           </li>
         </ul>
