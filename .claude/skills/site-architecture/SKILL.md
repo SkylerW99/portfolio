@@ -118,6 +118,12 @@ Large-project MDX bodies are built from shared components plus layout classes, n
 
 Not yet built: other `src/components/mdx/*` embeds (IframeEmbed, generic InteractiveDemo).
 
+## Hosting / deploy
+
+**Vercel**, connected to the GitHub repo (`SkylerW99/portfolio`, private): every push to `main` deploys to production; other branches get preview URLs. Domain: `ziyijpg.com`.
+- `vercel.json` — runs `npm run build` (so the `prebuild` index step runs), serves `dist/`, and rewrites every extension-less path to `/index.html` so deep links like `/work/fast-launch` load the SPA instead of 404ing. Real files (anything with a `.`) are served as-is.
+- **Vercel builds on Linux, which is case-sensitive.** An import or `/images/...` path whose casing differs from the git-tracked file works on macOS but breaks in production (imports fail the build; images 404 silently). Git tracks `src/components/projectOverview/` (lowercase p) — always import that path. Image filenames with capitals or spaces (e.g. `Reconciliation-cover.png`) must be referenced exactly.
+
 ## Maintenance instruction
 
 **Whenever an architecture change is made** (new dependency that affects the content/build pipeline, a routing scheme change, a new page type, a change to how filtering/modal state works, a change to the MDX pipeline or `vite.config.ts`) — **update this file in the same session**, in the relevant section above, before considering the change done.
