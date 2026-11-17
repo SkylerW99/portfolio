@@ -1,15 +1,176 @@
 ---
 title: "Reconciliation"
 slug: "reconciliation"
-description: "A reconciliation experience helping merchants match payouts, fees, and transactions. Work in progress."
+description: "Closing the reconciliation reporting gap for SMB merchants."
+summary: "A reconciliation experience helping merchants match payouts, fees, and transactions. Work in progress."
 categories: ["UX", "Payments"]
-thumbnail: ""
-date: "2026-01-01"
+thumbnail: "/images/reconciliation/Reconciliation-cover.png"
+date: "2026-09-01"
 year: 2026
 order: 2
 featured: true
 size: "large"
-status: "coming-soon"
+status: "In-Progress"
 ---
 
-{/* Placeholder entry from the portfolio redesign — add content and a cover when ready. */}
+import { ProjectOverview } from '../../src/components/projectOverview/ProjectOverview'
+import { SectionHeader } from '../../src/components/SectionHeader/SectionHeader'
+
+{/* Images go in public/images/reconciliation/ — swap each .cs-placeholder for
+    <div className="cs-media"><img src={img('file.png')} alt="…" /></div> */}
+export const img = (name) => `/images/reconciliation/${name}`
+
+<div className="page-container">
+
+<ProjectOverview
+  title={frontmatter.title}
+  description={frontmatter.description}
+  projectType="Work @Worldpay (in progress)"
+  team="1 Designer, 1 PM, Dev Team"
+  duration="09.2026 - Present"
+  myRole="Sole Product Designer"
+/>
+
+<div className="cs-placeholder cs-placeholder--wide cs-block">Static image</div>
+
+{/* ---- Summary ---- */}
+
+<div className="cs-grid-2 cs-divided cs-block">
+  <div className="cs-card cs-card--plain">
+    <p className="t-eyebrow-bold accent-color no-margin">Problem</p>
+    <p className="body-md">Merchants can’t see what makes up their payouts. Without a breakdown, internal audits are hard: they can’t easily spot missing transactions, unexpected charges, risk holds, or disputes that changed the amount deposited.</p>
+  </div>
+  <div className="cs-card cs-card--plain">
+    <p className="t-eyebrow-bold accent-color no-margin">Solution (Phase 1)</p>
+    <p className="body-md">Let merchants drill into any payout to see the transactions, fees, adjustments, and chargebacks behind it. Group each payout by Trace ID so it matches what merchants see in their bank records.</p>
+    <a href="#solution" className="btn no-fade" style={{ alignSelf: 'flex-start' }}>Jump to the solution ↓</a>
+  </div>
+</div>
+
+<div className="cs-gap-sm">
+  <div className="cs-placeholder cs-placeholder--wide">Before / after comparison image</div>
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro"><h3>How we’ll measure success</h3></div>
+  <div className="cs-grid-2 cs-divided">
+    <div className="cs-card cs-card--plain">
+      <p className="t-meta no-margin">Target · CSAT</p>
+      <h4>60 → <span className="accent-color">72</span></h4>
+      <p className="body-md">Reconciliation is the biggest gap in iQ Portal satisfaction today. If merchants can reconcile on their own, satisfaction should go up and payout-related feedback should go down.</p>
+    </div>
+    <div className="cs-card cs-card--plain">
+      <p className="t-meta no-margin">Target · Adoption</p>
+      <h4><span className="accent-color">70%</span> within 30 days</h4>
+      <p className="body-md">70% of active merchants open a payout breakdown in the first month, and most return to it after first use.</p>
+    </div>
+  </div>
+</div>
+
+{/* ---- 01 ---- */}
+
+<div id="background" className="cs-section">
+  <SectionHeader number="01" title="Background" subtitle="What merchants told us" />
+</div>
+
+<div className="cs-split--even cs-split cs-lead">
+  <div className="cs-placeholder">Pendo feedback image</div>
+  <div className="flex-vertical gap-24">
+    <p className="body-md">More than 50% of merchant feedback in Pendo was about reconciliation reporting. The top two pain points:</p>
+    <ol className="body-md cs-list">
+      <li><strong>Payouts don’t match the bank.</strong> Payout records in the portal don’t line up with what merchants see in their banking app.</li>
+      <li><strong>No breakdown.</strong> There’s no way to see which transactions make up a payout.</li>
+    </ol>
+    <p className="body-lg accent-color">Phase 1 addresses both: Trace ID grouping solves the first, and the payout drill-down solves the second.</p>
+  </div>
+</div>
+
+{/* ---- 02 ---- */}
+
+<div id="sense-making" className="cs-section">
+  <SectionHeader number="02" title="Sense-making" subtitle="Reconciliation from the merchant’s side" />
+</div>
+
+<div className="cs-lead">
+  <div className="cs-intro"><p className="body-md">I mapped how merchants reconcile today to find where the portal falls short.</p></div>
+  <div className="cs-placeholder cs-placeholder--wide">User flow chart</div>
+</div>
+
+<div className="cs-split--even cs-split cs-block">
+  <div style={{ alignSelf: 'flex-start' }}>
+    <h4>Designing for exceptions</h4>
+  </div>
+  <div className="flex-vertical gap-20">
+    <p className="body-md">Reconciliation is mostly about exceptions. When a payout arrives as expected, merchants don’t need to audit it line by line. When the amount looks wrong, they need to dig in: check pending transactions, look into a dispute, or find an unexpected fee.</p>
+    <p className="body-lg accent-color">So the design’s job isn’t only to show data. It has to give merchants a clear path to investigate.</p>
+  </div>
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro"><h4 className="cs-h-sm">What can change a payout</h4></div>
+  <div className="cs-placeholder">Settlement type codes</div>
+</div>
+
+{/* ---- 03 ---- */}
+
+<div id="solution" className="cs-section">
+  <SectionHeader number="03" title="Designing for three payout scenarios" />
+</div>
+
+<div className="cs-split cs-split--wide cs-lead">
+  <div className="flex-vertical gap-20">
+    <h4 className="cs-h-sm">1. Transactions only</h4>
+    <p className="body-md">The payout is made up entirely of sales.</p>
+  </div>
+  <div className="cs-placeholder">Transactions-only payout</div>
+</div>
+
+<div className="cs-split cs-split--wide cs-block">
+  <div className="flex-vertical gap-20">
+    <h4 className="cs-h-sm">2. Mixed</h4>
+    <p className="body-md">The payout combines transactions with chargebacks, risk holds, adjustments, or fees.</p>
+  </div>
+  <div className="cs-placeholder">Mixed payout</div>
+</div>
+
+<div className="cs-split cs-split--wide cs-block">
+  <div className="flex-vertical gap-20">
+    <h4 className="cs-h-sm">3. Non-transactions only</h4>
+    <p className="body-md">The payout has no sales activity at all.</p>
+  </div>
+  <div className="cs-placeholder">Non-transactions-only payout</div>
+</div>
+
+<div id="prototype" className="cs-subsection">
+  <h3>Prototype with test data</h3>
+</div>
+
+<div className="cs-lead">
+  <div className="cs-placeholder cs-placeholder--wide">Embedded prototype</div>
+</div>
+
+{/* ---- 04 ---- */}
+
+<div id="next" className="cs-section">
+  <SectionHeader number="04" title="What’s next" />
+</div>
+
+<div className="cs-grid-2 cs-gap-wide cs-lead">
+  <div className="flex-vertical gap-20">
+    <figure className="cs-figure">
+      <div className="cs-placeholder">Stripe vs. Worldpay comparison</div>
+      <figcaption className="t-meta cs-caption cs-caption--note">Competitive reference: how Stripe shows transaction status.</figcaption>
+    </figure>
+    <h4 className="cs-h-sm">Connecting the experience across the portal</h4>
+    <p className="body-md">Merchants don’t reconcile on one page. They move between Payouts and Transactions to piece together the full picture, so fully solving the problem means improving Transaction Search too. Merchants also need clearer visibility into each transaction’s lifecycle, so they can see where it currently stands.</p>
+  </div>
+  <div className="flex-vertical gap-20">
+    <figure className="cs-figure">
+      <div className="cs-placeholder">Data sources image</div>
+    </figure>
+    <h4 className="cs-h-sm">Data beyond the portal</h4>
+    <p className="body-md">Merchants also pull from bank statements and POS terminal records. The next step is understanding those sources better.</p>
+  </div>
+</div>
+
+</div>

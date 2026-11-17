@@ -24,9 +24,8 @@ export function Component() {
 
   return (
     <>
-      <div id="work" className="feed-head">
-        <h2 className="feed-title feed-title--sm">Work</h2>
-        <span className="t-nav g">Featured UX case studies</span>
+      <div id="work" className="feed-head feed-head--inline">
+        <h2 className="t-nav g">Work // Featured UX case studies</h2>
       </div>
       <div className="grid-works">
         {workProjects.map((p, i) => <WorkCard key={p.slug} project={p} num={pad2(i + 1)} />)}

@@ -73,10 +73,30 @@
 
 .ptop { display: flex; justify-content: space-between; align-items: center; }
 
+/* "Collapse ←" — text-only button: muted at rest, darkens on hover/focus,
+   never shows a frame or fill. Same 28px height as the icon buttons. */
+.collapse-btn {
+  gap: 6px;
+  height: 28px;
+  min-height: 0;
+  padding: 0 8px;
+  font-size: 11px;
+  color: var(--text-meta);
+  background: transparent;
+  border-color: var(--border); /* quiet outline, same as the scramble toggle */
+  transition: color .2s ease, border-color .2s ease;
+}
+.collapse-btn:hover,
+.collapse-btn:focus-visible {
+  color: var(--text);
+  border-color: var(--text-meta);
+  background: transparent;
+}
+
 /* SW logo: outlined mono letters that fill with ink from the bottom on hover */
 .logo { display: flex; align-items: center; min-height: 40px; color: var(--text); }
 .logo:hover { opacity: 1; }
-.ptop .logo { min-height: 28px; }   /* letters ≈ the 28px collapse button */
+.ptop .logo { min-height: 28px; }
 .logo__fill {
   /* Tight tracking/leading lets glyphs (the W's top-right) overhang the text box,
      and background-clip only paints inside the box — so pad the box out, and pull
@@ -102,30 +122,104 @@
 .logo--vertical { writing-mode: vertical-rl; transform: rotate(180deg); min-height: 0; }
 .logo--vertical .logo__fill { background-position: top; }
 
-.phero { margin: 20px 0 0; font-family: var(--font-body); font-weight: var(--fw-regular); }
-.phero__inner { display: flex; flex-direction: column; gap: 20px; }
-.hero-name { font-size: 48px; line-height: 1; letter-spacing: var(--ls-hero); }
+.phero-wrap { margin: 20px 0 0; display: flex; flex-direction: column; gap: 20px; }
+.phero { margin: 0; display: flex; font-family: var(--font-body); font-weight: var(--fw-regular); }
+
+/* [ ROLE ] line + pause/resume button beside it */
+.hero-role { display: flex; align-items: center; gap: 12px; }
+
+/* Fixed-width word box: hidden longest word + live word share one cell */
+.scramble { display: inline-grid; text-align: center; white-space: nowrap; }
+.scramble__sizer, .scramble__word { grid-area: 1 / 1; }
+.scramble__sizer { visibility: hidden; }
+
+/* Name: hovering swaps "Skylar Wang" for 王子怡 with pinyin above.
+   Both layers share one grid cell, aligned on their baselines so the pinyin
+   rises above the line instead of pushing the layout down. CJK ink fills
+   almost the whole em box (Latin caps are ~.72em), so the Chinese is set
+   smaller and nudged up to match the cap height top and bottom. */
+.hero-name {
+  display: inline-grid;
+  align-items: last baseline;
+  align-self: flex-start;
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: var(--ls-hero);
+  cursor: pointer;
+}
+.hero-name__en, .hero-name__zh {
+  grid-area: 1 / 1;
+  transition: opacity .28s ease, transform .38s cubic-bezier(.2, .7, .2, 1), filter .28s ease;
+}
+.hero-name__zh {
+  position: relative;
+  top: -.05em;
+  font-size: .8em;
+  letter-spacing: .04em;
+  opacity: 0;
+  transform: translateY(.18em);
+  filter: blur(4px);
+}
+.hero-name__zh ruby { ruby-position: over; }
+.hero-name__zh rt {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .06em;
+  color: var(--text-meta);
+  padding-bottom: 4px;
+}
+.hero-name:hover .hero-name__en { opacity: 0; transform: translateY(-.18em); filter: blur(4px); }
+.hero-name:hover .hero-name__zh { opacity: 1; transform: none; filter: none; }
+
+/* Pause/resume for the role scramble */
+/* Quiet outlined box: muted icon + light border, never filled
+   (overrides .btn's hover fill and its aria-pressed fill). */
+.scramble-toggle,
+.scramble-toggle:hover,
+.scramble-toggle[aria-pressed="true"] {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  font-size: 8px;
+  color: var(--text-meta);
+  background: transparent;
+  border-color: var(--border);
+  transition: color .2s ease, border-color .2s ease;
+}
+.scramble-toggle:hover,
+.scramble-toggle:focus-visible { color: var(--text); border-color: var(--text-meta); }
 .hero-code {
   font-family: var(--font-mono);
-  font-size: 20px;
+  font-size: 14px; /* fits "[ CREATIVE TECHNOLOGIST ]" + toggle on one line in the panel */
+  white-space: nowrap;
   line-height: 1.2;
-  letter-spacing: .1em;
+  letter-spacing: .05em;
   text-transform: uppercase;
 }
-.hero-code, .hero-code .g { color: var(--text-muted); }   /* [ DESIGNER / BUILDER / ARTIST ], brackets included */
+.hero-code, .hero-code .g { color: var(--text-muted); }   /* [ PRODUCT DESIGNER / CREATIVE TECHNOLOGIST ], brackets included */
 
+/* Intro blurb sits on top of the Now/Prev rows, inside the same rules (Now row) */
+.pabout { display: flex; flex-direction: column; border-top: 1px solid var(--border); }
+.phero-blurb {
+  margin: 0;
+  padding: 14px 0;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--text-meta);   /* a step lighter than body copy: quiet aside */
+  text-wrap: pretty;
+}
 .pmeta { margin: 0; display: flex; flex-direction: column; }
 .pmeta > div {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
+  gap: 8px;
   padding: 12px 0;
   border-top: 1px solid rgba(20, 21, 22, .25);
 }
-.pmeta > div:first-child { border-top-color: var(--border); }
+.pmeta > div:first-child { border-top-color: rgba(20, 21, 22, .25); }   /* light rule between blurb and Now */
 .pmeta > div:last-child { border-bottom: 1px solid var(--border); }
-.pmeta dd { margin: 0; text-align: right; }
-.pmeta__dot {
+.pmeta dd { margin: 0; text-align: right; white-space: nowrap; }
+.pmeta__dot {   /* orange "live" dot before Now */
   display: inline-block;
   width: 4px;
   height: 4px;
@@ -134,7 +228,6 @@
   margin-right: 8px;
   vertical-align: 1px;
 }
-
 .navb {
   display: flex;
   justify-content: space-between;
@@ -238,7 +331,9 @@
     min-width: 0;
   }
   .v-archive .side { display: none; }   /* archive goes straight to the grid on small screens */
-  .phero { margin: 0; }
+  .phero-wrap { margin: 0; }
+  .pabout { border-top: 0; }
+  .phero-blurb { padding: 0 0 8px; }
   .pmeta > div { border: 0 !important; padding: 4px 0; }
   .main { padding: 28px 28px 40px; }
 }
@@ -251,11 +346,10 @@
   .panel, .is-collapsed .panel { padding: 24px 16px 20px; min-height: 0; }
   .pbody, .pbody[hidden] { grid-template-columns: minmax(0, 1fr); row-gap: 20px; }
   .hero-name { font-size: 36px; }
-  .hero-code { font-size: 16px; }
   .main { padding: 24px 16px 32px; gap: 24px; }
   .foot { flex-direction: column; gap: 8px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .site, .logo__fill { transition: none; }
+  .site, .logo__fill, .hero-name__en, .hero-name__zh { transition: none; }
 }

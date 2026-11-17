@@ -18,6 +18,8 @@ const REQUIRED_FIELDS = [
   'size',
 ]
 
+const STATUSES = ['coming-soon', 'in-progress']
+
 function readProjectFrontmatter(fileName) {
   const filePath = path.join(PROJECTS_DIR, fileName)
   const raw = fs.readFileSync(filePath, 'utf8')
@@ -33,6 +35,16 @@ function readProjectFrontmatter(fileName) {
     throw new Error(
       `${fileName}: frontmatter slug "${data.slug}" must match the filename ("${fileName.replace(/\.mdx$/, '')}")`,
     )
+  }
+
+  // status: case-insensitive, so "In-Progress" works; anything unknown fails the build
+  // instead of silently turning the card into a live case-study link.
+  if (data.status != null) {
+    const status = String(data.status).trim().toLowerCase().replace(/[\s_]+/g, '-')
+    if (!STATUSES.includes(status)) {
+      throw new Error(`${fileName}: status "${data.status}" must be one of: ${STATUSES.join(', ')}`)
+    }
+    data.status = status
   }
 
   return data

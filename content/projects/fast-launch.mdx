@@ -17,6 +17,7 @@ import { ProjectOverview } from '../../src/components/projectOverview/ProjectOve
 import { SectionHeader } from '../../src/components/SectionHeader/SectionHeader'
 import { VideoEmbed } from '../../src/components/mdx/VideoEmbed'
 import { HScroll } from '../../src/components/mdx/HScroll'
+import { FastLaunchPrototype } from '../../src/components/FastLaunchPrototype/FastLaunchPrototype'
 
 export const img = (name) => `/images/fast-launch/${name}`
 
@@ -291,18 +292,31 @@ export const img = (name) => `/images/fast-launch/${name}`
 
 <div className="cs-lead">
   <div className="cs-intro">
-    <h4 className="cs-h-sm">Pre-Approval Experience</h4>
-    <p className="body-md">Provide a test mode for the users to access all the pages, with education and guidance on each one.</p>
+    <h4 className="cs-h-sm">Design Explorations</h4>
   </div>
-  <div className="cs-media"><img src={img('site-v1.png')} alt="Pre-approval site experience, version 1: setup guide with application status, setup items, and a pre-live mode banner" /></div>
-  <p className="t-meta cs-caption">Version 1</p>
+  <div className="cs-grid-2">
+    <figure className="cs-figure">
+      <div className="cs-media"><img src={img('site-v1.png')} alt="Pre-approval site experience, version 1: setup guide with application status, setup items, and a pre-live mode banner" /></div>
+      <figcaption className="flex-vertical gap-12 cs-gap-xs">
+        <p className="t-meta no-margin">Version 1</p>
+        <p className="body-md">Provides a test mode for the users to explore the site in depth and familiarize themselves with it before approval.</p>
+      </figcaption>
+    </figure>
+    <figure className="cs-figure">
+      <div className="cs-media"><img src={img('site-v2.png')} alt="Pre-approval site experience, version 2: brief tooltip explanations of the key features" /></div>
+      <figcaption className="flex-vertical gap-12 cs-gap-xs">
+        <p className="t-meta no-margin">Version 2</p>
+        <p className="body-md">Provides a brief explanation of the key features through tooltips, without an in-depth exploration experience in the pre-approval stage. The users will be able to explore the full site after approval. </p>
+      </figcaption>
+    </figure>
+  </div>
 </div>
 
 <div className="cs-split--even cs-split cs-block">
   <div className="cs-media"><img src={img('site-testing.png')} alt="Remote user testing session on the pre-approval site experience" /></div>
   <div className="flex-vertical gap-20">
     <h4 className="cs-h-sm">User Testing and Feedbacks</h4>
-    <p className="body-md">To our surprise, although I spent more effort on option 1 and created more elaborate visuals and guides, option 2 is preferred by 8/10 users for the same reason. Before knowing the application outcome, the merchants don’t want to explore the site deeply in case of rejection.</p>
+    <p className="body-md">Although we spent more design effort on option 1 and created more elaborate guides, option 2 is preferred by 8/10 users. Before knowing the application outcome, the users don’t want to explore the site deeply in case of rejection.</p>
     <p className="body-md">They want to focus more on keeping track of the application status and get fully activated as soon as possible. In option 2, a light preview through tooltip is enough for them in this stage.</p>
   </div>
 </div>
@@ -314,14 +328,39 @@ export const img = (name) => `/images/fast-launch/${name}`
   <h3>Setup Items</h3>
 </div>
 
-<div className="cs-split cs-lead">
+<div className="cs-split cs-split--wide cs-lead">
+  <div className="flex-vertical gap-20">
+    <h4 className="cs-h-sm">Access the payment credentials</h4>
+    <p className="body-md">Merchants and our internal support team can access the payment gateway credentials for initial setup.</p>
+    <p className="body-md">If the merchants work with a third-party payment provider, they can access their VAR sheet PDF from the portal and learn what to do with it.</p>
+  </div>
+  <div className="cs-media"><img src={img('Payment credentials.png')} alt="Payment Setup page listing payment gateway credentials and third-party VAR sheet downloads" /></div>
+</div>
+
+<div className="cs-split cs-split--wide cs-block">
+  <div className="flex-vertical gap-20">
+    <h4 className="cs-h-sm">Track your device order</h4>
+    <p className="body-md">After we ship out the merchants’ terminal device, they can track the delivery status on the portal.</p>
+  </div>
+  <div className="cs-media"><img src={img('Device order.png')} alt="Device Order page showing a terminal shipment's delivery status and package details" /></div>
+</div>
+
+<div className="cs-split cs-split--wide cs-block">
+  <div className="flex-vertical gap-20">
+    <h4 className="cs-h-sm">Book a payment setup appointment</h4>
+    <p className="body-md">If the merchants need additional support for setting up their terminal device or payment gateway, they can book and edit appointments through the iQ portal.</p>
+  </div>
+  <div className="cs-media"><img src={img('Book an appointment.png')} alt="Side panel for booking a payment setup appointment with an advisor" /></div>
+</div>
+
+<div className="cs-split cs-split--wide-left cs-block">
+  <div className="cs-media"><img src={img('tree-testing.png')} alt="Tree testing session: a participant navigating the portal menu to find the Device Order page" /></div>
   <div className="flex-vertical gap-20">
     <h4 className="cs-h-sm">Tree Testing</h4>
     <p className="body-md">As we add new pages for device order tracking and payment credentials to the portal, we conducted tree testing to validate the page naming, and the info architecture. We gave the merchants 3 tasks, each corresponding to one of the initial setup scenarios.</p>
     <p className="body-md">For example, the task 1 scenario is - “As a newly boarded merchant, you recently ordered a card reader from Worldpay. Now you want to check when it will arrive and see what’s included in your package. Where would you go?” The success criteria is user finds the “Device Order” Page.</p>
     <p className="body-md">The key metric for the testing is to measure the time-to-completion, success rate, and learnability.</p>
   </div>
-  <div className="cs-media"><img src={img('tree-testing.png')} alt="Tree testing session: a participant navigating the portal menu to find the Device Order page" /></div>
 </div>
 
 <div className="cs-block">
@@ -345,10 +384,9 @@ export const img = (name) => `/images/fast-launch/${name}`
 </div>
 
 <div className="cs-lead">
-  <div className="cs-intro"><p className="body-md">Interact with the prototype below.</p></div>
-  {/* TODO: embed the final prototype here */}
-  <div className="cs-placeholder cs-placeholder--wide">Embed the prototype here</div>
-  <p className="t-meta cs-caption">* We had our site-wide rebrand with design tokens, so the final look and feel is different from the initial designs.</p>
+  <div className="cs-intro"><p className="body-md">Step into a newly onboarded merchant’s shoes: create your password, explore the portal while you wait for approval, upload your documents, then get fully approved and set up to take payments.</p></div>
+  <FastLaunchPrototype />
+  <p className="t-meta cs-caption">* We had our site-wide rebrand during launch, so the final look and feel is different from the initial designs in old branding.</p>
 </div>
 
 {/* ---- 06 ---- */}
@@ -373,10 +411,11 @@ export const img = (name) => `/images/fast-launch/${name}`
     </div>
     {/* TODO: "Metrics 4" from the Figma draft */}
   </div>
-  <div>
-    {/* TODO: screenshot of the Pendo Fast Launch dashboard */}
-    <div className="cs-placeholder">Pendo Fast Launch dashboard</div>
-    <p className="t-meta cs-caption">Continuous user feedback tracking</p>
+  <div className="cs-scroll-fit">
+    <div className="cs-scroll-fit__box">
+      <div className="cs-media"><img src={img('Fast Launch analytics.png')} alt="Pendo analytics dashboard tracking Fast Launch usage and merchant feedback" /></div>
+    </div>
+    <p className="t-meta cs-caption">Continuous user feedback tracking through Pendo</p>
   </div>
 </div>
 
@@ -385,41 +424,53 @@ export const img = (name) => `/images/fast-launch/${name}`
 {/* ---- 07 ---- */}
 
 <div id="future" className="cs-section">
-  <SectionHeader number="07" title="Future Phase Opportunities" />
+  <SectionHeader number="07" title="Future Phase Targets" />
 </div>
 
-<div className="cs-split cs-lead">
+<div className="cs-grid-2 cs-gap-wide cs-lead">
   <div className="flex-vertical gap-20">
-    <h4>1. Reduce the friction for payment gateway setup</h4>
-    <p className="body-md">Merchants have different payment gateway integrations, some using WP Express gateway, some using their party partners like Authorize.net that requires them to provide VAR sheet to their own provider. The knowledge is kinda abstract and we could explore ways to offer customized experience and reduce the back-n-forth communication in the process.</p>
+    <figure className="cs-figure">
+      <div className="cs-media cs-media--16x10"><img src={img('var sheet.png')} alt="VAR sheet explainer showing the sheet’s sections next to an explanation of what a VAR sheet is and why merchants need it" /></div>
+      <figcaption className="t-meta cs-caption cs-caption--note">What is a VAR sheet? </figcaption>
+    </figure>
+    <h4 className="cs-h-sm">1. Reduce the friction for payment gateway setup</h4>
+    <dl className="cs-po">
+      <div className="cs-po__row cs-po__row--problem"><dt className="t-meta">Problem</dt><dd className="body-md">Merchants on third-party gateways must send Worldpay’s VAR sheet to their provider, but many SMB merchants don’t know what a VAR sheet is.</dd></div>
+      <div className="cs-po__row cs-po__row--opp"><dt className="t-meta">Opportunity</dt><dd className="body-md">Automate setup with their providers to cut the back-and-forth.</dd></div>
+    </dl>
   </div>
-  <div className="cs-placeholder">Payment gateway setup</div>
-</div>
-
-<div className="cs-split cs-split--wide-left cs-block">
-  <div className="cs-placeholder">Self-serve device setup</div>
   <div className="flex-vertical gap-20">
-    <h4>2. Self-serve device setup</h4>
-    <p className="body-md">We don’t have accessible instructions for card reader setup therefore we offer the human assistance by appointment.</p>
-    <p className="body-md">We could explore breaking down the most common device setup instructions into steps to enable self serve setup, while keeping the human assistance option available if the merchants need it.</p>
+    <figure className="cs-figure">
+      <div className="cs-media cs-media--16x10"><img src={img('Self-serve device setup.png')} alt="Pop-up on the approved dashboard asking if the merchant is ready to set up their terminal, listing what they need, with ‘Walk me through setup’ and ‘I’m not ready’ options" /></div>
+      <figcaption className="t-meta cs-caption cs-caption--note">Design concept for self-serve terminal setup</figcaption>
+    </figure>
+    <h4 className="cs-h-sm">2. Self-serve device setup</h4>
+    <dl className="cs-po">
+      <div className="cs-po__row cs-po__row--problem"><dt className="t-meta">Problem</dt><dd className="body-md">Without accessible terminal setup instructions, setup relies on appointments.</dd></div>
+      <div className="cs-po__row cs-po__row--opp"><dt className="t-meta">Opportunity</dt><dd className="body-md">Step-by-step guides for the most common devices, with human help still available.</dd></div>
+    </dl>
   </div>
-</div>
-
-<div className="cs-split cs-block">
   <div className="flex-vertical gap-20">
-    <h4>3. Bridge the gap between contract signing and portal registration</h4>
-    <p className="body-md">In the current state, the merchants still rely heavily on the sales team for negotiating the rates and finish the contract signing through Docusign, and 57% of merchants never register for the portal afterwards. Although the number dropped to 30% after the Fast Launch release, there is still a significant experience gap between the contract signing and portal registration.</p>
-    <p className="body-md">We are also working on a separate initiative to move the application process into the portal, and communicating the value of the portal early on in the E2E workflow.</p>
+    <figure className="cs-figure">
+      <div className="cs-media cs-media--16x10"><img src={img('submit-application-sign-in-ui-showcase.gif')} alt="Animated walkthrough of the step-by-step merchant application, from review and submit to signing in to the portal" /></div>
+      <figcaption className="t-meta cs-caption cs-caption--note">Design concept for contract-to-portal flow</figcaption>
+    </figure>
+    <h4 className="cs-h-sm">3. Bridge the gap between contract signing and portal registration</h4>
+    <dl className="cs-po">
+      <div className="cs-po__row cs-po__row--problem"><dt className="t-meta">Problem</dt><dd className="body-md">Merchants still sign contracts through sales and DocuSign. 57% never registered for the portal afterwards; Fast Launch cut that to 30%, but the gap remains.</dd></div>
+      <div className="cs-po__row cs-po__row--opp"><dt className="t-meta">Opportunity</dt><dd className="body-md">Move the application into the portal and show its value earlier.</dd></div>
+    </dl>
   </div>
-  <div className="cs-placeholder">Contract signing to portal registration</div>
-</div>
-
-<div className="cs-split cs-split--wide-left cs-block">
-  <div className="cs-placeholder">More intuitive device tracking</div>
   <div className="flex-vertical gap-20">
-    <h4>4. More intuitive device tracking</h4>
-    <p className="body-md">Due to the current technical constraint, our merchants still need to go from the portal to UPS site to track their device shipment status.</p>
-    <p className="body-md">To reduce the friction, in future phase, we will explore leveraging the UPS API and host all the tracking information within the portal.</p>
+    <figure className="cs-figure">
+      <div className="cs-media cs-media--16x10"><img src={img('device tracking improvement.png')} alt="Device Orders page with an expanded order showing the shipment status timeline and order details" /></div>
+      <figcaption className="t-meta cs-caption cs-caption--note">Showing shipment status in the portal</figcaption>
+    </figure>
+    <h4 className="cs-h-sm">4. More intuitive device tracking</h4>
+    <dl className="cs-po">
+      <div className="cs-po__row cs-po__row--problem"><dt className="t-meta">Problem</dt><dd className="body-md">Technical constraints send merchants to the UPS site to track their device shipment.</dd></div>
+      <div className="cs-po__row cs-po__row--opp"><dt className="t-meta">Opportunity</dt><dd className="body-md">Use the UPS API to show tracking right in the portal.</dd></div>
+    </dl>
   </div>
 </div>
 

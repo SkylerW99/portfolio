@@ -24,8 +24,10 @@ export interface ProjectFrontmatter {
   order?: number
   featured: boolean
   size: ProjectSize
-  /** Case study not published yet — shown as "Coming soon", not linked. */
-  status?: 'coming-soon'
+  /** "coming-soon": no page yet — card says "Coming soon" and isn't linked.
+   *  "in-progress": page is live but the work is ongoing — card links and says "In progress".
+   *  Case-insensitive in frontmatter ("In-Progress" is fine); build-index normalises it. */
+  status?: 'coming-soon' | 'in-progress'
   /** Excluded from the generated index entirely (e.g. sample/template files). */
   draft?: boolean
   /** Set on small projects shown in the home Art & Tech strip; the value is the strip caption. */

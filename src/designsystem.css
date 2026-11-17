@@ -10,7 +10,7 @@
    uppercase utility text and the SW logo. Mono is loaded as a variable font
    (100–800) because the logo mixes 560 and 800 weights.
    -------------------------------------------------------------------------- */
-@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@100..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@100..800&display=swap');
 
 :root {
   /* ---- Color: core ------------------------------------------------------ */

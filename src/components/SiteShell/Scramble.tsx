@@ -1,13 +1,16 @@
-// Cycles DESIGNER → BUILDER → ARTIST, scrambling through glyphs between words.
+// Cycles PRODUCT DESIGNER → CREATIVE TECHNOLOGIST, scrambling through glyphs between words.
 // Writes straight to the DOM node on an interval so it never re-renders React.
+// `paused` stops the cycle on the current word (mid-scramble snaps to the target word).
 
 import { useEffect, useRef } from 'react'
 
-const WORDS = ['DESIGNER', 'BUILDER', 'ARTIST']
+const WORDS = ['PRODUCT DESIGNER', 'CREATIVE TECHNOLOGIST']
 const GLYPHS = '#%&*+/<>=?@[]{}01'
 
-export function Scramble() {
+export function Scramble({ paused = false }: { paused?: boolean }) {
   const ref = useRef<HTMLSpanElement>(null)
+  const pausedRef = useRef(paused)
+  pausedRef.current = paused
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
@@ -15,6 +18,10 @@ export function Scramble() {
     const id = window.setInterval(() => {
       const el = ref.current
       if (!el) return
+      if (pausedRef.current) {
+        if (el.textContent !== to) { el.textContent = to; hold = 30 }
+        return
+      }
       if (hold > 0) {
         hold--
         if (hold === 0) { from = WORDS[w]; w = (w + 1) % WORDS.length; to = WORDS[w]; frame = 0 }
@@ -30,5 +37,13 @@ export function Scramble() {
     return () => window.clearInterval(id)
   }, [])
 
-  return <span ref={ref}>{WORDS[0]}</span>
+  // The invisible longest word sits in the same grid cell, so the box (and the
+  // brackets around it) keeps one width whichever word is showing.
+  const longest = WORDS.reduce((a, b) => (b.length > a.length ? b : a))
+  return (
+    <span className="scramble">
+      <span className="scramble__sizer" aria-hidden="true">{longest}</span>
+      <span ref={ref} className="scramble__word">{WORDS[0]}</span>
+    </span>
+  )
 }

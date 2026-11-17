@@ -6,14 +6,14 @@
 import { Link } from 'react-router-dom'
 import './ProjectCard.css'
 import type { ProjectFrontmatter } from '../../content/types'
-import { cardText, isCaseStudy, tagLine } from '../../content/projects'
+import { cardText, isCaseStudy, statusLabel, tagLine } from '../../content/projects'
 
 function Cover({ project, ratio }: { project: ProjectFrontmatter; ratio: '16/10' | '4/3' }) {
   return (
     <span className="pcard__cover" style={{ aspectRatio: ratio }}>
       {project.thumbnail
         ? <img className="thumbnail-image" src={project.thumbnail} alt="" loading="lazy" />
-        : <span className="pcard__ph"><span className="t-meta">Cover / {project.status === 'coming-soon' ? 'In progress' : project.title}</span></span>}
+        : <span className="pcard__ph"><span className="t-meta">Cover / {project.status ? 'In progress' : project.title}</span></span>}
     </span>
   )
 }
@@ -30,7 +30,7 @@ export function WorkCard({ project, num }: { project: ProjectFrontmatter; num: s
         <span className="pcard__desc">{cardText(project)}</span>
         <span className="t-nav pcard__meta">
           <span className="g">{tagLine(project)}</span>
-          {!isCaseStudy(project) && <span className="g">Coming soon</span>}
+          {project.status && <span className="g">{statusLabel(project)}</span>}
         </span>
       </span>
     </>

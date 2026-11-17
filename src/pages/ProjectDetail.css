@@ -58,6 +58,8 @@
 /* ---- Media -------------------------------------------------------------- */
 .cs-media { overflow: hidden; }
 .cs-media img { width: 100%; height: auto; display: block; }
+/* Uniform 16:10 frame so side-by-side images line up; the whole image stays visible */
+.cs-media--16x10 img { aspect-ratio: 16 / 10; object-fit: contain; background: #fff; }
 .case-study .cs-media img { cursor: zoom-in; transition: transform .6s cubic-bezier(.2,.7,.2,1); }   /* opens in the Lightbox (see ProjectDetail.tsx) */
 .case-study .cs-media img:hover { transform: scale(1.02); }   /* .cs-media clips the zoom */
 .case-study .cs-media img:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
@@ -74,11 +76,27 @@
 
 /* Small right-aligned caption under a media block */
 .cs-caption { margin: 12px 0 0; text-align: right; text-transform: none; letter-spacing: .04em; }
+/* Longer explanatory caption under an image: left-aligned, readable line length */
+.cs-caption--note { text-align: right; line-height: 1.5; text-wrap: pretty; }
 
 /* Media wider/taller than its slot: scroll inside the frame instead of shrinking it */
 .cs-scroll-x { overflow-x: auto; }
 .cs-scroll-x img { width: auto; max-width: none; height: 472px; }
 .cs-scroll-y { max-height: 464px; overflow-y: auto; border: 1px solid var(--divider); }
+
+/* Grid column whose media scrolls inside a box exactly as tall as the neighbouring column:
+   the box is absolutely positioned, so the image adds no height to the row.
+   <div class="cs-scroll-fit"><div class="cs-scroll-fit__box"><div class="cs-media">…</div></div>caption</div> */
+.cs-scroll-fit { position: relative; align-self: stretch; display: flex; flex-direction: column; min-height: 0; }
+/* The caption hangs below the box so the box itself lines up with the neighbour's bottom */
+.cs-scroll-fit > .cs-caption { position: absolute; top: 100%; right: 0; }
+.cs-scroll-fit__box { position: relative; flex: 1 1 auto; min-height: 240px; }
+.cs-scroll-fit__box > .cs-media {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  border: 1px solid var(--divider);
+}
 
 /* Grey stand-in for a visual that hasn't been made yet */
 .cs-placeholder {
@@ -224,6 +242,16 @@
 /* Sub-topic inside a numbered section (e.g. Feature 1 under 04. Design) */
 .cs-subsection { margin-top: 100px; padding-top: 28px; border-top: 1px solid var(--divider); display: flex; flex-direction: column; gap: 12px; }
 /* Smaller heading for blocks inside a subsection (below the 32px subsection title) */
+/* Problem → Opportunity pair (Future Phase Opportunities): labelled rows,
+   problem muted, opportunity in ink with an accent rule */
+.cs-po { margin: 0; display: flex; flex-direction: column; gap: 16px; }
+.cs-po__row { display: flex; flex-direction: column; gap: 6px; margin: 0; }
+.cs-po dt { margin: 0; }
+.cs-po dd { margin: 0; }
+.cs-po__row--problem dd { color: var(--text-muted); }
+.cs-po__row--opp { padding-left: 14px; border-left: 2px solid var(--accent); }
+.cs-po__row--opp dt { color: var(--accent); }
+
 .cs-h-sm { font-size: 20px; line-height: 1.15; letter-spacing: -.02em; }
 .cs-subsection h3 { font-size: 32px; letter-spacing: var(--ls-heading); }   /* between section titles (52) and the h4s beneath (32) */
 
@@ -273,6 +301,11 @@
 
 /* ---- Responsive --------------------------------------------------------- */
 @media (max-width: 900px) {
+  /* Stacked: no neighbour to match, so fall back to a fixed-height scroll box */
+  .cs-scroll-fit__box { min-height: 0; }
+  .cs-scroll-fit__box > .cs-media { position: static; max-height: 464px; }
+  .cs-scroll-fit > .cs-caption { position: static; }
+
   .case-study { padding: 32px 16px 48px; }
   .cs-section { margin-top: 88px; }
   .cs-subsection { margin-top: 68px; }

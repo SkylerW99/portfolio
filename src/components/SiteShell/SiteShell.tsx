@@ -1,5 +1,5 @@
 // Site shell (layout route for /, /archive, /about): a sticky left panel that never
-// changes between views — slime-mold warp, SW logo, scrambling role, Now/Prev,
+// changes between views — slime-mold warp, SW logo, scrambling role, intro + Now,
 // nav and contact — and the active view rendered on the right via <Outlet />.
 // About is a pop-up over the home feed, opened by the /about route.
 
@@ -36,6 +36,9 @@ export function Component() {
   })
   const [section, setSection] = useState<'work' | 'art'>('work')
   const [contactOpen, setContactOpen] = useState(false)
+  const [scramblePaused, setScramblePaused] = useState(false)
+  // Scramble doesn't animate under reduced motion, so there's nothing to pause.
+  const [reducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
 
   const panelRef = useRef<HTMLDivElement>(null)
   const imgRef = useRef<HTMLImageElement>(null)
@@ -127,22 +130,49 @@ export function Component() {
 
           <div className="pbody" hidden={collapsed}>
             <div className="ptop">
-              <Logo size={36} onClick={() => scrollToSection('work')} />
-              <button type="button" className="btn btn--icon collapse-btn" onClick={toggleCollapsed} aria-label="Collapse side panel">←</button>
+              <Logo size={44} onClick={() => scrollToSection('work')} />
+              <button type="button" className="btn collapse-btn" onClick={toggleCollapsed} aria-label="Collapse side panel">
+                <span aria-hidden="true">Collapse</span>
+                <span aria-hidden="true">←</span>
+              </button>
             </div>
 
-            <h1 className="phero">
-              <span className="sr-only">Skylar Wang — designer, builder, artist</span>
-              <span aria-hidden="true" className="phero__inner">
-                <span className="hero-name">Skylar Wang</span>
-                <span className="hero-code"><span className="g">[ </span><Scramble /><span className="g"> ]</span></span>
-              </span>
-            </h1>
+            <div className="phero-wrap">
+              <h1 className="phero">
+                <span className="sr-only">Skylar Wang (王子怡) — product designer, creative technologist</span>
+                {/* Mouse-only shortcut to About (keyboard/screen-reader users have the About nav item) */}
+                <span aria-hidden="true" className="hero-name" data-hot onClick={() => go('about')}>
+                  <span className="hero-name__en">Skylar Wang</span>
+                  <span className="hero-name__zh" lang="zh-Hans">
+                    <ruby>王<rt>wáng</rt>子<rt>zǐ</rt>怡<rt>yí</rt></ruby>
+                  </span>
+                </span>
+              </h1>
+              <div className="hero-role">
+                <span aria-hidden="true" className="hero-code"><span className="g">[ </span><Scramble paused={scramblePaused} /><span className="g"> ]</span></span>
+                {!reducedMotion && (
+                <button
+                  type="button"
+                  className="btn btn--icon scramble-toggle"
+                  onClick={() => setScramblePaused((p) => !p)}
+                  aria-label={scramblePaused ? 'Resume role animation' : 'Pause role animation'}
+                  aria-pressed={scramblePaused}
+                >
+                  {scramblePaused ? '▶' : '❚❚'}
+                </button>
+                )}
+              </div>
+            </div>
 
-            <dl className="t-nav pmeta">
-              <div><dt className="g">Now</dt><dd><span className="pmeta__dot" />Product Design @ Worldpay</dd></div>
-              <div><dt className="g">Prev</dt><dd>Interaction Design @ GE</dd></div>
-            </dl>
+            {/* Intro + Now read as one ruled block */}
+            <div className="pabout">
+              <p className="t-body phero-blurb">
+                I design systems people touch: financial tools, connected appliances, and interactive art.
+              </p>
+              <dl className="t-nav pmeta">
+                <div><dt className="g"><span className="pmeta__dot" aria-hidden="true" />Now</dt><dd>Product Design @Worldpay</dd></div>
+              </dl>
+            </div>
 
             <nav className="t-nav pnav" aria-label="Site">
               {nav.map((n) => {
@@ -150,7 +180,6 @@ export function Component() {
                 return (
                   <button key={n.key} type="button" className="navb" aria-current={on ? 'page' : undefined} onClick={() => go(n.key)}>
                     <span>{on ? '→ ' : '  '}{n.label}</span>
-                    <span className="g">{on ? '●' : ''}</span>
                   </button>
                 )
               })}

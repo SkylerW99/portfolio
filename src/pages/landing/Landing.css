@@ -3,6 +3,9 @@
 .feed-head { display: flex; flex-direction: column; gap: 8px; scroll-margin-top: 20px; }
 .feed-title { font-family: var(--font-body); font-size: 40px; line-height: 1; letter-spacing: var(--ls-heading); font-weight: var(--fw-regular); }
 .feed-title--sm { font-size: 24px; line-height: 1.1; letter-spacing: -.025em; }   /* Home section titles (Work, Art & Tech) — same as .pcard__title */
+/* One-line small label: "WORK  FEATURED UX CASE STUDIES" (title in ink, subtitle muted) */
+.feed-head--inline { flex-direction: row; align-items: baseline; flex-wrap: wrap; gap: 4px 16px; }
+.feed-label { margin: 0; color: var(--text); font-weight: inherit; }
 
 .grid-works { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
 

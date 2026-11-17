@@ -8,7 +8,12 @@ export { projects }
 
 /** Has a published case-study page at /work/:slug. */
 export function isCaseStudy(p: ProjectFrontmatter) {
-  return p.size === 'large' && p.status !== 'coming-soon'
+  return p.size === 'large' && p.status !== 'coming-soon'   // in-progress pages are live
+}
+
+/** Label for an unpublished case study's card ("Coming soon" / "In progress"). */
+export function statusLabel(p: ProjectFrontmatter) {
+  return p.status === 'in-progress' ? 'In progress' : 'Coming soon'
 }
 
 /** Card copy: the short summary if there is one, else the description. */
