@@ -4,8 +4,18 @@
 .feed-title { font-family: var(--font-body); font-size: 40px; line-height: 1; letter-spacing: var(--ls-heading); font-weight: var(--fw-regular); }
 .feed-title--sm { font-size: 24px; line-height: 1.1; letter-spacing: -.025em; }   /* Home section titles (Work, Art & Tech) — same as .pcard__title */
 /* One-line small label: "WORK  FEATURED UX CASE STUDIES" (title in ink, subtitle muted) */
-.feed-head--inline { flex-direction: row; align-items: baseline; flex-wrap: wrap; gap: 4px 16px; }
-.feed-label { margin: 0; color: var(--text); font-weight: inherit; }
+.feed-head--inline { flex-direction: row; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px 16px; }   /* title left, subtitle at the line end */
+#work.feed-head--inline { margin-bottom: -16px; }   /* .main gap is 28px; label sits 12px above the cards */
+/* "WORK ............ FEATURED UX CASE STUDIES": small mono label row (same type as .t-nav) */
+.feed-label {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  font-weight: inherit;
+  letter-spacing: var(--ls-meta);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
 
 .grid-works { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
 

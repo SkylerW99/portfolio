@@ -60,7 +60,7 @@ export function ArchiveCard({ project, num, onOpen }: { project: ProjectFrontmat
         <span className="t-meta pcard__num">{num}</span>
         <span className="pcard__title pcard__title--sm">{project.title}</span>
       </span>
-      <Cover project={project} ratio="4/3" />
+      <Cover project={project} ratio="16/10" />
       <span className="pcard__foot pcard__foot--sm">
         <span className="pcard__desc pcard__desc--sm">{cardText(project)}</span>
         <span className="t-tag pcard__meta">

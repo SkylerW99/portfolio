@@ -2,9 +2,9 @@
 title: "Reconciliation"
 slug: "reconciliation"
 description: "Closing the reconciliation reporting gap for SMB merchants."
-summary: "A reconciliation experience helping merchants match payouts, fees, and transactions. Work in progress."
+summary: "Closing the portal's biggest satisfaction gap: merchant reconciliation, with a target of raising CSAT from 60 to 80."
 categories: ["UX", "Payments"]
-thumbnail: "/images/reconciliation/Reconciliation-cover.png"
+thumbnail: "/images/reconciliation/reconciliation-cover.gif"
 date: "2026-09-01"
 year: 2026
 order: 2
@@ -15,6 +15,7 @@ status: "In-Progress"
 
 import { ProjectOverview } from '../../src/components/projectOverview/ProjectOverview'
 import { SectionHeader } from '../../src/components/SectionHeader/SectionHeader'
+import { HtmlEmbed } from '../../src/components/mdx/HtmlEmbed'
 
 {/* Images go in public/images/reconciliation/ — swap each .cs-placeholder for
     <div className="cs-media"><img src={img('file.png')} alt="…" /></div> */}
@@ -31,7 +32,22 @@ export const img = (name) => `/images/reconciliation/${name}`
   myRole="Sole Product Designer"
 />
 
-<div className="cs-placeholder cs-placeholder--wide cs-block">Static image</div>
+{/* ---- What is reconciliation ---- */}
+
+<div className="cs-split--even cs-split cs-block">
+  <div style={{ alignSelf: 'flex-start' }}>
+    <h4>What is reconciliation?</h4>
+  </div>
+  <div className="flex-vertical gap-20">
+    <p className="body-md">Reconciliation is how merchants check that the money that reached their bank account matches what they expected to receive. As the payment processor, worldpay pays the merchants their sales revenue. Each payout from Worldpay is a net amount: sales minus, chargebacks, refunds, risk holds, and adjustments. To close their books, sometimes merchants need to trace each deposit back to the activities behind it.</p>
+  </div>
+</div>
+
+<div className="cs-gap-sm">
+  <div className="cs-media">
+    <img src={img('What is reconciliation.png')} alt="What is reconciliation? Merchants check that the money from their sales matches what lands in their bank, and find out why when it doesn't. Six steps: gather, match, investigate, resolve, verify, monitor. Match and investigate are highlighted as the problem we're solving: today merchants can't do either in the portal because it doesn't show the breakdown of each deposit." />
+  </div>
+</div>
 
 {/* ---- Summary ---- */}
 
@@ -48,7 +64,7 @@ export const img = (name) => `/images/reconciliation/${name}`
 </div>
 
 <div className="cs-gap-sm">
-  <div className="cs-placeholder cs-placeholder--wide">Before / after comparison image</div>
+  <div className="cs-media"><img src={img('recon-before-vs-after-small.gif')} alt="Before and after. Before: payout records were a dead end, split by settlement type and expanding a row only repeated it. After: Bank Account Activity groups payouts by trace ID with net sales and others, and any payout opens into a breakdown down to individual transactions." /></div>
 </div>
 
 <div className="cs-block">
@@ -56,7 +72,7 @@ export const img = (name) => `/images/reconciliation/${name}`
   <div className="cs-grid-2 cs-divided">
     <div className="cs-card cs-card--plain">
       <p className="t-meta no-margin">Target · CSAT</p>
-      <h4>60 → <span className="accent-color">72</span></h4>
+      <h4>60 → <span className="accent-color">80</span></h4>
       <p className="body-md">Reconciliation is the biggest gap in iQ Portal satisfaction today. If merchants can reconcile on their own, satisfaction should go up and payout-related feedback should go down.</p>
     </div>
     <div className="cs-card cs-card--plain">
@@ -70,18 +86,62 @@ export const img = (name) => `/images/reconciliation/${name}`
 {/* ---- 01 ---- */}
 
 <div id="background" className="cs-section">
-  <SectionHeader number="01" title="Background" subtitle="What merchants told us" />
+  <SectionHeader number="01" title="Research" subtitle="What merchants told us" />
 </div>
 
+{/* Method: what I did (left) + the raw input (right) */}
 <div className="cs-split--even cs-split cs-lead">
-  <div className="cs-placeholder">Pendo feedback image</div>
-  <div className="flex-vertical gap-24">
-    <p className="body-md">More than 50% of merchant feedback in Pendo was about reconciliation reporting. The top two pain points:</p>
+  <div className="flex-vertical gap-20">
+    <h4>~4,000 support calls, traced to their source</h4>
+    <p className="body-md">I sorted ~4,000 support call records by topic and coded an interactive Sankey diagram that categorizes and traces each call back to the part of the merchant experience it came from.</p>
+    <p className="body-lg accent-color">Two topics drove most of the calls: reconciliation reporting and transaction status lookup.</p>
+  </div>
+  <figure className="cs-figure">
+    <div className="cs-media"><img src={img('transaction-cases-excel-blurred.gif')} alt="Scrolling through the raw support call spreadsheet, blurred for privacy, with each call tagged by theme such as refund issues, settlement and deposit issues, and transaction lookup" /></div>
+    <figcaption className="t-meta cs-caption">Raw data: support call records, tagged by theme (blurred)</figcaption>
+  </figure>
+</div>
+
+{/* Output: the interactive Sankey */}
+<div className="cs-block">
+  <HtmlEmbed
+    src={img('transaction_lookup_sankey_diagram.html')}
+    title="Interactive Sankey diagram: support call themes, sub-patterns and the experience surfaces they came from"
+    minHeight={720}
+    hideOpenWhen=".drawer.open"
+    zoom={0.6}
+    zoomTarget=".viz-root"
+    intro={<div className="flex-vertical gap-20">
+      <h4>From call topic to experience surface</h4>
+      <p className="body-md">Hover over a theme, or click a topic to read the individual case details.</p>
+    </div>}
+  />
+  <p className="t-meta cs-caption cs-caption--note">* In each of the case details, all customer names, contact details and card numbers have been replaced with synthetic test data.</p>
+</div>
+
+{/* The two drivers, with what each phase takes on */}
+<div className="cs-grid-2 cs-gap-wide cs-block">
+  <div className="flex-vertical gap-20">
+    <p className="t-meta no-margin">Driver 1</p>
+    <h4 className="cs-h-sm">Transaction status lookup</h4>
+    <ul className="body-md cs-list">
+      <li><strong>Unclear transaction lifecycle.</strong> Merchants can’t tell where a transaction stands, so they can’t trace the refund status, or trace a sale.</li>
+    </ul>
+    <dl className="cs-po">
+      <div className="cs-po__row cs-po__row--problem"><dt className="t-meta">Phase 2 scope</dt><dd className="body-md">Fixing this involves massive back-end database and architecture revamp, so it’s temporaily out of scope for Phase 1. However, It’s a key objective for phase 2, as lifecycle visibility is how merchants verify refunds, track down missing transactions and resolve discrepancies.</dd></div>
+    </dl>
+  </div>
+  <div className="flex-vertical gap-20">
+    <p className="t-meta no-margin">Driver 2</p>
+    <h4 className="cs-h-sm">Reconciliation reporting</h4>
     <ol className="body-md cs-list">
+      <li><strong>Delayed or missing deposits.</strong> The portal doesn’t flag deposits that are late or never arrive.</li>
       <li><strong>Payouts don’t match the bank.</strong> Payout records in the portal don’t line up with what merchants see in their banking app.</li>
       <li><strong>No breakdown.</strong> There’s no way to see which transactions make up a payout.</li>
     </ol>
-    <p className="body-lg accent-color">Phase 1 addresses both: Trace ID grouping solves the first, and the payout drill-down solves the second.</p>
+    <dl className="cs-po">
+      <div className="cs-po__row cs-po__row--opp"><dt className="t-meta">Phase 1 scope</dt><dd className="body-md">Trace ID grouping solves #2, and the payout drill-down solves #3. #1 needs more investigation first: we need to understand why deposits are delayed or go missing before deciding what the UI should surface.</dd></div>
+    </dl>
   </div>
 </div>
 
@@ -92,8 +152,12 @@ export const img = (name) => `/images/reconciliation/${name}`
 </div>
 
 <div className="cs-lead">
-  <div className="cs-intro"><p className="body-md">I mapped how merchants reconcile today to find where the portal falls short.</p></div>
-  <div className="cs-placeholder cs-placeholder--wide">User flow chart</div>
+  <HtmlEmbed
+    src={img('reconciliation-workflow.html')}
+    title="Interactive reconciliation workflow: the checks merchants run, and the root causes where they get stuck"
+    height="min(88vh, 960px)"
+    intro={<p className="body-md">I mapped how merchants reconcile to identify the causes of payout vs. sales mismatch in each step, and how much of that our current scope can cover. Scroll through the workflow and click any card for details.</p>}
+  />
 </div>
 
 <div className="cs-split--even cs-split cs-block">

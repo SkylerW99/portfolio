@@ -127,6 +127,28 @@
   display: block;
 }
 
+/* Self-contained interactive HTML page (HtmlEmbed): framed, auto-height */
+.html-embed { display: flex; flex-direction: column; gap: 12px; }
+.html-embed iframe { width: 100%; border: 1px solid var(--border-soft, rgba(0, 0, 0, .12)); background: #fff; display: block; }
+.html-embed { gap: 20px; }
+.html-embed__intro { max-width: 632px; }
+.html-embed__frame { position: relative; }
+/* Floating "Open in new tab" in the frame's top-right corner. Compact (28px) and centred
+   on the Sankey's header title (mid ≈ 31px), so it clears the header's divider at 56px. */
+.html-embed__open {
+  position: absolute;
+  top: 17px;
+  right: 16px;
+  height: 28px;
+  min-height: 0;
+  padding: 0 10px;
+  font-size: 11px;
+  z-index: 1;
+  background: var(--c-cream);
+  box-shadow: 0 1px 3px rgba(20, 21, 22, .12);
+}
+.html-embed__open[hidden] { display: none; }
+
 /* ---- Grids -------------------------------------------------------------- */
 .cs-grid-2,
 .cs-grid-3,
