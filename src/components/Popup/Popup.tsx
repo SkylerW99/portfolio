@@ -2,7 +2,7 @@
 // dimmed overlay, bordered box, mono header bar with a ✕, Esc / backdrop to close,
 // focus moved in on open and restored on close, page scroll locked while open.
 
-import { useEffect, useRef, type ReactNode } from 'react'
+import { useEffect, useRef, type ReactNode, type RefObject } from 'react'
 import './Popup.css'
 
 type Props = {
@@ -17,10 +17,12 @@ type Props = {
   media?: ReactNode
   /** Sticky footer row (e.g. prev / next, résumé / contact). */
   footer?: ReactNode
+  /** Element to focus on open instead of the ✕ (e.g. a form field). */
+  initialFocus?: RefObject<HTMLElement | null>
   children: ReactNode
 }
 
-export function Popup({ open, onClose, label, heading, className = '', media, footer, children }: Props) {
+export function Popup({ open, onClose, label, heading, className = '', media, footer, initialFocus, children }: Props) {
   const closeRef = useRef<HTMLButtonElement>(null)
   const onCloseRef = useRef(onClose)
   onCloseRef.current = onClose
@@ -28,7 +30,7 @@ export function Popup({ open, onClose, label, heading, className = '', media, fo
   useEffect(() => {
     if (!open) return
     const opener = document.activeElement as HTMLElement | null
-    closeRef.current?.focus()
+    ;(initialFocus?.current ?? closeRef.current)?.focus()
     const prevOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onCloseRef.current() }

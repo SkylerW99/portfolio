@@ -199,7 +199,7 @@
 .hero-code, .hero-code .g { color: var(--text-muted); }   /* [ PRODUCT DESIGNER / CREATIVE TECHNOLOGIST ], brackets included */
 
 /* Intro blurb sits on top of the Now/Prev rows, inside the same rules (Now row) */
-.pabout { display: flex; flex-direction: column; border-top: 1px solid var(--border); }
+.pabout { display: flex; flex-direction: column; }   /* no rule above the blurb */
 .phero-blurb {
   margin: 0;
   padding: 14px 0;
@@ -217,7 +217,7 @@
   border-top: 1px solid rgba(20, 21, 22, .25);
 }
 .pmeta > div:first-child { border-top-color: rgba(20, 21, 22, .25); }   /* light rule between blurb and Now */
-.pmeta > div:last-child { border-bottom: 1px solid var(--border); }
+/* no rule under the Now row */
 .pmeta dd { margin: 0; text-align: right; white-space: nowrap; }
 .pmeta__dot {   /* orange "live" dot before Now */
   display: inline-block;
@@ -332,7 +332,6 @@
   }
   .v-archive .side { display: none; }   /* archive goes straight to the grid on small screens */
   .phero-wrap { margin: 0; }
-  .pabout { border-top: 0; }
   .phero-blurb { padding: 0 0 8px; }
   .pmeta > div { border: 0 !important; padding: 4px 0; }
   .main { padding: 28px 28px 40px; }

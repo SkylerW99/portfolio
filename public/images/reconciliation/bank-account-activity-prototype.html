@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bank Account Activity — prototype with test data</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+<style>
+  /* Tokens from the iQ SMB Figma file (Final Design Happy Path) */
+  :root{
+    --primary:#17171c; --secondary:#6a6e87; --tertiary:#8d91aa;
+    --border:#e2e4e9; --border-input:#8d91aa; --page:#f5f5f7; --card:#fff;
+    --brand:#4b4bd3; --brand-bg:#f5f5fd; --link:#1b1b6f; --nav-text:#5a5e72;
+    --indigo:#5b5bd7; --coral:#fd8d62; --orange:#ffa41b; --cyan:#1fc0e0; --purple:#8a5cf0;
+    --green:#199f6b; --amber:#de7402;
+    --r-md:8px; --r-lg:12px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--page);color:var(--primary);font-family:Inter,system-ui,-apple-system,sans-serif;font-size:13px;line-height:1.45;letter-spacing:-.1px;-webkit-font-smoothing:antialiased}
+  button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+  .ico{width:14px;height:14px;display:inline-block;vertical-align:-2px;flex:none}
+
+  /* ---------- app chrome: header + side nav stay put, content scrolls ---------- */
+  html,body{height:100%;overflow:hidden}
+  .app{display:grid;grid-template-columns:212px minmax(0,1fr);grid-template-rows:56px minmax(0,1fr);height:100vh}
+  .top{grid-column:1/-1;display:flex;align-items:stretch;background:#fff;border-bottom:1px solid var(--border);z-index:5}
+  .top > *{display:flex;align-items:center;padding:0 16px;border-right:1px solid var(--border)}
+  .brand{width:212px;padding-left:22px}
+  .brand img{width:30px;height:auto;display:block}
+  .loc{width:240px;justify-content:space-between;gap:8px;font-weight:500}
+  .loc .lt{display:flex;flex-direction:column;line-height:18px}
+  .loc small{color:var(--secondary);font-size:12.5px;font-weight:500}
+  .loc .rt{display:flex;align-items:center;gap:4px}
+  .chip16{height:22px;padding:0 7px;border:1px solid #cccfd7;border-radius:6px;background:#f7f7f8;color:var(--secondary);font-size:12.5px;display:flex;align-items:center}
+  .top .spacer{flex:1;border-right:0}
+  .search{width:210px;gap:8px;color:var(--secondary);border-left:1px solid var(--border)}
+  .legacy{gap:8px;font-weight:500;white-space:nowrap}
+  .toggle{width:32px;height:18px;border-radius:20px;background:#9296aa;padding:2px;display:flex}
+  .toggle i{width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(16,24,40,.1)}
+  .iconcell{width:56px;justify-content:center;padding:0}
+  .bellw{position:relative;display:flex}
+  .bellw b{position:absolute;left:10px;top:-6px;min-width:16px;height:16px;padding:0 4px;border-radius:999px;background:#dd1308;color:#fff;font-size:11px;font-weight:400;display:grid;place-items:center}
+  .side{background:#fff;border-right:1px solid var(--border);padding:8px;display:flex;flex-direction:column;overflow:auto}
+  .side a{display:flex;align-items:center;gap:8px;padding:10px 10px;border-radius:var(--r-md);color:var(--nav-text);text-decoration:none;font-size:14px;line-height:20px;letter-spacing:-.2px;white-space:nowrap}
+  .side a img{width:18px;height:18px;flex:none}
+  .side a .grow{flex:1}
+  .side a.sub{padding:8px 10px 8px 36px}
+  .side a.on{background:var(--brand-bg);color:var(--link);font-weight:700}
+  .side .pdot{width:7px;height:7px;border-radius:50%;background:#c24fde}
+  main{padding:24px 24px 32px;min-width:0;overflow:auto;scroll-behavior:smooth}
+
+  /* ---------- shared ---------- */
+  h1{font-size:20px;line-height:28px;font-weight:600;letter-spacing:-.3px;margin:0}
+  .sub-h{margin:4px 0 0;color:var(--primary)}
+  .crumb{display:flex;align-items:center;gap:6px;margin-top:6px;color:var(--secondary);font-weight:500;font-size:12px}
+  .crumb button{color:var(--secondary);font-weight:500}
+  .crumb button:hover{color:var(--brand);text-decoration:underline}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg)}
+  .lbl{display:inline-flex;align-items:center;gap:5px;color:var(--secondary);font-weight:500}
+  .bdg{width:7px;height:7px;border-radius:50%;display:inline-block;flex:none}
+  .amt{font-weight:500;font-size:17px;letter-spacing:-.2px;font-variant-numeric:tabular-nums}
+  .amt .c{font-size:13px}
+  .lnk{color:var(--link);font-weight:600;text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+  .lnk:hover{color:var(--brand)}
+  .btn{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border:1px solid var(--border-input);border-radius:var(--r-md);background:#fff;font-weight:600;font-size:12px}
+  .btn:hover{border-color:var(--primary)}
+  .field{display:flex;align-items:center;justify-content:space-between;gap:8px;height:34px;padding:0 12px;border:1px solid var(--border-input);border-radius:var(--r-md);background:#fff;width:220px}
+  .num{font-variant-numeric:tabular-nums}
+  .neg{color:var(--primary)}
+
+  /* info tooltip: one floating layer, positioned in JS so table headers and scrolling panes can't clip it */
+  .tip{display:inline-flex;cursor:help;border-radius:50%}
+  .tip:focus-visible{outline:2px solid var(--brand);outline-offset:1px}
+  .tiplayer{position:fixed;z-index:100;max-width:260px;padding:10px 12px;border-radius:6px;background:#1c1c22;color:#fff;font-size:12px;font-weight:400;line-height:1.45;letter-spacing:0;white-space:normal;text-transform:none;box-shadow:0 6px 16px rgba(0,0,0,.18);pointer-events:none;opacity:0;transition:opacity .12s}
+  .tiplayer.show{opacity:1}
+  .tiplayer::after{content:"";position:absolute;left:var(--ax,50%);margin-left:-5px;border:5px solid transparent}
+  .tiplayer.above::after{top:100%;border-top-color:#1c1c22}
+  .tiplayer.below::after{bottom:100%;border-bottom-color:#1c1c22}
+
+  /* tables */
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  .tables-scroll{overflow-x:auto}   /* wide tables scroll sideways instead of clipping */
+  th{font-weight:500;color:var(--secondary);text-align:left;padding:10px 8px;white-space:nowrap}
+  td{padding:11px 8px;border-top:1px solid var(--border);white-space:nowrap}
+  th .sort{display:inline-flex;align-items:center;gap:4px}
+  th button.sort:hover{color:var(--primary)}
+  .arrow{font-size:10px;opacity:.7}
+
+  /* ---------- list page ---------- */
+  .filters{display:flex;gap:16px;margin:16px 0 18px}
+  .overview{display:grid;grid-template-columns:200px minmax(0,1fr);gap:16px}
+  .sum{background:var(--brand-bg);border:1px solid var(--brand);border-radius:var(--r-lg);padding:22px 16px 16px;display:flex;flex-direction:column;gap:16px}
+  .sum hr{border:0;border-top:1px solid #c9c9ef;margin:0}
+  .sum .net .amt{font-size:21px;font-weight:600;color:var(--brand)}
+  .chart{padding:16px 16px 10px}
+  .chart svg{display:block;width:100%;height:190px}
+  .legend{display:flex;justify-content:center;gap:24px;color:var(--secondary);margin-top:4px}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .list{margin-top:18px;overflow:hidden}
+  .list-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px}
+  .list table th{background:#fafafb;border-top:1px solid var(--border)}
+  .list tbody tr{transition:background .12s}
+  .list tbody tr:hover{background:#fafafb}
+  .list td:first-child,.list th:first-child{padding-left:16px}
+
+  /* ---------- details page ---------- */
+  .tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0}
+  .tab{text-align:left;padding:12px 14px;border:1px solid var(--border);border-radius:var(--r-md);background:#fff;display:flex;flex-direction:column;gap:4px;transition:border-color .15s,background .15s,box-shadow .15s}
+  .tab:not([disabled]):not(.on):hover{border-color:var(--brand);box-shadow:0 0 0 3px rgba(75,75,211,.08)}
+  .tab.on{background:var(--brand-bg);border-color:var(--brand);box-shadow:inset 0 0 0 1px var(--brand)}
+  .tab[disabled]{cursor:default;background:#fafafb;color:var(--tertiary)}
+  .tab[disabled] .lbl{color:var(--tertiary)}
+  .tab.static{cursor:default;background:transparent;border-color:transparent}
+  .tab.static .amt{color:var(--brand)}
+  .grid-d{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px;align-items:stretch}   /* breakdown + transfer record share one top and bottom edge */
+  .grid-d > div > .card{height:100%}
+  .pane{padding:16px}
+  .pane-head{display:flex;justify-content:space-between;align-items:flex-start}
+  .batch{border:1px solid var(--border);border-radius:6px;padding:2px 8px;color:var(--secondary);font-size:11.5px;background:#fafafb}
+  .stack{display:flex;height:22px;margin-top:14px;border-radius:3px;overflow:hidden}
+  .stack span{height:100%;transition:opacity .15s}
+  .stack.filtered span:not(.hit){opacity:.25}
+  .ticks{display:flex;justify-content:space-between;color:var(--secondary);font-size:10.5px;margin:4px 0 12px}
+  .pm{border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden}
+  .pm th{background:#fafafb;padding:8px 6px}
+  .pm td{padding:8px 6px}
+  .pm th:first-child,.pm td:first-child{padding-left:12px}
+  .pm th:last-child,.pm td:last-child{padding-right:12px}
+  .pm .cnt{font-size:12px}
+  .pm .bdg{margin-right:6px!important}
+  .pm tr.sel td{background:var(--brand-bg)}
+  .pm tr.sel td:first-child{box-shadow:inset 3px 0 0 var(--brand)}
+  .pm tfoot td{font-weight:400}
+  .pm b{font-weight:600}
+  .pm .cnt{color:var(--secondary)}
+  .rec{padding:16px 18px}
+  .rec-top{display:flex;align-items:center;gap:8px;width:100%;text-align:left}
+  .rec-top .chev24{display:none;width:20px;height:20px;transition:transform .15s}
+  .rec h3{font-size:14px;font-weight:500;color:#000;margin:0}
+  .rec .acct{display:flex;align-items:center;gap:8px;font-size:20px;font-weight:600;letter-spacing:-.2px;color:#000;margin-top:0}
+  .rec .acct span{display:grid;place-items:center;width:32px;height:32px;border-radius:var(--r-md);background:#f4f4f6}
+  .rec .acct img{width:20px;height:20px}
+  .rec h4{font-size:14px;font-weight:500;color:#000;margin:16px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+  .kv{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;margin:0}
+  .kv dt{font-size:12px;color:var(--secondary)}
+  .kv dd{margin:0;font-size:13px;font-weight:500}
+  .tx{margin-top:16px;overflow:hidden}
+  .tx-head{display:flex;justify-content:space-between;align-items:flex-start;padding:14px 16px 10px}
+  .tx-head h2{font-size:15px;font-weight:600;margin:0}
+  .tx-head small{color:var(--secondary)}
+  .chip{display:inline-flex;align-items:center;gap:6px;margin:0 16px 10px;padding:3px 6px 3px 10px;border:1px solid var(--border-input);border-radius:6px;background:#fafafb;font-size:12px}
+  .chip b{font-weight:600}
+  .chip button{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;color:var(--secondary)}
+  .chip button:hover{background:var(--border);color:var(--primary)}
+  .tx table th{background:#fafafb;border-top:1px solid var(--border)}
+  .tx td:first-child,.tx th:first-child{padding-left:16px}
+  .tx tbody tr.row{cursor:pointer}
+  .tx tbody tr.row:hover{background:#fafafb}
+  .cardno{display:inline-flex;align-items:center;gap:8px}
+  .type{display:inline-flex;align-items:center;gap:6px}
+  .chev{color:var(--secondary);transition:transform .15s;display:inline-block}
+  tr.open .chev{transform:rotate(180deg)}
+  tr.more td{background:#fafafb;border-top:0;padding:4px 16px 14px}
+  tr.more .kv{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .pager{display:flex;justify-content:center;align-items:center;gap:4px;padding:12px}
+  .pager button{min-width:28px;height:28px;border-radius:6px;color:var(--secondary);font-weight:500}
+  .pager button.on{background:#ececf2;color:var(--primary)}
+  .pager button:hover:not(.on){background:#f3f3f6}
+
+  .oth table th{background:#fafafb}
+  .oth{border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;margin-top:12px}
+  .oth td small{display:block;color:var(--secondary);font-size:11px}
+  .oth tfoot td{font-weight:600}
+  .stmt{margin-top:16px}
+  .stmt-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px}
+  .stmt-head h2{font-size:15px;font-weight:600;margin:0}
+  .paper{margin:0 16px 16px;border:1px solid var(--border);height:330px;overflow:auto;background:#eceef2;padding:18px;position:relative}
+  .sheet{background:#fff;max-width:560px;margin:0 auto;padding:28px 32px;font-family:"Courier New",monospace;font-size:10.5px;line-height:1.5;color:#222;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+  .sheet h5{font-family:Inter,sans-serif;font-size:12px;margin:0 0 2px;letter-spacing:.04em}
+  .sheet table{font-size:10.5px}
+  .sheet td,.sheet th{padding:3px 4px;border:0;color:#222;font-weight:400}
+  .sheet thead th{border-bottom:1px solid #222;font-weight:700}
+  .sheet tfoot td{border-top:1px solid #222;font-weight:700}
+  .sheet .note{margin-top:14px;padding-top:8px;border-top:1px dashed #999}
+  .pagectl{position:sticky;bottom:0;margin:14px auto 0;width:max-content;display:flex;align-items:center;gap:10px;padding:6px 14px;border-radius:999px;background:#2b2b33;color:#fff;font-size:12px}
+
+  .empty{padding:28px 16px;text-align:center}
+  .empty .ic{width:36px;height:36px;border-radius:8px;background:#f0f0f4;display:grid;place-items:center;margin:0 auto 8px;color:var(--secondary)}
+  .empty h3{margin:0;font-size:16px;font-weight:600}
+  .empty p{margin:4px 0 0;color:var(--secondary)}
+
+  .toast{position:fixed;left:50%;bottom:20px;transform:translate(-50%,20px);background:#1c1c22;color:#fff;padding:9px 14px;border-radius:8px;font-size:12px;opacity:0;transition:.2s;pointer-events:none;z-index:50}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+  .view{animation:in .22s ease}
+  @keyframes in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  @media (max-width: 1000px){
+    .grid-d{grid-template-columns:1fr}
+    .grid-d > .rec{order:-1}
+    .rec-top{cursor:pointer}
+    .rec-top .chev24{display:block;transform:rotate(-90deg)}
+    .rec.open .rec-top .chev24{transform:none}
+    .rec:not(.open) .rec-body{display:none}
+    .rec-body{padding-left:28px}
+    .rec .kv{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+  }
+  @media (max-width: 900px){
+    .app{grid-template-columns:1fr}
+    .legacy,.search{display:none}
+    .side{display:none}
+    .brand{width:auto}
+    .overview,.grid-d{grid-template-columns:1fr}
+    main{padding:20px 16px}
+    .tables-scroll{overflow-x:auto}
+  }
+  @media (prefers-reduced-motion: reduce){ *{transition:none!important;animation:none!important} }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand"><img src="proto/logo.svg" alt="iQ"></div>
+    <div class="loc"><span class="lt"><small>Locations</small>All Locations</span><span class="rt"><span class="chip16">16</span><img class="ico" src="proto/chevron-down-16.svg" alt=""></span></div>
+    <div class="spacer"></div>
+    <div class="search"><img class="ico" src="proto/search.svg" alt="">Help Search...</div>
+    <div class="legacy">Switch to legacy iQ <span class="toggle"><i></i></span><img class="ico" src="proto/info-header.svg" alt=""></div>
+    <div class="iconcell"><span class="bellw"><img src="proto/bell.svg" alt="Notifications" width="20" height="20"><b>9</b></span></div>
+    <div class="iconcell" style="border-right:0"><img class="ico" src="proto/user.svg" alt="Profile"></div>
+  </header>
+  <nav class="side" aria-label="Product navigation (static)">
+    <a><img src="proto/gauge.svg" alt="">Dashboard</a>
+    <a><img src="proto/credit-card.svg" alt=""><span class="grow">Transactions</span><img src="proto/nav-chevron-up.svg" alt=""></a>
+    <a class="sub">Overview</a>
+    <a class="sub">Search</a>
+    <a class="sub on" aria-current="page">Bank Account Activity</a>
+    <a><img src="proto/monitor.svg" alt="">Virtual Terminal</a>
+    <a><img src="proto/arrow-right-left.svg" alt=""><span class="grow">Disputes</span><img src="proto/nav-chevron-down.svg" alt=""></a>
+    <a><img src="proto/rectangle-ellipsis.svg" alt="">PIN Adjustment</a>
+    <a><img src="proto/file-text.svg" alt="">Reports</a>
+    <a><img src="proto/square-percent.svg" alt="">Tax</a>
+    <a><img src="proto/settings.svg" alt=""><span class="grow">Manage Account</span><img src="proto/nav-chevron-down.svg" alt=""></a>
+    <a><img src="proto/nav-user.svg" alt=""><span class="grow">Users</span><img src="proto/nav-chevron-down.svg" alt=""></a>
+    <a><img src="proto/nav-bell.svg" alt=""><span class="grow">Notification Center</span><img src="proto/nav-chevron-down.svg" alt=""></a>
+    <a><img src="proto/chart-line.svg" alt=""><span class="grow">Grow Your Business</span><img src="proto/nav-chevron-down.svg" alt=""></a>
+  </nav>
+  <main id="main"></main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="tiplayer" id="tiplayer" aria-hidden="true"></div>
+
+<script>
+/* All data below is synthetic test data. */
+const TIP = {
+  sales: 'Total amount from sales and refunds that gets deposited or deducted from your bank account.',
+  others: 'Other activities that affect your bank account balance, such as chargebacks, monthly fees, and adjustments.'
+};
+const PM_COLOR = {Credit:'var(--indigo)', Debit:'var(--orange)', 'EBT / WIC':'var(--cyan)', POS:'var(--purple)'};
+
+const ACTIVITIES = [
+  { id:'s1', scen:1, date:'05/19/2026', txDate:'05/18/2026', trace:'242071754852333', batch:'00000243001', acct:'*5577',
+    location:'Sample Merchant Co.', mid:'4445070320445',
+    methods:[ {pm:'Credit',sales:[940,12],ret:[-40,1]}, {pm:'Debit',sales:[450,6],ret:[0,0]}, {pm:'EBT / WIC',sales:[150,3],ret:[0,0]}, {pm:'POS',sales:[100,2],ret:[0,0]} ],
+    others:[] },
+  { id:'s2', scen:2, date:'05/18/2026', txDate:'05/17/2026', trace:'242071754760118', batch:'00000242987', acct:'*5577',
+    location:'Sample Merchant Co.', mid:'4445070320445',
+    methods:[ {pm:'Credit',sales:[1000,12],ret:[-60,2]}, {pm:'Debit',sales:[420,5],ret:[0,0]}, {pm:'EBT / WIC',sales:[240,3],ret:[0,0]} ],
+    others:[ {type:'Chargeback', ref:'9924752222', reason:'13.1 - Merchandise / Services not received', amt:-100},
+             {type:'Chargeback', ref:'9925239463', reason:'13.3 - Not as described / defective', amt:-50},
+             {type:'Adjustment', reason:'Invalid / Missing merchant number', amt:-50} ] },
+  { id:'s3', scen:3, date:'05/17/2026', txDate:null, trace:'072000092202941', batch:null, acct:'*5577',
+    location:'Sample Merchant Co.', mid:'—',
+    methods:[],
+    others:[ {type:'Monthly Fees', reason:'April monthly fee', amt:-2000, statement:true} ] }
+];
+
+/* ---------- money helpers ---------- */
+const fmt = (n, cents=true) => (n<0?'-':'') + '$' + Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:cents?2:0, maximumFractionDigits:cents?2:0});
+const big = n => { const s = fmt(n); const i = s.lastIndexOf('.'); return `${s.slice(0,i+1)}<span class="c">${s.slice(i+1)}</span>`; };
+const sum = a => Math.round(a.reduce((x,y)=>x+y,0)*100)/100;
+ACTIVITIES.forEach(a => {
+  a.net = sum(a.methods.map(m=>m.sales[0]+m.ret[0]));
+  a.oth = sum(a.others.map(o=>o.amt));
+  a.total = sum([a.net, a.oth]);
+});
+
+/* ---------- synthetic transactions (seeded, so they never change) ---------- */
+function rng(seed){ return () => (seed = (seed*16807) % 2147483647) / 2147483647; }
+function split(total, n, r){
+  if(!n) return [];
+  const w = Array.from({length:n}, () => 0.6 + r());
+  const ws = w.reduce((a,b)=>a+b,0);
+  const cents = Math.round(Math.abs(total)*100);
+  const parts = w.map(x => Math.floor(cents*x/ws));
+  parts[0] += cents - parts.reduce((a,b)=>a+b,0);
+  return parts.map(c => Math.sign(total) * c/100);
+}
+const CARDS = { Credit:[['VISA','4111 11xx xxxx 1111'],['MC','5500 00xx xxxx 0004'],['AMEX','3400 00xx xxxx 0009'],['DISC','6011 00xx xxxx 4521']],
+                Debit:[['VISA','4000 12xx xxxx 3301'],['MC','5200 82xx xxxx 0007']],
+                'EBT / WIC':[['EBT','7000 00xx xxxx 1234']],
+                POS:[['POS','Terminal 02']] };
+ACTIVITIES.forEach((a, ai) => {
+  const r = rng(1000 + ai*77);
+  const tx = [];
+  a.methods.forEach(m => {
+    const add = (amt, kind) => {
+      const c = CARDS[m.pm][Math.floor(r()*CARDS[m.pm].length)];
+      const h = 8 + Math.floor(r()*13), mi = Math.floor(r()*60), s = Math.floor(r()*60);
+      tx.push({ pm:m.pm, net:c[0], card:c[1], amt, kind, time:`${String(h).padStart(2,'0')}:${String(mi).padStart(2,'0')}:${String(s).padStart(2,'0')}`,
+                auth: String(100000 + Math.floor(r()*899999)), term: 'T' + (100 + Math.floor(r()*8)) });
+    };
+    split(m.sales[0], m.sales[1], r).forEach(x => add(x,'Sale'));
+    split(m.ret[0], m.ret[1], r).forEach(x => add(x,'Return'));
+  });
+  a.tx = tx;
+});
+
+/* ---------- state + render ---------- */
+const state = { view:'list', id:null, tab:'sales', pm:null, page:1, sort:{key:'time',dir:-1}, open:null, recOpen:false };
+const $main = document.getElementById('main');
+const ICON = {
+  info: '<img class="ico" src="proto/info.svg" alt="">',
+  cal: '<img class="ico" src="proto/calendar-days.svg" alt="">',
+  chev: '<img class="ico" src="proto/chevron-down.svg" alt="">',
+  dl: '<img class="ico" src="proto/download.svg" alt="">',
+  sale: '<img class="ico" src="proto/sale-credit-card.svg" alt="">',
+  ret: '<img class="ico" src="proto/undo-2.svg" alt="">',
+  x: '<img class="ico" src="proto/x.svg" alt="" style="width:12px;height:12px">',
+  updown: '<img class="ico" src="proto/chevrons-up-down.svg" alt="">',
+  down: '<img class="ico" src="proto/arrow-down.svg" alt="">',
+  next: '<img class="ico" src="proto/chevron-right.svg" alt="">',
+  chev24: '<img class="chev24" src="proto/chevron-down-24.svg" alt="">',
+  bank: '<img src="proto/landmark.svg" alt="">'
+};
+const tip = (key) => `<span class="tip" tabindex="0" role="img" data-tip="${key}" aria-label="${TIP[key]}">${ICON.info}</span>`;
+
+function go(patch){
+  Object.assign(state, patch);
+  render();
+  $main.scrollTo({top:0, behavior:'auto'});
+}
+function toast(msg){ const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(()=>t.classList.remove('show'), 2200); }
+
+/* ---------- list page ---------- */
+function renderList(){
+  const tN = sum(ACTIVITIES.map(a=>a.net)), tO = sum(ACTIVITIES.map(a=>a.oth));
+
+  const sortedRows = ACTIVITIES.map(a => `
+    <tr>
+      <td>${a.date}</td>
+      <td>${a.acct}</td>
+      <td>${a.location || '—'}</td>
+      <td>${a.trace}</td>
+      <td>${a.net ? `<button class="lnk" data-open="${a.id}" data-tab="sales" aria-label="Open net sales breakdown, ${fmt(a.net)}">${fmt(a.net)}</button>` : fmt(0)}</td>
+      <td>${a.oth ? `<button class="lnk" data-open="${a.id}" data-tab="others" aria-label="Open others breakdown, ${fmt(a.oth)}">${fmt(a.oth)}</button>` : fmt(0)}</td>
+      <td>${fmt(a.total)}</td>
+    </tr>`).join('');
+
+  return `<div class="view">
+    <h1>Bank Account Activity</h1>
+    <p class="sub-h">View amounts being withdrawn from and deposited into your linked bank accounts.</p>
+    <div class="filters">
+      <div class="field">05/17/2026 - 05/19/2026 ${ICON.cal}</div>
+      <div class="field">All Accounts ${ICON.chev}</div>
+    </div>
+    <div class="overview">
+      <div class="sum">
+        <div><span class="lbl"><span class="bdg" style="background:var(--indigo)"></span>Net Sales ${tip('sales')}</span><div class="amt">${big(tN)}</div></div>
+        <div><span class="lbl"><span class="bdg" style="background:var(--coral)"></span>Others ${tip('others')}</span><div class="amt">${big(tO)}</div></div>
+        <hr>
+        <div class="net"><span class="lbl">Net Amount</span><div class="amt">${big(tN+tO)}</div></div>
+      </div>
+      <div class="card chart">
+        <svg id="chart" role="img" aria-label="Daily net sales and others for 05/17 to 05/19"></svg>
+        <div class="legend"><span><span class="bdg" style="background:var(--indigo)"></span>Net Sales</span><span><span class="bdg" style="background:var(--coral)"></span>Others</span></div>
+      </div>
+    </div>
+    <div class="card list">
+      <div class="list-head"><span>Showing 3 activities for <b>All Locations</b> from 05/17/2026 through 05/19/2026</span><button class="btn" data-toast>Export ${ICON.dl}</button></div>
+      <div class="tables-scroll"><table>
+        <thead><tr><th><span class="sort">Date ${ICON.down}</span></th><th><span class="sort">Account ${ICON.updown}</span></th><th><span class="sort">Location ${ICON.updown}</span></th><th><span class="sort">Trace ID ${ICON.updown}</span></th><th><span class="sort">Net Sales ${tip('sales')} ${ICON.updown}</span></th><th><span class="sort">Others ${tip('others')} ${ICON.updown}</span></th><th><span class="sort">Net Amount ${ICON.updown}</span></th></tr></thead>
+        <tbody>${sortedRows}</tbody>
+      </table></div>
+    </div>
+  </div>`;
+}
+
+/* ---------- details page ---------- */
+function renderDetails(){
+  const a = ACTIVITIES.find(x => x.id === state.id);
+  const tab = (key, label, val, badge) => {
+    const disabled = val === 0;
+    return `<button class="tab ${state.tab===key?'on':''}" ${disabled?'disabled':''} data-tab-switch="${key}" aria-pressed="${state.tab===key}">
+      <span class="lbl">${label} ${tip(key)}</span><span class="amt">${big(val)}</span></button>`;
+  };
+  return `<div class="view">
+    <h1>Activity details</h1>
+    <div class="crumb"><button data-back>Bank Account Activity</button><span>›</span><span>Activity details for ${a.trace}</span></div>
+    <div class="tabs">
+      ${tab('sales','Net Sales',a.net)}
+      ${tab('others','Others',a.oth)}
+      <div class="tab static"><span class="lbl">Net Total Amount</span><span class="amt">${big(a.total)}</span></div>
+    </div>
+    <div class="grid-d">
+      <div>${state.tab==='sales' ? salesPane(a) : othersPane(a)}</div>
+      ${recordCard(a)}
+    </div>
+    ${state.tab==='sales' ? txTable(a) : statement(a)}
+  </div>`;
+}
+function recordCard(a){
+  return `<aside class="card rec ${state.recOpen?'open':''}">
+    <button class="rec-top" data-rec aria-expanded="${!!state.recOpen}">
+      ${ICON.chev24}
+      <span><h3>Transfer details</h3><span class="acct">Account ${a.acct} <span>${ICON.bank}</span></span></span>
+    </button>
+    <div class="rec-body">
+      <h4>Activity Details</h4>
+      <dl class="kv">
+        <div><dt>Process Date</dt><dd>${a.date}</dd></div>
+        <div><dt>Amount</dt><dd>${fmt(a.total)}</dd></div>
+        <div><dt>Routing Transit Number</dt><dd>121137522</dd></div>
+        <div><dt>Trace ID</dt><dd>${a.trace}</dd></div>
+      </dl>
+      <h4>Business Details</h4>
+      <dl class="kv">
+        <div><dt>Chain Code</dt><dd>0YY007</dd></div>
+        <div><dt>Merchant Number</dt><dd>${a.mid}</dd></div>
+        <div><dt>Merchant Name</dt><dd>${a.location || '—'}</dd></div>
+      </dl>
+    </div>
+  </aside>`;
+}
+function salesPane(a){
+  if(!a.net) return `<div class="card empty"><div class="ic">${ICON.sale}</div><h3>No sales data</h3><p>There are no net sales to display for this account activity.</p></div>`;
+  const rows = a.methods.map(m => {
+    const tot = sum([m.sales[0], m.ret[0]]);
+    return {pm:m.pm, s:m.sales, r:m.ret, tot, n:m.sales[1]+m.ret[1]};
+  });
+  const S = sum(rows.map(r=>r.s[0])), Sn = rows.reduce((x,r)=>x+r.s[1],0);
+  const Rt = sum(rows.map(r=>r.r[0])), Rn = rows.reduce((x,r)=>x+r.r[1],0);
+  const max = Math.ceil(a.net/400)*400;
+  const ticks = Array.from({length:5},(_,i)=>`<span>$${(max*i/4).toLocaleString()}</span>`).join('');
+  return `<div class="card pane">
+    <div class="pane-head"><div><span class="lbl">Net Sales</span><div class="amt" style="font-size:20px">${big(a.net)}</div></div><span class="batch">Batch ID: ${a.batch}</span></div>
+    <div class="stack ${state.pm?'filtered':''}" role="img" aria-label="Net sales by payment method">${rows.map(r=>`<span class="${state.pm===r.pm?'hit':''}" style="width:${r.tot/max*100}%;background:${PM_COLOR[r.pm]}" title="${r.pm}: ${fmt(r.tot)}"></span>`).join('')}</div>
+    <div class="ticks">${ticks}</div>
+    <div class="pm tables-scroll"><table>
+      <thead><tr><th>Payment Method</th><th>Sales</th><th>Returns</th><th>Total</th></tr></thead>
+      <tbody>${rows.map(r=>`<tr class="${state.pm===r.pm?'sel':''}">
+        <td><span class="bdg" style="background:${PM_COLOR[r.pm]};margin-right:8px"></span><button class="lnk" data-pm="${r.pm}" aria-pressed="${state.pm===r.pm}">${r.pm}</button></td>
+        <td><b>${fmt(r.s[0])}</b> <span class="cnt">(${r.s[1]})</span></td>
+        <td><b>${fmt(r.r[0])}</b> <span class="cnt">(${r.r[1]})</span></td>
+        <td><b>${fmt(r.tot)}</b> <span class="cnt">(${r.n})</span></td></tr>`).join('')}</tbody>
+      <tfoot><tr><td>Total</td><td><b>${fmt(S)}</b> <span class="cnt">(${Sn})</span></td><td><b>${fmt(Rt)}</b> <span class="cnt">(${Rn})</span></td><td><b>${fmt(a.net)}</b> <span class="cnt">(${Sn+Rn})</span></td></tr></tfoot>
+    </table></div>
+  </div>`;
+}
+function txTable(a){
+  if(!a.net) return '';
+  let list = a.tx.filter(t => !state.pm || t.pm === state.pm);
+  const {key, dir} = state.sort;
+  list = [...list].sort((p,q) => (key==='amt' ? p.amt-q.amt : p.time.localeCompare(q.time)) * dir);
+  const per = 8, pages = Math.max(1, Math.ceil(list.length/per));
+  const page = Math.min(state.page, pages);
+  const shown = list.slice((page-1)*per, page*per);
+  const sortBtn = (k, label) => `<button class="sort" data-sort="${k}">${label} ${state.sort.key===k ? `<span style="display:inline-flex;transform:${state.sort.dir<0?'none':'rotate(180deg)'}">${ICON.down}</span>` : ICON.updown}</button>`;
+  const rows = shown.map((t,i) => {
+    const id = a.id + t.time + t.card + i;
+    const open = state.open === id;
+    return `<tr class="row ${open?'open':''}" data-row="${id}" aria-expanded="${open}">
+      <td>${t.card}</td>
+      <td>${a.txDate} ${t.time}</td>
+      <td>${fmt(t.amt)}</td>
+      <td><span class="type ${t.kind==='Sale'?'sale':'ret'}">${t.kind==='Sale'?ICON.sale:ICON.ret}${t.kind}</span></td>
+      <td>${t.pm}</td>
+      <td>${a.date}</td>
+      <td style="text-align:right"><span class="chev">${ICON.chev}</span></td>
+    </tr>${open ? `<tr class="more"><td colspan="7"><dl class="kv">
+      <div><dt>Authorization code</dt><dd>${t.auth}</dd></div>
+      <div><dt>Terminal</dt><dd>${t.term}</dd></div>
+      <div><dt>Status</dt><dd>Funded in this deposit</dd></div>
+      <div><dt>Batch ID</dt><dd>${a.batch}</dd></div></dl></td></tr>` : ''}`;
+  }).join('');
+  const pager = pages > 1 ? `<div class="pager">${Array.from({length:pages},(_,i)=>`<button class="${i+1===page?'on':''}" data-page="${i+1}">${i+1}</button>`).join('')}<button data-page="${Math.min(page+1,pages)}" aria-label="Next page">${ICON.next}</button></div>` : '<div style="height:8px"></div>';
+  return `<div class="card tx">
+    <div class="tx-head"><div><h2>Transactions</h2><small>${list.length} of ${a.tx.length} transactions</small></div><button class="btn" data-toast>Export ${ICON.dl}</button></div>
+    ${state.pm ? `<span class="chip">Payment Method: <b>${state.pm}</b><button data-clear aria-label="Clear payment method filter">${ICON.x}</button></span>` : ''}
+    <div class="tables-scroll"><table>
+      <thead><tr><th>Card</th><th>${sortBtn('time','Transaction Date')}</th><th>${sortBtn('amt','Amount')}</th><th>Type</th><th>Payment Method</th><th>Process Date</th><th></th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+    ${pager}
+  </div>`;
+}
+function othersPane(a){
+  if(!a.oth) return `<div class="card empty"><div class="ic">${ICON.sale}</div><h3>No other activity</h3><p>Nothing besides sales affected this deposit.</p></div>`;
+  return `<div class="card pane">
+    <span class="lbl">Others</span><div class="amt" style="font-size:20px">${big(a.oth)}</div>
+    <div class="oth tables-scroll"><table>
+      <thead><tr><th>Activity Type</th><th>Reason</th><th style="text-align:right">Amount</th></tr></thead>
+      <tbody>${a.others.map(o=>`<tr>
+        <td><button class="lnk" data-toast="${o.type==='Chargeback'?'In iQ this opens the dispute case in Disputes.':o.statement?'The billing statement is shown below.':'In iQ this opens the adjustment record.'}">${o.type}</button>${o.ref?`<small>${o.ref}</small>`:''}</td>
+        <td>${o.reason}</td><td style="text-align:right">${fmt(o.amt)}</td></tr>`).join('')}</tbody>
+      <tfoot><tr><td>Total</td><td></td><td style="text-align:right">${fmt(a.oth)}</td></tr></tfoot>
+    </table></div>
+  </div>`;
+}
+function statement(a){
+  if(state.tab!=='others' || !a.others.some(o=>o.statement)) return '';
+  const fee = a.others.find(o=>o.statement).amt;
+  const lines = [['Transaction fees',612.40],['Interchange pass-through',988.15],['Gift card program',95.00],['Hardware, supplies and POS services',184.45],['PCI program fee',120.00]];
+  return `<div class="card stmt">
+    <div class="stmt-head"><h2>Monthly Billing Statement</h2><button class="btn" data-toast aria-label="Download statement">${ICON.dl}</button></div>
+    <div class="paper" tabindex="0" aria-label="Billing statement (sample)">
+      <div class="sheet">
+        <h5>MERCHANT BILLING STATEMENT</h5>
+        <div>Statement date: May 7, 2026 &nbsp;·&nbsp; Statement period: April 2026</div>
+        <div>Billing account: C 70545603 &nbsp;·&nbsp; Chain: 0YY007</div>
+        <br>
+        <div>SAMPLE MERCHANT CO.<br>100 TEST STREET<br>ANYTOWN, ST 00000</div>
+        <br>
+        <table>
+          <thead><tr><th>Section description</th><th style="text-align:right">Total</th></tr></thead>
+          <tbody>${lines.map(l=>`<tr><td>${l[0]}</td><td style="text-align:right">$ ${l[1].toFixed(2)}</td></tr>`).join('')}</tbody>
+          <tfoot><tr><td>Total fees due</td><td style="text-align:right">$ ${Math.abs(fee).toFixed(2)}</td></tr></tfoot>
+        </table>
+        <div class="note">ACH debit of $ ${Math.abs(fee).toFixed(2)} is scheduled to post on or about ${a.date} to account ${a.acct}.</div>
+        <br><br><br>
+        <div style="color:#888">Page 1 of 1 · Sample statement with test data</div>
+      </div>
+      <div class="pagectl">Page 1 / 1 &nbsp;−&nbsp; 100% &nbsp;+</div>
+    </div>
+  </div>`;
+}
+
+/* Chart drawn at its real pixel width (a stretched viewBox squashes the axis text). */
+function drawChart(){
+  const svg = document.getElementById('chart');
+  if(!svg) return;
+  const days = [...ACTIVITIES].reverse();
+  const W = Math.max(280, svg.clientWidth), H = 190, L = 52, R = 8, T = 10, B = 28, max = 2000, min = -2000;
+  const y = v => T + (max - v) * (H-T-B) / (max-min);
+  const bw = (W-L-R)/days.length;
+  const grid = [2000,1000,0,-1000,-2000].map(v => `<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="${v===0?'#c4c7d4':'#eceef2'}"/><text x="${L-8}" y="${y(v)+3.5}" text-anchor="end" font-size="11" fill="#6a6e87">${v<0?'$('+Math.abs(v/1000)+'K)':'$'+v/1000+'K'}</text>`).join('');
+  const bars = days.map((a,i) => {
+    const w = Math.min(bw*.56, 120), x = L + i*bw + (bw-w)/2;
+    let s = '';
+    if(a.net>0) s += `<rect x="${x}" y="${y(a.net)}" width="${w}" height="${y(0)-y(a.net)}" fill="#5b5bd7"/>`;
+    if(a.oth<0) s += `<rect x="${x}" y="${y(0)}" width="${w}" height="${y(a.oth)-y(0)}" fill="#fd8d62"/>`;
+    s += `<text x="${x+w/2}" y="${H-8}" text-anchor="middle" font-size="11" fill="#6a6e87">${a.date.slice(0,5)}</text>`;
+    return s;
+  }).join('');
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.innerHTML = grid + bars;
+}
+function render(){ $main.innerHTML = state.view === 'list' ? renderList() : renderDetails(); drawChart(); }
+addEventListener('resize', drawChart);
+
+document.addEventListener('click', e => {
+  const t = e.target.closest('button,tr.row');
+  if(!t) return;
+  if(t.dataset.open) return go({view:'details', id:t.dataset.open, tab:t.dataset.tab, pm:null, page:1, open:null, recOpen:false});
+  if('rec' in t.dataset){ if(matchMedia('(max-width: 1000px)').matches){ state.recOpen=!state.recOpen; render(); } return; }
+  if('back' in t.dataset) return go({view:'list', id:null, pm:null, open:null});
+  if(t.dataset.tabSwitch) return go({tab:t.dataset.tabSwitch, pm:null, page:1, open:null});
+  if(t.dataset.pm){ Object.assign(state,{pm: state.pm===t.dataset.pm ? null : t.dataset.pm, page:1, open:null}); return render(); }
+  if('clear' in t.dataset){ Object.assign(state,{pm:null, page:1}); return render(); }
+  if(t.dataset.page){ Object.assign(state,{page:+t.dataset.page, open:null}); return render(); }
+  if(t.dataset.sort){ const k=t.dataset.sort; state.sort = {key:k, dir: state.sort.key===k ? -state.sort.dir : -1}; state.page=1; return render(); }
+  if(t.dataset.row){ state.open = state.open===t.dataset.row ? null : t.dataset.row; return render(); }
+  if('toast' in t.dataset) return toast(t.dataset.toast || 'Not part of this prototype.');
+});
+/* tooltip layer */
+const tl = document.getElementById('tiplayer');
+function showTip(el){
+  tl.textContent = TIP[el.dataset.tip];
+  tl.className = 'tiplayer';
+  const r = el.getBoundingClientRect(), w = tl.offsetWidth, h = tl.offsetHeight, gap = 8;
+  const above = r.top - h - gap >= 4;
+  let left = r.left + r.width/2 - w/2;
+  left = Math.max(8, Math.min(left, innerWidth - w - 8));
+  tl.style.left = left + 'px';
+  tl.style.top = (above ? r.top - h - gap : r.bottom + gap) + 'px';
+  tl.style.setProperty('--ax', (r.left + r.width/2 - left) + 'px');
+  tl.classList.add(above ? 'above' : 'below', 'show');
+}
+const hideTip = () => tl.classList.remove('show');
+document.addEventListener('mouseover', e => { const t = e.target.closest('.tip'); t ? showTip(t) : hideTip(); });
+document.addEventListener('focusin', e => { const t = e.target.closest('.tip'); t ? showTip(t) : hideTip(); });
+document.addEventListener('focusout', hideTip);
+$main.addEventListener('scroll', hideTip);
+render();
+</script>
+</body>
+</html>

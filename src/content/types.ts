@@ -28,6 +28,9 @@ export interface ProjectFrontmatter {
    *  "in-progress": page is live but the work is ongoing — card links and says "In progress".
    *  Case-insensitive in frontmatter ("In-Progress" is fine); build-index normalises it. */
   status?: 'coming-soon' | 'in-progress'
+  /** SHA-256 hex of a password; the case-study page shows a password screen until it's entered.
+   *  Client-side only — keeps casual visitors out, not a real security boundary. */
+  passwordHash?: string
   /** Excluded from the generated index entirely (e.g. sample/template files). */
   draft?: boolean
   /** Set on small projects shown in the home Art & Tech strip; the value is the strip caption. */

@@ -11,6 +11,8 @@ order: 2
 featured: true
 size: "large"
 status: "In-Progress"
+# SHA-256 of the page password — see PasswordGate.tsx
+passwordHash: "19930c50393d991fc68271ff51dc917fbd232f76a4514afcf281933f6c6ade12"
 ---
 
 import { ProjectOverview } from '../../src/components/projectOverview/ProjectOverview'
@@ -59,7 +61,7 @@ export const img = (name) => `/images/reconciliation/${name}`
   <div className="cs-card cs-card--plain">
     <p className="t-eyebrow-bold accent-color no-margin">Solution (Phase 1)</p>
     <p className="body-md">Let merchants drill into any payout to see the transactions, fees, adjustments, and chargebacks behind it. Group each payout by Trace ID so it matches what merchants see in their bank records.</p>
-    <a href="#solution" className="btn no-fade" style={{ alignSelf: 'flex-start' }}>Jump to the solution ↓</a>
+    <a href="#solution" className="btn no-fade" style={{ alignSelf: 'flex-start' }}>Jump to Output ↓</a>
   </div>
 </div>
 
@@ -155,8 +157,11 @@ export const img = (name) => `/images/reconciliation/${name}`
   <HtmlEmbed
     src={img('reconciliation-workflow.html')}
     title="Interactive reconciliation workflow: the checks merchants run, and the root causes where they get stuck"
-    height="min(88vh, 960px)"
-    intro={<p className="body-md">I mapped how merchants reconcile to identify the causes of payout vs. sales mismatch in each step, and how much of that our current scope can cover. Scroll through the workflow and click any card for details.</p>}
+    height="min(80vh, 780px)"
+    intro={<div className="flex-vertical gap-20">
+      <h4>Understand merchants’ reconciliation workflow</h4>
+      <p className="body-md">I mapped how merchants reconcile to identify the causes of payout vs. sales mismatch in each step, and how much of that our current scope can cover. Scroll through the workflow and click any card for details.</p>
+    </div>}
   />
 </div>
 
@@ -170,31 +175,40 @@ export const img = (name) => `/images/reconciliation/${name}`
   </div>
 </div>
 
-<div className="cs-block">
-  <div className="cs-intro"><h4 className="cs-h-sm">What can change a payout</h4></div>
-  <div className="cs-placeholder">Settlement type codes</div>
+<div className="cs-split--even cs-split cs-block cs-ruled">
+  <div style={{ alignSelf: 'flex-start' }}>
+    <h4>What can change a payout</h4>
+  </div>
+  <div className="flex-vertical gap-20">
+    <p className="body-md">I worked with the back-end engineers to identify the settlement types that can change a payout amount: transaction-related ones (deposits from day-to-day sales), and non-transaction-related ones (chargebacks, risk holds, monthly bills) that occur less often.</p>
+    <p className="body-md">We identified the common types that cover <strong className="accent-color">90% of use cases</strong>. The remaining 10% are pending more investigation into different business lines and payment setups.</p>
+  </div>
+</div>
+
+<div className="cs-gap-sm">
+  <div className="cs-media"><img src={img('settlement types code.png')} alt="Settlement type codes from the back-end table. Non-transaction types: adjustments and chargebacks are the most common, fees are monthly, daily discount applies only to a small segment of flat-rate merchants, and codes G through 2 are uncommon for 90% of merchants. Transaction types: card sales, plus debit, EBT, POS and WIC, which settle separately." /></div>
 </div>
 
 {/* ---- 03 ---- */}
 
 <div id="solution" className="cs-section">
-  <SectionHeader number="03" title="Designing for three payout scenarios" />
+  <SectionHeader number="03" title="Designing for 3 payout scenarios" />
 </div>
 
 <div className="cs-split cs-split--wide cs-lead">
   <div className="flex-vertical gap-20">
     <h4 className="cs-h-sm">1. Transactions only</h4>
-    <p className="body-md">The payout is made up entirely of sales.</p>
+    <p className="body-md">The payout is made up entirely of deposits from sales.</p>
   </div>
-  <div className="cs-placeholder">Transactions-only payout</div>
+  <div className="cs-media" style={{ alignSelf: 'center' }}><img src={img('Scenario 1.png')} alt="Transactions-only payout row: Net Sales $1,600.00, Others $0.00, Net Amount $1,600.00" /></div>
 </div>
 
 <div className="cs-split cs-split--wide cs-block">
   <div className="flex-vertical gap-20">
     <h4 className="cs-h-sm">2. Mixed</h4>
-    <p className="body-md">The payout combines transactions with chargebacks, risk holds, adjustments, or fees.</p>
+    <p className="body-md">The payout combines sales with chargebacks, risk holds, adjustments, fees, or others.</p>
   </div>
-  <div className="cs-placeholder">Mixed payout</div>
+  <div className="cs-media" style={{ alignSelf: 'center' }}><img src={img('scenario 2.png')} alt="Mixed payout row: Net Sales $1,600.00, Others -$200.00, Net Amount $1,400.00" /></div>
 </div>
 
 <div className="cs-split cs-split--wide cs-block">
@@ -202,7 +216,7 @@ export const img = (name) => `/images/reconciliation/${name}`
     <h4 className="cs-h-sm">3. Non-transactions only</h4>
     <p className="body-md">The payout has no sales activity at all.</p>
   </div>
-  <div className="cs-placeholder">Non-transactions-only payout</div>
+  <div className="cs-media" style={{ alignSelf: 'center' }}><img src={img('scenario 3.png')} alt="Non-transactions-only payout row: Net Sales $0.00, Others -$2,000.00, Net Amount -$2,000.00" /></div>
 </div>
 
 <div id="prototype" className="cs-subsection">
@@ -210,7 +224,15 @@ export const img = (name) => `/images/reconciliation/${name}`
 </div>
 
 <div className="cs-lead">
-  <div className="cs-placeholder cs-placeholder--wide">Embedded prototype</div>
+  <HtmlEmbed
+    src={img('bank-account-activity-prototype.html')}
+    title="Interactive prototype of the Bank Account Activity page, with three payouts that match the three scenarios above"
+    height="800px"
+    framed
+    intro={<div className="flex-vertical gap-20">
+      <p className="body-md">Click around and explore the prototype. The three activities in the grid match the three payout scenarios above, top to bottom. All data is synthetic.</p>
+    </div>}
+  />
 </div>
 
 {/* ---- 04 ---- */}
@@ -219,22 +241,23 @@ export const img = (name) => `/images/reconciliation/${name}`
   <SectionHeader number="04" title="What’s next" />
 </div>
 
-<div className="cs-grid-2 cs-gap-wide cs-lead">
-  <div className="flex-vertical gap-20">
+<div className="flex-vertical gap-20 cs-lead">
+    <h4>Now: Validating with real merchants</h4>
+    <p className="body-md">We tested the design with 10 internal Operations team members, and the feedback was positive. Now we’re recruiting Worldpay merchants to stress-test the design direction and learn about their reconciliation workflow.</p>
     <figure className="cs-figure">
-      <div className="cs-placeholder">Stripe vs. Worldpay comparison</div>
+      <div className="cs-media"><img src={img('user-testing-session.png')} alt="A remote user testing session: an internal Operations team member shares their screen while navigating the Activity details page of the prototype, with Net Sales, Others and the payment method breakdown, and the designer on video beside it." /></div>
+      <figcaption className="t-meta cs-caption cs-caption--note">User testing with the internal Operations team: watching them navigate the prototype.</figcaption>
+    </figure>
+</div>
+
+<div className="flex-vertical gap-20 cs-block">
+    <h4>Next: Connecting the experience across the portal</h4>
+    <p className="body-md">Merchants don’t reconcile on one page. They move between Payouts and Transactions to piece together the full picture.</p>
+    <p className="body-md">Today, merchants can’t tell where a transaction stands in its lifecycle. Improving Transaction Search to make each transaction’s status clear is the next step toward an end-to-end reconciliation experience.</p>
+    <figure className="cs-figure">
+      <div className="cs-media"><img src={img('Transaction statuses — Stripe vs. Worldpay.png')} alt="Transaction statuses, Stripe vs. Worldpay. Stripe shows 21 statuses across three stages: authorized, settled and funded, and disputes. Worldpay iQ shows 6 statuses split between Authorizations and Settlements, so one settled transaction can appear in both places, and merchants can't tell whether a transaction has been funded, is on hold, or is in dispute." /></div>
       <figcaption className="t-meta cs-caption cs-caption--note">Competitive reference: how Stripe shows transaction status.</figcaption>
     </figure>
-    <h4 className="cs-h-sm">Connecting the experience across the portal</h4>
-    <p className="body-md">Merchants don’t reconcile on one page. They move between Payouts and Transactions to piece together the full picture, so fully solving the problem means improving Transaction Search too. Merchants also need clearer visibility into each transaction’s lifecycle, so they can see where it currently stands.</p>
-  </div>
-  <div className="flex-vertical gap-20">
-    <figure className="cs-figure">
-      <div className="cs-placeholder">Data sources image</div>
-    </figure>
-    <h4 className="cs-h-sm">Data beyond the portal</h4>
-    <p className="body-md">Merchants also pull from bank statements and POS terminal records. The next step is understanding those sources better.</p>
-  </div>
 </div>
 
 </div>

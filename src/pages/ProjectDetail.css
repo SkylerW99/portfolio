@@ -30,6 +30,7 @@
 /* ---- Vertical rhythm ---------------------------------------------------- */
 .cs-section { margin-top: 132px; }   /* before a numbered SectionHeader */
 .cs-block   { margin-top: 52px; }   /* between blocks inside a section */
+.cs-ruled   { padding-top: 52px; border-top: 1px solid var(--divider); }   /* hairline above a block that starts a new topic */
 .cs-lead    { margin-top: 48px; }   /* first block after a SectionHeader */
 .cs-gap-sm  { margin-top: 28px; }
 .cs-gap-xs  { margin-top: 20px; }
@@ -148,6 +149,24 @@
   box-shadow: 0 1px 3px rgba(20, 21, 22, .12);
 }
 .html-embed__open[hidden] { display: none; }
+.html-embed__open--bottom { top: auto; right: auto; bottom: 16px; left: 16px; }   /* bottom-left: clear of an app embed's header controls and its content */
+/* framed: dark surround + window bar, matching Fast Launch's demo video (.video-embed) */
+.html-embed__frame--dark {
+  background: var(--bg-inverse);
+  padding: 0 32px 32px;
+}
+.html-embed__frame--dark iframe { border: 0; border-radius: 10px; }
+.html-embed__bar { height: 52px; padding-left: 2px; }
+.html-embed__open--bar { top: 12px; right: 32px; }
+@media (max-width: 767px) {
+  .html-embed__frame--dark { padding: 0 12px 12px; }
+  .html-embed__bar { height: 44px; }
+  .html-embed__open--bar { top: 8px; right: 12px; }
+}
+.html-embed--raised .html-embed__frame iframe {   /* live prototype: lifted off the page so it reads differently from screenshots */
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(20, 21, 22, .08), 0 18px 48px -12px rgba(20, 21, 22, .28);
+}
 
 /* ---- Grids -------------------------------------------------------------- */
 .cs-grid-2,

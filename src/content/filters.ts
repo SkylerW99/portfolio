@@ -5,6 +5,8 @@ import { useSearchParams } from 'react-router-dom'
 
 export const CATEGORY_PARAM = 'category'
 export const PROJECT_PARAM = 'project'
+/** Slug of a password-protected case study whose password pop-up is open (SiteShell). */
+export const UNLOCK_PARAM = 'unlock'
 
 export function getActiveCategory(searchParams: URLSearchParams): string | null {
   return searchParams.get(CATEGORY_PARAM)

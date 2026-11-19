@@ -4,7 +4,7 @@
 // About is a pop-up over the home feed, opened by the /about route.
 
 import { useEffect, useRef, useState } from 'react'
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import './SiteShell.css'
 import heroSlime from '../../assets/hero-slime.png'
 import { Logo } from './Logo'
@@ -12,6 +12,10 @@ import { Scramble } from './Scramble'
 import { useHeroWarp } from './useHeroWarp'
 import { AboutModal } from '../AboutModal/AboutModal'
 import { ContactModal } from '../ContactModal/ContactModal'
+import { PasswordGate } from '../PasswordGate/PasswordGate'
+import { UNLOCK_PARAM } from '../../content/filters'
+import { passwordHashFor } from '../../content/unlock'
+import { projects } from '../../content/projects'
 import { EMAIL, GITHUB_URL, LINKEDIN_URL, RESUME_URL } from '../../content/contact'
 
 const COLLAPSE_KEY = 'skyw:panel-collapsed'
@@ -206,13 +210,41 @@ export function Component() {
       <main className="main">
         <Outlet />
         <footer className="t-nav foot">
-          <span>© SW {new Date().getFullYear()} — No cookies</span>
+          <span>© SW {new Date().getFullYear()}</span>
           <span className="g">Made across Shanghai, New York, and Dallas</span>
         </footer>
       </main>
 
       <AboutModal open={aboutOpen} onClose={() => navigate('/')} onContact={() => { navigate('/'); setContactOpen(true) }} />
       <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
+      <UnlockPopup />
     </div>
+  )
+}
+
+// Password pop-up for a protected case study (?unlock=slug), shown over whichever
+// shell page is open. The right password continues to /work/:slug, replacing the
+// ?unlock entry so Back returns to the page underneath.
+function UnlockPopup() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const navigate = useNavigate()
+  const slug = searchParams.get(UNLOCK_PARAM)
+  const hash = passwordHashFor(slug)
+  if (!slug || !hash) return null
+  const title = projects.find((p) => p.slug === slug)?.title ?? ''
+  const close = () => setSearchParams((prev) => {
+    const next = new URLSearchParams(prev)
+    next.delete(UNLOCK_PARAM)
+    return next
+  })
+  return (
+    <PasswordGate
+      key={slug}
+      slug={slug}
+      title={title}
+      hash={hash}
+      onClose={close}
+      onUnlock={() => navigate(`/work/${slug}`, { replace: true })}
+    />
   )
 }

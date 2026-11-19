@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Reconciliation workflow — where merchants get stuck</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap">
 <style>
   :root{
     --bg:#FFFFFF; --ink:#141516; --muted:#34383b; --meta:#5c6063; --soft:#c4c7c9; --divider:#e3e5e6; --tint:#f2f3f3; --cream:#FFFFFF;
@@ -23,7 +23,7 @@
   .mono{font-family:var(--mono);font-size:12px;}
 
   /* ---------- header ---------- */
-  h1{font-size:36px;line-height:1.1;font-weight:400;letter-spacing:-.03em;margin:0}
+  h1{font-size:28px;line-height:1.1;font-weight:400;letter-spacing:-.03em;margin:0}
   .quote{font-size:17px;line-height:1.5;color:var(--muted);margin:16px 0 0;max-width:900px}
   .quote em{font-style:normal;color:var(--ink);font-weight:500}
 
@@ -37,8 +37,8 @@
   .dot{display:inline-block;width:8px;height:8px;margin-right:8px;vertical-align:1px}
   .dot.g{background:var(--green)} .dot.a{background:var(--rust)} .dot.o{background:var(--grey-line)}
 
-  .legend{display:flex;flex-direction:column;gap:10px;margin:24px 0 0;font-family:var(--mono);font-size:14px;color:var(--meta)}
-  .legend-row{display:flex;flex-wrap:wrap;gap:10px 28px}
+  .legend{display:flex;flex-wrap:wrap;gap:16px 56px;margin:32px 0 0;font-family:var(--mono);font-size:14px;color:var(--meta)}
+  .legend-row{display:flex;flex-direction:column;gap:10px}
   .legend .dot{margin-right:0}
   .legend span{display:inline-flex;align-items:center;gap:8px}
   .sw{width:20px;height:12px;display:inline-block}
@@ -79,6 +79,8 @@
   .node.hub{cursor:default;background:var(--bg);border-color:var(--soft);color:var(--meta);font-family:var(--mono);font-size:13px;font-weight:500;min-height:36px;padding:9px 14px}
   .node.hub:hover{border-color:var(--soft)}
   .node.yes{background:var(--bg);border:1px solid var(--green-line);color:var(--green);font-family:var(--mono);font-size:13px;font-weight:500;min-height:36px;padding:9px 14px}
+  .node.yes{transition:background .15s,color .15s,border-color .15s,transform .18s ease}
+  .node.yes:hover{background:var(--green);border-color:var(--green);color:#fff;transform:translateY(-2px)}
   .node.done{background:var(--green-bg);border-color:var(--green);color:var(--green);font-family:var(--mono);font-size:13px;font-weight:500;min-height:36px;padding:9px 14px}
   .node.selected{outline:2px solid var(--rust);outline-offset:3px}
   .vs{font-family:var(--mono);font-size:13px;color:var(--meta);background:var(--bg);padding:2px 8px;position:relative;z-index:2;margin:0 -44px}
@@ -104,7 +106,14 @@
   .card.g{background:var(--green-bg);border:1px solid var(--green-line)}
   .card.a{background:var(--amber-bg);border:1px solid var(--amber-line)}
   .card.o{background:transparent;border:1px dashed var(--grey-line)}
-  .card:hover{filter:brightness(.98)}
+  /* hover: lift + darker edge so cards read as clickable */
+  .card{transition:background .15s,opacity .2s,transform .18s ease,box-shadow .18s ease,border-color .15s}
+  .card:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(20,21,22,.12)}
+  .card.g:hover{border-color:var(--green)}
+  .card.a:hover{border-color:var(--rust)}
+  .card.o:hover{border-color:var(--grey);border-style:solid;background:var(--tint)}
+  .card .t{transition:color .15s}
+  .card:hover .t{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
   .card.selected{outline:2px solid var(--ink);outline-offset:3px}
 
   .badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:13px;font-weight:500;}
@@ -137,6 +146,88 @@
   .key h4{color:var(--ink);margin-top:14px}
   .key .lede{margin-top:10px}
 
+  /* ---------- refined, compact pass ---------- */
+  .page{padding:56px 40px 64px}   /* top clears the embed's floating "Open in new tab" button */
+  h1{font-size:24px;letter-spacing:-.02em}
+  .quote{font-size:15px;margin-top:10px}
+  .legend{gap:10px 48px;margin-top:22px;font-size:12px}
+  .legend-row{gap:7px}
+  .sw{width:16px;height:10px}
+  .dot{width:7px;height:7px}
+  .layout{grid-template-columns:minmax(0,1fr) 320px;gap:32px;margin-top:40px}
+  .flow-col{gap:56px}
+  .step-head{padding-bottom:12px;border-bottom-color:var(--divider)}
+  .step h3{font-size:20px}
+  .step-tag{font-size:11px;padding:2px 6px}
+  .step .ask{font-size:13px;margin-top:2px}
+  .flow{margin-top:28px}
+  .row{gap:56px}
+  .row + .row,.row + .reasons{margin-top:30px}
+  .reasons{gap:12px}
+  .node{min-height:40px;max-width:210px;padding:9px 14px;font-size:13px;line-height:1.3}
+  .node small{font-size:11px;margin-top:3px}
+  .node.hub,.node.yes,.node.done{font-size:12px;min-height:30px;padding:6px 11px}
+  .vs{font-size:11px;margin:0 -36px}
+  .decision{width:100px;height:100px}
+  .decision::before{inset:16px;border-color:var(--meta)}
+  .decision span{font-size:12px;width:62px}
+  .sources span{font-size:11px;padding:3px 7px}
+  .card{min-height:0;gap:6px;padding:14px 14px 12px}
+  .card .n{font-size:11px}
+  .card .t{font-size:15px;line-height:1.25}
+  .card .d{font-size:12.5px;line-height:1.45}
+  .card .badge{margin-top:auto;padding-top:8px;font-size:11.5px}
+  .panel{top:16px;max-height:calc(100vh - 32px);padding:22px}
+  .panel .p-eyebrow{font-size:12px;margin-bottom:8px}
+  .panel h4{font-size:18px}
+  .panel .lede{font-size:14px;margin-top:10px}
+  .panel section{margin-top:16px;padding-top:14px}
+  .panel h5{font-size:12px;margin-bottom:8px}
+  .panel p,.panel li{font-size:13.5px;line-height:1.5}
+  .list-btn{font-size:13px;min-height:36px;padding:8px 0}
+
+  /* header: title + quote left, legend right, one band */
+  .head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 40px;padding-bottom:20px;border-bottom:1px solid var(--divider)}
+  .head .quote{margin-top:6px}
+  .head .legend{margin:0;gap:6px 32px;font-size:11.5px}
+  .head .legend-row{gap:4px}
+  .head + .layout{margin-top:32px}
+
+  /* ---------- depth pass: canvas + raised elements ---------- */
+  :root{--lift:0 1px 2px rgba(20,21,22,.06),0 6px 16px -4px rgba(20,21,22,.10);--lift-hi:0 2px 4px rgba(20,21,22,.08),0 14px 28px -8px rgba(20,21,22,.18)}
+  .step-head{border-bottom:0;padding-bottom:0}
+  .flow{margin-top:16px;padding:32px 24px 24px;border:1px solid var(--divider);
+    background-color:#f7f8f8;
+    background-image:radial-gradient(circle,#d9dcdd 1px,transparent 1.2px);background-size:18px 18px;background-position:9px 9px}
+  #step-3 .flow{border-style:dashed;border-color:var(--soft)}
+  .node{box-shadow:var(--lift)}   /* analysis nodes keep their grey tint (legend) */
+  .node.ext{background:#fff}
+  .node.iq{box-shadow:0 2px 4px rgba(20,21,22,.12),0 10px 20px -6px rgba(20,21,22,.28)}
+  .node.hub{background:#fff;box-shadow:none}
+  .node.yes,.node.done{box-shadow:none}
+  .decision::before{background:#fff;box-shadow:var(--lift)}
+  .decision:hover::before{background:var(--tint)}
+  .vs{background:#f7f8f8}   /* canvas colour, so the dashed line breaks around "vs" */
+  .card{box-shadow:var(--lift);border-top-width:3px}
+  .card.g{border-top-color:var(--green)}
+  .card.a{border-top-color:var(--rust)}
+  .card.o{box-shadow:none;background:rgba(255,255,255,.6);border-top-width:1px}
+  .card:hover{box-shadow:var(--lift-hi)}
+  .panel{box-shadow:var(--lift)}
+
+  .head h1{font-style:italic;font-weight:500;line-height:1.25}
+
+  /* legend: two matching groups, each with a small heading and identical swatches */
+  .head .legend{gap:6px 28px}
+  .head .legend-row{gap:5px;min-width:112px}
+  .legend-h{font-weight:500;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);margin-bottom:2px}
+  .head .sw{width:14px;height:10px}
+  .sw.st{border:0}
+  .sw.st.g{background:var(--green)} .sw.st.a{background:var(--rust)} .sw.st.o{background:var(--grey-line)}
+
+  /* headings: medium weight so they hold up against the body copy */
+  .step h3,.card .t,.panel h4{font-weight:500}
+
   @media (max-width: 1100px){
     .layout{grid-template-columns:1fr}
     .panel{position:fixed;left:0;right:0;bottom:0;top:auto;max-height:72vh;border-width:1px 0 0;z-index:20;transform:translateY(105%);transition:transform .25s;box-shadow:0 -20px 60px rgba(20,21,22,.15)}
@@ -145,7 +236,7 @@
   }
   @media (max-width: 760px){
     .page{padding:48px 18px 72px}
-    h1{font-size:30px}
+    h1{font-size:24px}
     .step h3{font-size:22px}
     .reasons.c3,.reasons.c2{grid-template-columns:1fr}
     .row{gap:8px}
@@ -160,25 +251,22 @@
 </head>
 <body>
 <main class="page">
-  <h1>Merchant Reconciliation Workflow</h1>
-  <p class="quote"><em>“Money hits my bank, and I want to make sense of it.”</em> Each step is a check the merchant runs. Select a root cause to see whether it’s already in the current scope, and what comes next.</p>
-
-  <div class="summary">
-    <div>
-      <h2>Root causes across the workflow</h2>
-      <div class="bar" id="bar" aria-hidden="true"></div>
-      <div class="counts" id="counts"></div>
-    </div>
+  <header class="head">
+  <div>
+    <h1>“Money hits my bank.<br>I want to make sense of it, and here’s what I do.”</h1>
   </div>
 
   <div class="legend" aria-label="Legend">
-    <div class="legend-row"><span><i class="sw ext"></i>External record</span>
-    <span><i class="sw iq"></i>iQ record</span>
+    <div class="legend-row"><b class="legend-h">Source</b>
+    <span><i class="sw ext"></i>External record</span>
+    <span><i class="sw iq"></i>In-Portal record</span>
     <span><i class="sw an"></i>Analysis</span></div>
-    <div class="legend-row"><span><span class="dot g"></span>Already in the current scope</span>
-    <span><span class="dot a"></span>Partially solved / in discovery</span>
-    <span><span class="dot o"></span>Open, needs investigation</span></div>
+    <div class="legend-row"><b class="legend-h">Status</b>
+    <span><i class="sw st g"></i>In scope</span>
+    <span><i class="sw st a"></i>In discovery</span>
+    <span><i class="sw st o"></i>Open</span></div>
   </div>
+  </header>
 
   <div class="layout">
     <div class="flow-col" id="flowCol"></div>
@@ -204,15 +292,15 @@ const ARROW = '<svg width="18" height="12" viewBox="0 0 18 12" fill="none" strok
 const NODES = {
   /* step 1 */
   's1-bank':{step:1,title:'Bank statement',kind:'External record',body:'The merchant opens their banking app and sees what actually landed in their account.'},
-  's1-baa':{step:1,title:'iQ Bank Account Activity',kind:'iQ record',body:'The page in iQ that lists every deposit and withdrawal Worldpay sent to the merchant’s bank account.'},
+  's1-baa':{step:1,title:'iQ Bank Account Activity',kind:'In-Portal record',body:'The page in iQ that lists every deposit and withdrawal Worldpay sent to the merchant’s bank account.'},
   's1-d':{step:1,title:'Does the deposit amount match?',kind:'Decision',body:'The merchant compares each bank line with a record in iQ.',paths:[['Yes','The money arrived. The merchant moves on to auditing what the deposit is made of (Step 2).'],['No','The deposit is missing, late or looks different from iQ. One of three root causes below.']]},
   /* step 2 */
-  's2-dep':{step:2,title:'Deposit amount',kind:'iQ record',body:'The single amount that reached the bank in Step 1.'},
+  's2-dep':{step:2,title:'Deposit amount',kind:'In-Portal record',body:'The single amount that reached the bank in Step 1.'},
   's2-exp':{step:2,title:'Expected total sales',kind:'Analysis',body:'What the merchant expected to be paid, built from what they sold yesterday.',list:['Authorization records from their POS terminal','and / or iQ transaction records for yesterday’s total sales']},
   's2-d':{step:2,title:'Does the deposit match total sales?',kind:'Decision',body:'The merchant checks the deposit against what they sold.',paths:[['Yes','Sales and deposit agree. Optionally, the merchant checks individual transactions against their POS (Step 3).'],['No','The merchant needs to know why. They drill into the deposit breakdown in iQ.']]},
-  's2-drill':{step:2,title:'Drill into the deposit breakdown',kind:'iQ record',body:'In iQ Bank Account Activity, the merchant opens the deposit to see the sales, refunds, fees, chargebacks and adjustments inside it. This is the core of the redesign.'},
+  's2-drill':{step:2,title:'Drill into the deposit breakdown',kind:'In-Portal record',body:'In iQ Bank Account Activity, the merchant opens the deposit to see the sales, refunds, fees, chargebacks and adjustments inside it. This is the core of the redesign.'},
   /* step 3 */
-  's3-iq':{step:3,title:'iQ expected amount + count',kind:'iQ record',body:'Transaction totals and counts as iQ records them.'},
+  's3-iq':{step:3,title:'iQ expected amount + count',kind:'In-Portal record',body:'Transaction totals and counts as iQ records them.'},
   's3-pos':{step:3,title:'POS amount + count',kind:'External record',body:'The same totals as the merchant’s point-of-sale system records them.'},
   's3-d':{step:3,title:'Do iQ and the POS agree?',kind:'Decision',body:'A transaction-level check between two systems the merchant relies on.',paths:[['Yes','Reconciled. The merchant closes the books.'],['No','Unknown territory: three suspected causes still need investigation.']]},
   's3-done':{step:3,title:'Reconciled — close the books',kind:'Outcome',body:'Every deposit is explained and every transaction matches. This is the outcome the whole workflow is working towards.'},
@@ -237,12 +325,12 @@ const REASONS = [
   {id:'r21',step:2,n:'2.1',st:'a',badge:'Partially solved',title:'Unexpected item in the deposit',short:'A chargeback, refund or Worldpay adjustment the merchant didn’t expect.',
     need:'“There’s a deduction in my deposit I don’t recognise.”',
     why:['A chargeback or refund tied to an older sale.','A Worldpay adjustment, which may be related to risk holds: after a review, released funds can show up as a “miscellaneous adjustment”.'],
-    how:['The redesigned breakdown already shows chargebacks and refunds inside the deposit.','Next: additional discovery on displaying more details around chargebacks, adjustments and holds, such as linking to the dispute case to respond, or looking up the original transaction.'],
+    how:['The redesigned breakdown already shows chargebacks and refunds inside the deposit.','<em>Next: additional discovery on displaying more details around chargebacks, adjustments and holds, such as linking to the dispute case to respond, or looking up the original transaction.</em>'],
     note:'Partially solved; needs more discovery.'},
   {id:'r22',step:2,n:'2.2',st:'g',pct:80,badge:'In current scope · 80%',title:'Transactions missing from the deposit',short:'The deposit is “short”: some of yesterday’s sales aren’t in it.',
     need:'“I sold more than this. Which sales didn’t get paid?”',
-    why:['Some transactions were not settled into this deposit. They can sit in one of three non-settled statuses: <b>Under review</b>, where funds are withheld; <b>Approved</b> but delayed by the card network (for example, Amex funds later); or <b>Uncaptured</b>, where the transaction was authorized but never captured for settlement.'],
-    how:['The deposit now lists the transactions inside it, so merchants can see exactly which sales are missing from a short deposit.','For the future: more detailed status tracking for each transaction record in transaction search, so merchants can spot transactions that weren’t funded.'],
+    why:['Some transactions were not settled into this deposit. They could be in other statuses, like <b>Under review</b>, <b>Approved</b> or <b>Uncaptured</b>.'],
+    how:['The deposit now lists the transactions inside it, so merchants can see exactly which sales are missing from a short deposit.','<em>For Phase 2, we need more intuitive status tracking for each transaction record, so merchants can troubleshoot what happened to the missing transactions.</em>'],
     note:'80% solved in the reconciliation feature.'},
   {id:'r31',step:3,n:'3.1',st:'o',badge:'Open',title:'In the POS, missing in iQ',short:'A sale the POS recorded never appears in iQ.',
     need:'“My POS shows this sale, but iQ doesn’t.”',why:['Unconfirmed: the transaction may be delayed, or never captured by the gateway.'],how:['Not yet addressed. Needs further information.']},
@@ -263,7 +351,6 @@ const R = id => REASONS.find(r=>r.id===id);
 const steps = [
 `<section class="step" id="step-1" aria-labelledby="h-s1">
   <div class="step-head"><span class="step-num">Step 1</span><h3 id="h-s1"><span class="num">01.</span> Match the deposit amount</h3><p class="ask">Did the money I expected arrive in my bank?</p></div>
-  <div class="scen"><span><b>Happy path</b> · the money hit the bank; the merchant starts auditing</span><span><b>Unhappy path</b> · missing or delayed deposit</span></div>
   <div class="flow" data-edges='[["s1-bank","s1-d"],["s1-baa","s1-d"],["s1-d","s1-yes"],["s1-d","s1-hub"],["s1-hub","r11"],["s1-hub","r12"],["s1-hub","r13"]]' data-dashed='[["s1-bank","s1-baa"]]'>
     <div class="row">${node('s1-bank','ext','Bank statement<small>in the merchant’s banking app</small>')}<span class="vs" aria-hidden="true">vs</span>${node('s1-baa','iq','iQ Bank Account Activity')}</div>
     <div class="row">${decision('s1-d','Amount matched?')}</div>
@@ -320,24 +407,18 @@ function drawAll(){
       const pa=box(A,flow),pb=box(B,flow);
       const reasonEdge=B.classList.contains('card');
       if(reasonEdge && window.innerWidth<=760) return;
-      out+=`<path data-a="${a}" data-b="${b}" d="${elbow(pa.cx,pa.bottom,pb.cx,pb.top-2)}" fill="none" stroke="${reasonEdge?'#a3a6a8':'#5c6063'}" stroke-width="1" marker-end="${mk}"/>`;
+      out+=`<path data-a="${a}" data-b="${b}" d="${elbow(pa.cx,pa.bottom,pb.cx,pb.top-2)}" fill="none" stroke="${reasonEdge?'#c4c7c9':'#8f9294'}" stroke-width="1" marker-end="${mk}"/>`;
     });
     JSON.parse(flow.dataset.dashed||'[]').forEach(([a,b])=>{
       const pa=box(elOf(flow,a),flow),pb=box(elOf(flow,b),flow);
       if(Math.abs(pa.cy-pb.cy)>40)return;
-      out+=`<path d="M${pa.right+6},${pa.cy} H${pb.left-6}" stroke="#8f9294" stroke-width="1" stroke-dasharray="5 5" fill="none"/>`;
+      out+=`<path d="M${pa.right+6},${pa.cy} H${pb.left-6}" stroke="#b3b6b8" stroke-width="1" stroke-dasharray="4 4" fill="none"/>`;
     });
     svg.innerHTML=out;
   });
 }
 
 /* ---------------- summary + filter ---------------- */
-const cnt={g:0,a:0,o:0}; REASONS.forEach(r=>cnt[r.st]++);
-document.getElementById('bar').innerHTML=['g','a','o'].map(k=>`<span class="${k}" style="flex:${cnt[k]}"></span>`).join('');
-document.getElementById('counts').innerHTML=
-  `<span><span class="dot g"></span><b>${cnt.g}</b>already in the current scope</span>`+
-  `<span><span class="dot a"></span><b>${cnt.a}</b>partially solved or in discovery</span>`+
-  `<span><span class="dot o"></span><b>${cnt.o}</b>open (Step 3)</span>`;
 
 
 /* ---------------- panel ---------------- */
@@ -350,8 +431,7 @@ function renderOverview(){
   body.innerHTML=`<div class="key">
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 9l10.5 4.2-4.3 1.6-1.6 4.3L9 9z"/><path d="M5.5 3v2M3 5.5h2M8.5 3.9l-.9 1.4M3.9 8.5l1.4-.9"/></svg>
     <h4>Click a card on the left to learn more</h4>
-    <p class="lede">Each card in the flow opens here with the reason or hypothesis behind it, and the next step or potential solve.</p>
-    <p class="lede">You can also click the inputs and decisions to see what each one means.</p>
+    <p class="lede">Each card in the flow opens here with more details. You can also click the inputs and decisions to see what each one means.</p>
   </div>`;
 }
 

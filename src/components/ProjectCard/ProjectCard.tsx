@@ -3,10 +3,23 @@
 //   ArtCard     — Home → Art & tech strip (opens the art pop-up)
 //   ArchiveCard — Archive grid (case study link, or the art pop-up)
 
-import { Link } from 'react-router-dom'
+import type { ReactNode } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import './ProjectCard.css'
 import type { ProjectFrontmatter } from '../../content/types'
 import { cardText, isCaseStudy, statusLabel, tagLine } from '../../content/projects'
+import { UNLOCK_PARAM } from '../../content/filters'
+import { isLocked } from '../../content/unlock'
+
+// Link to a case study. Password-protected ones (not yet unlocked) stay on the
+// current page and set ?unlock=slug, so SiteShell shows the password pop-up over it.
+function CaseStudyLink({ project, children }: { project: ProjectFrontmatter; children: ReactNode }) {
+  const { search } = useLocation()
+  if (!isLocked(project)) return <Link to={`/work/${project.slug}`} className="pcard">{children}</Link>
+  const params = new URLSearchParams(search)
+  params.set(UNLOCK_PARAM, project.slug)
+  return <Link to={{ search: params.toString() }} className="pcard" aria-haspopup="dialog">{children}</Link>
+}
 
 function Cover({ project, ratio }: { project: ProjectFrontmatter; ratio: '16/10' | '4/3' }) {
   return (
@@ -36,7 +49,7 @@ export function WorkCard({ project, num }: { project: ProjectFrontmatter; num: s
     </>
   )
   return isCaseStudy(project)
-    ? <Link to={`/work/${project.slug}`} className="pcard">{body}</Link>
+    ? <CaseStudyLink project={project}>{body}</CaseStudyLink>
     : <div className="pcard pcard--static">{body}</div>
 }
 
@@ -71,6 +84,6 @@ export function ArchiveCard({ project, num, onOpen }: { project: ProjectFrontmat
     </>
   )
   return isCase
-    ? <Link to={`/work/${project.slug}`} className="pcard">{body}</Link>
+    ? <CaseStudyLink project={project}>{body}</CaseStudyLink>
     : <button type="button" className="pcard" onClick={() => onOpen(project.slug)} aria-haspopup="dialog">{body}</button>
 }

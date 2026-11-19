@@ -2,9 +2,11 @@
 
 
 import { useCallback, useEffect, useRef, useState, type ComponentType } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, Navigate, useParams } from 'react-router-dom'
 import type { ProjectFrontmatter } from '../content/types'
 import { caseLabel } from '../content/projects'
+import { UNLOCK_PARAM } from '../content/filters'
+import { isLocked } from '../content/unlock'
 import { Lightbox, type LightboxImage } from '../components/Lightbox/Lightbox'
 import './ProjectDetail.css'
 
@@ -30,9 +32,15 @@ export function Component() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const closeLightbox = useCallback(() => setLightboxIndex(null), [])
 
+  // Password-protected pages (hash read from the cheap-tier index): a direct visit
+  // is sent to Home with the password pop-up open, and the MDX body chunk isn't
+  // fetched until the password has been entered.
+  const locked = isLocked(slug!)
+
   useEffect(() => {
     setProject(null)
     setNotFound(false)
+    if (locked) return
 
     const loadModule = projectModules[`/content/projects/${slug}.mdx`]
     if (!loadModule) {
@@ -47,7 +55,7 @@ export function Component() {
     return () => {
       cancelled = true
     }
-  }, [slug])
+  }, [slug, locked])
 
   // Once the MDX body has rendered, make its images clickable/focusable and
   // open the lightbox via one delegated listener on the article.
@@ -80,6 +88,7 @@ export function Component() {
     }
   }, [project])
 
+  if (locked) return <Navigate to={`/?${UNLOCK_PARAM}=${encodeURIComponent(slug!)}`} replace />
   if (notFound) return <p>Project not found.</p>
   if (!project) return <p>Loading…</p>
 

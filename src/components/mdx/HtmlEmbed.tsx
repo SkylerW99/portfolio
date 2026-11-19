@@ -8,6 +8,11 @@
 // `zoomTarget` limits it to one element (e.g. the chart, not its drawer).
 // `height` (any CSS length) switches to a fixed frame that scrolls inside — for full
 // pages with sticky panels or bottom sheets, which break in an auto-height frame.
+// `openAt="bottom"` moves the floating button to the bottom-left corner, for pages
+// whose own controls sit in the top-right (e.g. an app header with a side nav).
+// `raised` lifts the frame with a soft drop shadow, to set a live prototype apart from static images.
+// `framed` sets the page in a dark surround with a top bar (like Fast Launch's demo video);
+// the "Open in new tab" button then sits in that bar instead of over the page.
 
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 
@@ -20,9 +25,12 @@ interface HtmlEmbedProps {
   zoom?: number
   zoomTarget?: string
   height?: string
+  openAt?: 'top' | 'bottom'
+  raised?: boolean
+  framed?: boolean
 }
 
-export function HtmlEmbed({ src, title, minHeight = 600, intro, hideOpenWhen, zoom, zoomTarget = 'body', height: fixedHeight }: HtmlEmbedProps) {
+export function HtmlEmbed({ src, title, minHeight = 600, intro, hideOpenWhen, zoom, zoomTarget = 'body', height: fixedHeight, openAt = 'top', raised = false, framed = false }: HtmlEmbedProps) {
   const ref = useRef<HTMLIFrameElement>(null)
   const [height, setHeight] = useState(minHeight)
   const [covered, setCovered] = useState(false)
@@ -71,11 +79,12 @@ export function HtmlEmbed({ src, title, minHeight = 600, intro, hideOpenWhen, zo
   }, [minHeight, hideOpenWhen, zoom, zoomTarget, fixedHeight])
 
   return (
-    <div className="html-embed">
+    <div className={`html-embed${raised ? ' html-embed--raised' : ''}`}>
       {intro && <div className="html-embed__intro">{intro}</div>}
-      <div className="html-embed__frame">
+      <div className={`html-embed__frame${framed ? ' html-embed__frame--dark' : ''}`}>
+        {framed && <div className="html-embed__bar" aria-hidden="true" />}
         <iframe ref={ref} src={src} title={title} loading="lazy" style={{ height: fixedHeight ?? height }} />
-        <a className="btn html-embed__open" href={src} target="_blank" rel="noopener noreferrer" hidden={covered}>
+        <a className={`btn html-embed__open${framed ? ' html-embed__open--bar' : openAt === 'bottom' ? ' html-embed__open--bottom' : ''}`} href={src} target="_blank" rel="noopener noreferrer" hidden={covered}>
           Open in new tab ↗
         </a>
       </div>
