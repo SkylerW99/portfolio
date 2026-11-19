@@ -47,7 +47,7 @@ export function Component() {
         {stripProjects.map((p) => <ArtCard key={p.slug} project={p} onOpen={openModal} />)}
       </div>
 
-      <ProjectModal list={stripProjects} section="Art & tech" />
+      <ProjectModal section="Art & tech" />
     </>
   )
 }

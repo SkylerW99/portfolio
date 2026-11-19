@@ -7,7 +7,8 @@ interface ProjectOverviewProps {
     projectType: string
     team: string
     duration: string
-    myRole: string
+    /** Optional: the My Role column is hidden when omitted. */
+    myRole?: string
 }
 
 export function ProjectOverview({
@@ -39,10 +40,12 @@ export function ProjectOverview({
                 <p className="body-md">{duration}</p>
                 </div>
 
+                {myRole && (
                 <div>
                 <p className="t-eyebrow">My Role</p>
                 <p className="body-md">{myRole}</p>
                 </div>
+                )}
             
             </div>
         </section>

@@ -1,28 +1,23 @@
 ---
 title: "Bio × Bits"
 slug: "bio-bits"
-description: "Generative bio-art pairing living slime mold with responsive LED light."
+description: "Generative bio-art that treats living slime mold as a quantum computer, entangled with dynamic LED light conditions."
+summary: "Generative bio-art that treats living slime mold as a quantum computer."
 categories: ["Creative Coding", "Visual Design"]
 thumbnail: "/images/biobits/Biobits.png"
-date: "2022-01-01"
+date: "2023-01-01"
+year: 2023
+order: 6
 featured: true
 size: "small"
-year: 2022
-order: 6
 strip: "Bio art"
+format: "Bio-art installation"
+role: "Developer + Visual Artist"
+collaborators: "Frida Moreno Cabrera & Shristi Singh"
+exhibition: "Quantum Design Jam × IBM"
+showDiscipline: false
+images: [{"src": "/images/biobits/img-1503.jpg", "alt": "Slime mold growing on top of a computed LED light pattern", "fit": "contain", "caption": "Slime mold sits on top of the computed light effect"}, {"src": "/images/biobits/video-879675742.jpg", "alt": "Bio × Bits concept video", "video": "https://player.vimeo.com/video/879675742?h=dba6e884c8&title=0&byline=0&portrait=0", "caption": "Concept video"}, {"src": "/images/biobits/video-879674692.jpg", "alt": "Visualization of slime mold growth states", "video": "https://player.vimeo.com/video/879674692?h=b96e6878ba&title=0&byline=0&portrait=0", "caption": "Visualization of slime growth states"}, {"src": "/images/biobits/video-879674058.jpg", "alt": "The installation with its real-time visualization", "video": "https://player.vimeo.com/video/879674058?h=3464dc9b14&title=0&byline=0&portrait=0", "caption": "Installation & real-time visualization"}, {"src": "/images/biobits/quantum-biology.png", "alt": "Quantum biology concept diagram", "fit": "contain", "caption": "Concept: quantum biology"}, {"src": "/images/biobits/qiskit-setup.png", "alt": "Qiskit circuit setup", "fit": "contain", "caption": "Step 1: a Qiskit circuit generates 1,024 data points"}, {"src": "/images/biobits/map-the-data.gif", "alt": "Data mapped onto a 32×32 LED matrix", "fit": "contain", "caption": "Step 1: each data point maps to a light on the 32×32 matrix"}, {"src": "/images/biobits/static-screenshot.png", "alt": "ML model classifying slime mold states", "fit": "contain", "caption": "Step 2: training an ML model to classify slime states"}, {"src": "/images/biobits/ai-generation.gif", "alt": "Generated training images", "fit": "contain", "caption": "Step 2: generating more training data"}, {"src": "/images/biobits/video-879691023.jpg", "alt": "Prototype of the LED light and visualizer responding to the slime", "video": "https://player.vimeo.com/video/879691023?h=593cf9de90&title=0&byline=0&portrait=0", "caption": "Step 3: light and visualizer respond to the slime"}]
+paras: [{"k": "About", "t": "An artwork that uses quantum entanglement as a metaphor. We looked at slime mold as a living quantum computer and explored its entanglement with different lighting conditions as it grows."}, {"k": "Step 1 · Quantum light", "t": "We ran a Qiskit circuit to generate 1,024 data points, then mapped each one to a light point on a 32×32 LED matrix the slime mold grows on."}, {"k": "Step 2 · Reading the slime", "t": "I trained an ML model to classify the slime mold’s growth states, generating extra training images to make it more reliable."}, {"k": "Step 3 · Responsive system", "t": "The prototype makes the LED light and an on-screen visualizer respond in real time to whichever state the slime is in."}]
 ---
 
-import { ProjectOverview } from '../../src/components/projectOverview/ProjectOverview'
-
-<div className="page-container">
-
-<ProjectOverview
-  title="Smart HQ Design System"
-  description="A tech-empowered, headless cooking experience redesigned for GE’s 7-inch LCD wall-oven screen — where the oven calibrates time and temperature for you."
-  projectType = "GE Appliances Co-op Project"
-  team = "1 designer +2 consumer insight co-op + dev team"
-  duration = "08.2022 - 03.2023"
-  myRole = "Lead UX Designer"
-/>
-
-</div>
+{/* Small project: everything shows in the art pop-up, which reads only this frontmatter. */}

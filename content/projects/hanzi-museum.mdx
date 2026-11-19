@@ -1,28 +1,24 @@
 ---
 title: "Museum of Remaking Hanzi"
 slug: "hanzi-museum"
-description: "An AI-empowered language learning experience combining tactile and digital interactions."
+description: "An AI-empowered Hanzi learning experience that combines tactile building blocks with digital interaction. With a game box holding the grid, pieces and a webcam, it can be played at home on a laptop or tablet, or used in schools."
+summary: "An AI-empowered Hanzi learning experience that combines tactile building blocks with digital interaction."
 categories: ["AI/ML", "Web Dev", "Visual Design"]
 thumbnail: "/images/hanzi-museum/museum of remaking hanzi.png"
 date: "2023-01-01"
-featured: true
-size: "small"
 year: 2023
 order: 8
+featured: true
+size: "small"
 strip: "Creative Tech"
+format: "Tangible + Digital Experience"
+role: "Developer & Visual Designer"
+collaborators: "Ruohan Wang, Xinyu Zhang, Jinyun Li"
+exhibition: "@Wonderville NYC"
+showDiscipline: false
+cta: {"label": "Try it ↗", "href": "https://skylerw99.github.io/Hanzi-Museum/"}
+images: [{"src": "/images/hanzi-museum/museum of remaking hanzi.png", "alt": "Museum of Remaking Hanzi poster", "fit": "contain"}, {"src": "/images/hanzi-museum/wonderville-pic.jpg", "alt": "The Hanzi Museum station at Wonderville NYC: screen, webcam and the grid of pieces", "fit": "contain", "caption": "Exhibition @ Wonderville NYC"}, {"src": "/images/hanzi-museum/video-922163976.jpg", "alt": "Documentation video: assembling a Hanzi that the AI image recognition reads", "video": "https://player.vimeo.com/video/922163976?h=49ac1a9b51&title=0&byline=0&portrait=0", "caption": "Documentation video"}, {"src": "/images/hanzi-museum/hanzi-museum-kit.png", "alt": "Museum of Remaking Hanzi poster and game-kit box", "fit": "contain", "caption": "The Hanzi Museum kit"}, {"src": "/images/hanzi-museum/user-generated-hanzi.png", "alt": "Postcards of user-generated New Hanzi", "fit": "contain", "caption": "User-generated “New Hanzi” postcards"}]
+paras: [{"k": "About", "t": "An inclusive way to learn Hanzi: players assemble characters from laser-cut pieces on a grid, and a webcam with AI image recognition reads what they built."}, {"k": "Crafting a unique learning experience", "t": "Hanzi grew out of oracle-bone pictographs of tangible objects (the script for “bird” once looked like a bird), and calligraphy is an art form of its own. Linear digital apps can’t capture a culture that lives largely in physical space. Therefore, this project combines digital with tactile interactions to invite visitors to feel the form better."}, {"k": "Design", "t": "We built on two easy components: 木 (wood), shaped like a tree, and 口 (mouth). Repeated and combined, they form many related characters. Pieces sit on the traditional four-square TianZiGe grid used in calligraphy. Assemble a real Hanzi and the screen reveals its meaning; invent a new one and you define it yourself and add it to a growing “New Hanzi Archive”, much as Hanzi historically absorbed foreign elements."}, {"k": "Build & testing", "t": "We paper-prototyped with 20 players, then laser-cut the pieces and tested materials. I trained the recognition model on 400+ image samples per character and set up an Express backend that saves new characters to a JSON archive."}]
 ---
 
-import { ProjectOverview } from '../../src/components/projectOverview/ProjectOverview'
-
-<div className="page-container">
-
-<ProjectOverview
-  title="Smart HQ Design System"
-  description="A tech-empowered, headless cooking experience redesigned for GE’s 7-inch LCD wall-oven screen — where the oven calibrates time and temperature for you."
-  projectType = "GE Appliances Co-op Project"
-  team = "1 designer +2 consumer insight co-op + dev team"
-  duration = "08.2022 - 03.2023"
-  myRole = "Lead UX Designer"
-/>
-
-</div>
+{/* Small project: everything shows in the art pop-up, which reads only this frontmatter. */}

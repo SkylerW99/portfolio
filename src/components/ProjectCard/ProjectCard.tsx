@@ -21,9 +21,23 @@ function CaseStudyLink({ project, children }: { project: ProjectFrontmatter; chi
   return <Link to={{ search: params.toString() }} className="pcard" aria-haspopup="dialog">{children}</Link>
 }
 
+// Padlock badge on password-protected covers (hidden once unlocked this session).
+function LockBadge() {
+  return (
+    <span className="t-meta pcard__lock">
+      <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+        <rect x="3" y="7" width="10" height="7" rx="1.5" fill="currentColor" />
+        <path d="M5.25 7V5a2.75 2.75 0 0 1 5.5 0v2" fill="none" stroke="currentColor" strokeWidth="1.6" />
+      </svg>
+      Password
+    </span>
+  )
+}
+
 function Cover({ project, ratio }: { project: ProjectFrontmatter; ratio: '16/10' | '4/3' }) {
   return (
     <span className="pcard__cover" style={{ aspectRatio: ratio }}>
+      {isLocked(project) && <LockBadge />}
       {project.thumbnail
         ? <img className="thumbnail-image" src={project.thumbnail} alt="" loading="lazy" />
         : <span className="pcard__ph"><span className="t-meta">Cover / {project.status ? 'In progress' : project.title}</span></span>}
@@ -78,7 +92,6 @@ export function ArchiveCard({ project, num, onOpen }: { project: ProjectFrontmat
         <span className="pcard__desc pcard__desc--sm">{cardText(project)}</span>
         <span className="t-tag pcard__meta">
           <span>{tagLine(project)}</span>
-          <span className={isCase ? 'pcard__kind--case' : 'text-primary-col'}>{isCase ? 'Case study ↗' : 'View ↗'}</span>
         </span>
       </span>
     </>

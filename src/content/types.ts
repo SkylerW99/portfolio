@@ -1,9 +1,14 @@
 export type ProjectSize = 'large' | 'small'
 
 export interface ProjectImage {
+  /** The image itself — or, for a video, its poster (used as the thumbnail). */
   src: string
   alt: string
   fit?: 'cover' | 'contain'
+  /** Embed URL (Vimeo / YouTube player). The item then plays in the art pop-up's media pane. */
+  video?: string
+  /** Short line shown under the media in the art pop-up. */
+  caption?: string
 }
 
 export interface ProjectFrontmatter {
@@ -37,7 +42,27 @@ export interface ProjectFrontmatter {
   strip?: string
   /** Extra fields for the art pop-up. */
   format?: string
+  /** Art pop-up meta row, e.g. "Developer + visual artist (team of 3)". */
+  role?: string
+  /** Art pop-up meta rows: collaborators (e.g. "Frida Moreno Cabrera (service design)") and where it was shown. */
+  collaborators?: string
+  /** "Team" meta row after Role, e.g. "2 designers + 4 developers". */
+  team?: string
+  exhibition?: string
+  /** Award meta row, shown first (e.g. "ShapeXR Design Jam 3rd Place"). */
+  award?: string
+  /** "Type" meta row, shown just above Year (e.g. "Commission Work @School for social research"). */
+  projectType?: string
+  /** false hides the pop-up's Discipline row (categories still drive the Archive filters). */
+  showDiscipline?: boolean
+  /** Dark button right under the pop-up's summary line, e.g. a live demo link. */
+  cta?: { label: string; href: string } | { label: string; href: string }[]
+  /** Short line shown above the cta buttons, e.g. "Try the brush effects in the app". */
+  ctaNote?: string
+  /** "outline" uses the site's standard outlined button instead of the dark filled one. */
+  ctaStyle?: 'outline'
   images?: ProjectImage[]
-  paras?: { k: string; t: string }[]
+  /** `link` puts a button under that paragraph (e.g. a video or data-viz link). */
+  paras?: { k: string; t: string; link?: { label: string; href: string } }[]
   links?: { label: string; href: string }[]
 }

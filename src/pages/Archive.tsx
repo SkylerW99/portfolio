@@ -5,7 +5,7 @@ import { useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import './landing/Landing.css'
 import { CATEGORY_PARAM, getActiveCategory, useOpenProjectModal } from '../content/filters'
-import { isCaseStudy, pad2, projects } from '../content/projects'
+import { pad2, projects } from '../content/projects'
 import { FEATURED_FILTER, FilterBar } from '../components/FilterBar'
 import { ArchiveCard } from '../components/ProjectCard/ProjectCard'
 import { ProjectModal } from '../components/ProjectModal/ProjectModal'
@@ -56,7 +56,7 @@ export function Component() {
         ))}
       </div>
 
-      <ProjectModal list={visible.filter((p) => !isCaseStudy(p))} section="Archive" />
+      <ProjectModal section="Archive" />
     </>
   )
 }

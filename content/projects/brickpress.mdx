@@ -1,28 +1,21 @@
 ---
 title: "Brickpress"
 slug: "brickpress"
-description: "A tangible interface translating physical blocks into layout on screen."
-categories: ["UX", "pComp"]
-thumbnail: "/images/brickpress/brickpress.png"
-date: "2022-01-01"
+description: "A geometric drawing tool that recreates the imperfect surprise of Lego-block printmaking in code."
+categories: ["Creative Coding", "Web Dev", "Visual Design"]
+thumbnail: "/images/brickpress/prints.jpg"
+date: "2026-01-01"
+year: 2026
+order: 7
 featured: true
 size: "small"
-year: 2022
-order: 7
 strip: "Creative interface"
+format: "Interactive web tool, prints"
+exhibition: "NYC Resistor annual interactive show"
+showDiscipline: false
+cta: {"label": "Try Brickpress ↗", "href": "https://my-brickpress.vercel.app/"}
+images: [{"src": "/images/brickpress/prints.jpg", "alt": "A spread of Brickpress prints on a cutting mat", "fit": "contain", "caption": "Prints"}, {"src": "/images/brickpress/brickpress-tool.png", "alt": "The Brickpress web tool: block palette, grid canvas, live print preview and print-effect sliders", "fit": "contain", "caption": "The tool: place blocks, tune grain, bleed and distress, then print"}, {"src": "/images/brickpress/exhibition-visitors.jpg", "alt": "Visitors making a print at the Brickpress station", "fit": "contain", "caption": "NYC Resistor annual interactive show"}, {"src": "/images/brickpress/exhibition-booth.jpg", "alt": "The Brickpress station with laptop, printer and prints on the wall", "fit": "contain", "caption": "Visitors design and print their own"}]
+paras: [{"k": "About", "t": "Brickpress is a geometric drawing tool inspired by my analog printmaking practice — pressing Lego pieces onto a grid, inking them with a brayer, and rolling the assembly onto paper. The results were always imperfect: noise, missing areas, slight offsets. Every print was unique, and the gap between what I imagined and what the paper gave back was where the surprise lived."}, {"k": "In code", "t": "Brickpress is my attempt to recreate that surprise in code. Choose shapes, place them on the grid, tune the grain, bleed, and distress — then print. There’s a strange reversal at the center of it. Now that I can recreate the imperfection on demand, they feel less like accidents and more like a costume the digital is wearing."}, {"k": "In between", "t": "Brickpress sits in that uncertainty — somewhere between the tool I wished I’d had and the thing I might have lost by building it."}]
 ---
 
-import { ProjectOverview } from '../../src/components/projectOverview/ProjectOverview'
-
-<div className="page-container">
-
-<ProjectOverview
-  title="Smart HQ Design System"
-  description="A tech-empowered, headless cooking experience redesigned for GE’s 7-inch LCD wall-oven screen — where the oven calibrates time and temperature for you."
-  projectType = "GE Appliances Co-op Project"
-  team = "1 designer +2 consumer insight co-op + dev team"
-  duration = "08.2022 - 03.2023"
-  myRole = "Lead UX Designer"
-/>
-
-</div>
+{/* Small project: everything shows in the art pop-up, which reads only this frontmatter. */}

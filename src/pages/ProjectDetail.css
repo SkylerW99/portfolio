@@ -340,6 +340,12 @@
   align-self: flex-start;
 }
 
+/* Two columns whose rows line up across the grid (heading / text / media): each column
+   spans 3 rows of a shared subgrid, so the media starts at the same height in both
+   even when one column's text is longer. Stacked ≤900px, it falls back to one column. */
+.cs-rows-aligned { row-gap: 20px; }
+.cs-rows-aligned > * { display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: 20px; align-content: start; }
+
 /* ---- Responsive --------------------------------------------------------- */
 @media (max-width: 900px) {
   /* Stacked: no neighbour to match, so fall back to a fixed-height scroll box */

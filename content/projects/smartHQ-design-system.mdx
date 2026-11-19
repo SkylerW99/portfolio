@@ -2,7 +2,7 @@
 title: "SmartHQ Design System"
 id: "3"
 slug: "smartHQ-design-system"
-description: "Built robust design system for a massive IoT mobile app"
+description: "Built a robust design system for a massive IoT mobile app."
 categories: ["Design System", "Accessibility"]
 thumbnail: "/images/smartHQ/smartHQ-cover.png"
 date: "2026-08-24"
@@ -14,16 +14,349 @@ summary: "Unified GE's SmartHQ app across 11 product lines, consolidating 1,000+
 ---
 
 import { ProjectOverview } from '../../src/components/projectOverview/ProjectOverview'
+import { SectionHeader } from '../../src/components/SectionHeader/SectionHeader'
+import { VideoEmbed } from '../../src/components/mdx/VideoEmbed'
+import { PdfEmbed } from '../../src/components/mdx/PdfEmbed'
+
+export const img = (name) => `/images/smartHQ/${name}`
+export const vimeo = (id, hash, loop = false) =>
+  `https://player.vimeo.com/video/${id}?h=${hash}${loop ? '&autoplay=1&loop=1&muted=1&autopause=0' : ''}&title=0&byline=0&portrait=0`
 
 <div className="page-container">
 
 <ProjectOverview
   title={frontmatter.title}
   description={frontmatter.description}
-  projectType = "Work @GE Appliances"
-  team = "5 UX Designers | Dev Team"
-  duration = "01.2023 - 05.2023"
-  myRole = "Research + Component Building + Stress Testing"
+  projectType="Work @GE Appliances"
+  team="5 Designers, Dev Team"
+  duration="01.2023 - 05.2023"
+  myRole="Research + Component Building + Stress Testing"
 />
+
+<div className="cs-media cs-block">
+  <img src={img('hero.jpg')} alt="SmartHQ design system cover: appliance control screens built from the new component library" />
+</div>
+
+{/* ---- Summary ---- */}
+
+<div className="cs-split--even cs-split cs-block">
+  <div style={{ alignSelf: 'flex-start' }}>
+    <h3>Project Summary</h3>
+  </div>
+  <div className="flex-vertical gap-20">
+    <p className="body-md">Built a robust design system for a massive IoT mobile app “smartHQ”.</p>
+    <p className="body-md">I worked on the UI components kit, and color tokenizations. We started from interface audit to finishing our first design library. Now onto the next step of tokenizing them with the involvement of dev team.</p>
+    <a href="#kit" className="btn no-fade" style={{ alignSelf: 'flex-start' }}>Jump to Design Kit ↓</a>
+  </div>
+</div>
+
+<div className="cs-split cs-block" style={{ alignItems: 'center' }}>
+  <div className="flex-vertical gap-20">
+    <h4 className="cs-h-sm">What does “SmartHQ” do?</h4>
+    <p className="body-md">It allows our customers to control GE appliances remotely from their phones.</p>
+  </div>
+  <div className="cs-media"><img src={img('overview.jpg')} alt="SmartHQ app overview: control screens for GE appliances across product lines" /></div>
+</div>
+
+<div className="cs-grid-2 cs-divided cs-block">
+  <div className="cs-card cs-card--plain">
+    <p className="t-eyebrow-bold accent-color no-margin">Problem</p>
+    <p className="body-md">Without any formalized design system, SmartHQ app 1.0 version lost design consistency as it kept expanding for over 1000 appliances models across 11 product lines.</p>
+  </div>
+  <div className="cs-card cs-card--plain">
+    <p className="t-eyebrow-bold accent-color no-margin">Outcome</p>
+    <ol className="body-md cs-list">
+      <li>Defined a new control page structure that fits all the product lines for the 2.0 new release.</li>
+      <li>Built the first smartHQ design system with color, grid & spacing and UI components, comply to WCAG Level AAA.</li>
+    </ol>
+  </div>
+</div>
+
+<div className="cs-gap-sm">
+  <VideoEmbed title="SmartHQ design system overview" src={vimeo('916587147', 'abb7222d3c', true)} />
+</div>
+
+{/* ---- 01 ---- */}
+
+<div id="why" className="cs-section">
+  <SectionHeader number="01" title="Why we need a design system now?" />
+</div>
+
+<div className="cs-split--even cs-split cs-lead">
+  <div className="flex-vertical gap-20" style={{ alignSelf: 'flex-start' }}>
+    <p className="t-meta no-margin">User Pain Points & Needs</p>
+    <h4>How does inconsistent interfaces affect the our customer’s experience?</h4>
+  </div>
+  <p className="body-md">In 85% of the cases, users choose to download smartHQ when they own more than 1 smart GE appliances. But the control pages of different products differ a lot, which increases the learning curve.</p>
+</div>
+
+<div className="cs-gap-sm">
+  <div className="cs-media"><img src={img('user-pain-points.jpg')} alt="User pain points: control pages for different GE appliances look and behave differently" /></div>
+</div>
+
+<div className="cs-block cs-ruled">
+  <div className="cs-intro">
+    <p className="t-meta no-margin">Business Needs</p>
+    <h4>How does inconsistent interfaces affect the our customer’s experience?</h4>
+  </div>
+  <div className="cs-grid-2 cs-gap-wide cs-rows-aligned">
+    <div>
+      <h4 className="cs-h-sm">1. Inconsistent product look and feel</h4>
+      <p className="body-md">There’s a lot of misalignments between shipped designs and final products, such as padding, spacing, and font size. We need a better system to streamline the process.</p>
+      <div className="cs-media"><img src={img('design-dev-misalignment.jpg')} alt="Misalignment between design and dev: shipped screens differ from the designs in padding, spacing and font size" /></div>
+    </div>
+    <div>
+      <h4 className="cs-h-sm">2. Not ready for AI-assisted design and build</h4>
+      <p className="body-md">Our old smartHQ components live in a disorganized Figma file, untouched since 2021, so AI tools have no structured source of truth to work from. A robust, tokenized system makes AI automation reliable and lets designers explore directly in the codebase without drifting from the system.</p>
+      <div className="cs-media"><img src={img('inefficient-workflow.jpg')} alt="Inefficient design workflow: the outdated, disorganized Figma component file" /></div>
+    </div>
+  </div>
+</div>
+
+{/* ---- 02 ---- */}
+
+<div id="research" className="cs-section">
+  <SectionHeader number="02" title="Research & Planning" />
+</div>
+
+<div className="cs-lead">
+  <div className="cs-intro">
+    <h4>Design Audit & Categorizations</h4>
+    <p className="body-md">We start with collecting and auditing the existing screens in smartHQ. We collected 1000+ screens, removing the duplicates, and end up with 5 big categories.</p>
+  </div>
+  <div className="cs-media"><img src={img('design-audit.jpg')} alt="Design audit: 1000+ SmartHQ screens collected, de-duplicated and sorted into 5 categories" /></div>
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro">
+    <p className="body-md">Among all the categories, “control and monitor appliances” is the biggest and most complex category.</p>
+    <p className="body-md">Therefore, we started from the control page where the users view their appliances’ current running status, and open the setting menu to edit them. After finishing a deep analysis for all the control screens, we identified the 4 types of information.</p>
+  </div>
+  <div className="cs-grid-2">
+    <VideoEmbed title="The 4 types of information on a control page" src={vimeo('917811568', '63c3530ad9', true)} />
+    <div className="cs-media"><img src={img('control-page-categories.jpg')} alt="Control page information sorted into 4 types: turn on / off, read-only status, editable settings, and promotional materials" /></div>
+  </div>
+</div>
+
+<div className="cs-split cs-split--wide-left cs-block">
+  <div className="cs-media"><img src={img('past-reference.jpg')} alt="Alternative control page layout proposed by the UX team in 2022" /></div>
+  <div className="flex-vertical gap-20">
+    <h4 className="cs-h-sm">Alternative Layout Proposal</h4>
+    <p className="body-md">In earlier 2022, our UX designers proposed an alternative control page layout. They tested it with user flows for several appliances, and got positive feedbacks from participants. Their proposal provides a good reference for our systematic redesign.</p>
+  </div>
+</div>
+
+<div className="cs-block cs-ruled">
+  <div className="cs-intro">
+    <h4>Identifying Opportunities</h4>
+    <p className="body-md">What did our competitor do better in their appliances control page? Here are some good takeaways.</p>
+  </div>
+  <div className="cs-grid-3 cs-divided">
+    <div className="cs-card cs-card--plain">
+      <p className="t-meta no-margin accent-color">1.</p>
+      <p className="body-md">They established a design pattern with appliance status displayed at the top, with editable settings at the bottom half of the screen for easy thumb reach.</p>
+    </div>
+    <div className="cs-card cs-card--plain">
+      <p className="t-meta no-margin accent-color">2.</p>
+      <p className="body-md">They did better in visual hierarchy, and page spacing by having enough white space.</p>
+    </div>
+    <div className="cs-card cs-card--plain">
+      <p className="t-meta no-margin accent-color">3.</p>
+      <p className="body-md">Their control pages for different product lines also lack consistency, which could be improved too.</p>
+    </div>
+  </div>
+</div>
+
+<div className="cs-gap-sm">
+  <div className="cs-media"><img src={img('competitors.jpg')} alt="Competitors’ appliance control pages, compared" /></div>
+</div>
+
+{/* ---- 03 ---- */}
+
+<div id="brainstorm" className="cs-section">
+  <SectionHeader number="03" title="Brainstorm the new layout" />
+</div>
+
+<div className="cs-lead">
+  <div className="cs-intro"><p className="body-md">We did several brainstorming sessions to sketch out some rough ideas for a new control page structure that could apply to all the appliances.</p></div>
+  <div className="cs-media"><img src={img('layout-sketch.jpg')} alt="Low-fi sketches of new control page structures" /></div>
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro"><p className="body-md">We followed the low-fi layout and created some hi-fi concepts for different appliances, and presented to the design team. We decided the final layout based on feedbacks.</p></div>
+  <div className="cs-media"><img src={img('internal-presentation.jpg')} alt="Hi-fi control page concepts for different appliances, from the internal presentation" /></div>
+</div>
+
+{/* ---- 04 ---- */}
+
+<div id="components" className="cs-section">
+  <SectionHeader number="04" title="Build the components" />
+</div>
+
+<div className="cs-lead">
+  <div className="cs-intro"><p className="body-md">Before start, I researched some common practices for the base components. I focused my research on the ones that closely related to control page, which are tiles, cards, buttons, and bottom sheets.</p></div>
+  <div className="cs-grid-2">
+    <div className="cs-media"><img src={img('research-cards.jpg')} alt="Component research: cards" /></div>
+    <div className="cs-media"><img src={img('research-buttons.jpg')} alt="Component research: buttons" /></div>
+    <div className="cs-media"><img src={img('research-tiles.jpg')} alt="Component research: tiles" /></div>
+    <div className="cs-media"><img src={img('research-bottom-sheets.jpg')} alt="Component research: bottom sheets" /></div>
+  </div>
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro"><p className="body-md">While I was working on the control page components, my co-workers worked on color, typography, and grid system. We incorporated each others’ design decisions into our own parts, then built the foundation for the design system.</p></div>
+  <div className="cs-grid-2">
+    <div className="cs-media"><img src={img('component-color.jpg')} alt="Control page components with the new color system applied" /></div>
+    <div className="cs-media"><img src={img('component-grid.jpg')} alt="Control page components on the new grid" /></div>
+  </div>
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro"><p className="body-md">I hosted 2 internal testing sessions, explained how to use the components, and asked other UX designers to build the control page using the new components. These are the final designs coming out of the workshops.</p></div>
+  <div className="cs-media"><img src={img('control-page-testing.jpg')} alt="Control pages built by other UX designers with the new components during the testing workshops" /></div>
+</div>
+
+{/* ---- 04 · Accessibility ---- */}
+
+<div id="accessibility" className="cs-subsection">
+  <h3>Accessibility Improvements</h3>
+</div>
+
+<div className="cs-lead">
+  <div className="cs-intro"><p className="body-md">While building components for the control page, I also looked at the existing formats in our app to edit appliances current status.</p></div>
+  <div className="cs-media"><img src={img('edit-formats.jpg')} alt="Existing formats for editing appliance settings, with several formats used for the same use case" /></div>
+</div>
+
+<div className="cs-split--even cs-split cs-block">
+  <div className="flex-vertical gap-20">
+    <p className="body-md">I found different formats were used for the same use cases. After discussing with other designers, we decided to remove some duplicates, and deprecate the “slider” styles for better accessibility.</p>
+    <p className="body-lg accent-color">“Swiping” action doesn’t work well with screen readers.</p>
+    <p className="body-md">Slider is highly inefficient for visually impaired users that needs to hear the screen reader to read it out every time a new swiping action is made.</p>
+  </div>
+  <VideoEmbed title="Using a slider with a screen reader" src={vimeo('918225066', '07060ac285')} />
+</div>
+
+<div className="cs-gap-sm">
+  <div className="cs-media"><img src={img('accessibility-improvement.jpg')} alt="Accessibility improvement: slider formats replaced with screen-reader-friendly controls" /></div>
+</div>
+
+{/* ---- 04 · Control Page Template ---- */}
+
+<div id="template" className="cs-subsection">
+  <h3>Control Page Template</h3>
+</div>
+
+<div className="cs-split cs-lead">
+  <div className="flex-vertical gap-20">
+    <p className="body-md">After finishing the base components, I built a control page template with defined spacing. Other UX designers can use it to build / update new control pages with a few clicks.</p>
+  </div>
+  <VideoEmbed title="Building a control page from the template" src={vimeo('918911160', 'f78bfcc515')} />
+</div>
+
+{/* ---- 05 ---- */}
+
+<div id="kit" className="cs-section">
+  <SectionHeader number="05" title="Launch SmartHQ Design Kit" />
+</div>
+
+<div className="cs-grid-2 cs-lead">
+  <div className="cs-media"><img src={img('color-type-grid.png')} alt="Design kit foundations: color, typography and grid" /></div>
+  <div className="cs-media"><img src={img('components-demo.jpg')} alt="Design kit components demo" /></div>
+</div>
+
+<div className="cs-split--even cs-split cs-block">
+  <p className="body-md">We published the new design library in Figma, and includes a brief guide for enabling this library in other design files.</p>
+  <div className="cs-media"><img src={img('add-design-kit.jpg')} alt="Guide for adding the SmartHQ design kit library to a Figma file" /></div>
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro"><p className="body-md">I also worked on documentation and guidelines for the new components. Designers and developers can refer to it for more specific guidance. Here are some examples.</p></div>
+  <div className="cs-grid-2">
+    <div className="cs-media"><img src={img('tiles-documentation.jpg')} alt="Component documentation: tiles" /></div>
+    <div className="cs-media"><img src={img('bottom-sheet-documentation.jpg')} alt="Component documentation: bottom sheets" /></div>
+  </div>
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro"><h4>Take a look at our current design system kit!</h4></div>
+  <PdfEmbed src={img('SmartHQ_2.0_Design_System.pdf')} title="SmartHQ 2.0 design system kit (PDF)" />
+</div>
+
+{/* ---- 06 ---- */}
+
+<div id="tokens" className="cs-section">
+  <SectionHeader number="06" title="Color Tokens" />
+</div>
+
+<div className="cs-split cs-lead">
+  <div className="flex-vertical gap-20">
+    <h4>Learn & Build Tokens</h4>
+    <p className="body-md">Afterwards, I worked on the nomenclature for color tokens, and experimented with “Figma Token Studio” plug-in with another designer. We involved dev team into the discussion, and did some preliminary works as the starting point.</p>
+  </div>
+  <div className="cs-media"><img src={img('color-tokenization.jpg')} alt="Color tokenization example: token names mapped from primitives to semantic roles" /></div>
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro"><h4>Color Theming</h4></div>
+  <VideoEmbed title="Color theming with tokens" src={vimeo('918913253', '9485c73afc', true)} />
+  <div className="cs-grid-2 cs-gap-sm">
+    <div className="cs-media"><img src={img('token-to-css.gif')} alt="Tokens exported from Figma to CSS" /></div>
+    <div className="cs-media"><img src={img('token-visualization.png')} alt="Token visualization" /></div>
+  </div>
+</div>
+
+{/* ---- 07 ---- */}
+
+<div id="next" className="cs-section">
+  <SectionHeader number="07" title="What’s Next?" />
+</div>
+
+<div className="cs-grid-2 cs-gap-wide cs-rows-aligned cs-lead">
+  <div>
+    <h4 className="cs-h-sm">UI Kit Iterations</h4>
+    <div className="flex-vertical gap-20">
+      <p className="body-md">We need to expand our UI kit to fit other pages. Through the project, we’ve already established a workflow for building components.</p>
+      <p className="body-md">In addition, We discovered a few misalignments between shipped designs and final products. We need more than a design system, but a better QA workflow to spot the discrepancies in the early stage.</p>
+    </div>
+    <div className="cs-media"><img src={img('design-system-workflow.jpg')} alt="Design system workflow for building new components" /></div>
+  </div>
+  <div>
+    <h4 className="cs-h-sm">Continue Token Development</h4>
+    <p className="body-md">We need to continue the discussion with dev team for implementing the design tokens, and help them bridge gaps between Figma Token and CSS styles.</p>
+    <div className="cs-media"><img src={img('token-test.jpg')} alt="Token test: Figma tokens compared with CSS styles" /></div>
+  </div>
+</div>
+
+{/* ---- 08 ---- */}
+
+<div id="final" className="cs-section">
+  <SectionHeader number="08" title="Final Thoughts" />
+</div>
+
+<div className="cs-split--even cs-split cs-lead">
+  <div className="flex-vertical gap-20">
+    <h4 className="cs-h-sm">Micro Decisions needs to be validated.</h4>
+    <p className="body-md">I made several micro-decisions with my manager during the component building process.</p>
+    <p className="body-md">For example, we got rid of the toggle for a minimalistic clean look on the small tiles. When tapping the card, it would switch the current setting on/off. This is a new interaction that needs to be further validated through testings.</p>
+  </div>
+  <div className="cs-media"><img src={img('toggle-card.gif')} alt="Small tile without a toggle: tapping the card switches the setting on and off" /></div>
+</div>
+
+<div className="cs-split--even cs-split cs-block">
+  <div className="cs-media"><img src={img('icon-style.jpg')} alt="Icon style improvements for large and small appliance icons" /></div>
+  <div className="flex-vertical gap-20">
+    <h4 className="cs-h-sm">Icon Style Improvements</h4>
+    <p className="body-md">I spotted a lot of inconsistencies in icon styles while collecting the existing icons for our design kit.</p>
+    <p className="body-md">For large appliances icons, we could try to increase visual details to better distinguish between different appliances. And for small icons, we could simplify them for better visual accessibility on small screens.</p>
+  </div>
+</div>
+
+<div className="cs-block cs-ruled">
+  <div className="cs-intro">
+    <h4 className="cs-h-sm">Last but not least...</h4>
+    <p className="body-md">This massive and challenging project wouldn’t be possible to progress that much without my amazing UX teammates, and the support from dev team for learning a new tool together. Teamwork makes the dream work!</p>
+  </div>
+  <div className="cs-media"><img src={img('team-photo.jpg')} alt="The GE Appliances UX team" /></div>
+</div>
 
 </div>

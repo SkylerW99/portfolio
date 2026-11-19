@@ -1,0 +1,269 @@
+---
+title: "Apex Smart Range"
+slug: "apex"
+description: "Designed the 4.3-inch smart screen experience for GE's APEX range, delivering a high-end cooking experience on a low-cost, low-memory LCD."
+categories: ["UX", "Embedded UI"]
+thumbnail: "/images/apex/apex-cover.jpg"
+date: "2023-05-01"
+featured: false
+size: "large"
+year: 2023
+order: 4.5
+summary: "A high-end cooking experience on a low-cost 4.3-inch LCD screen for GE's APEX smart range."
+---
+
+import { ProjectOverview } from '../../src/components/projectOverview/ProjectOverview'
+import { SectionHeader } from '../../src/components/SectionHeader/SectionHeader'
+import { VideoEmbed } from '../../src/components/mdx/VideoEmbed'
+
+export const img = (name) => `/images/apex/${name}`
+export const vimeo = (id, hash) =>
+  `https://player.vimeo.com/video/${id}?h=${hash}&autoplay=1&muted=1&loop=1&autopause=0&title=0&byline=0&portrait=0`
+
+<div className="page-container">
+
+<ProjectOverview
+  title={frontmatter.title}
+  description={frontmatter.description}
+  projectType="Internship work @GE Appliances · shipped to dev"
+  team="3 designers, 1 project manager, software & engineering team"
+  duration="05.2022 - 05.2023"
+/>
+
+<div className="cs-media cs-block">
+  <img src={img('apex-cover.jpg')} alt="APEX smart range with its 4.3-inch LCD control screen" />
+</div>
+
+{/* ---- Summary ---- */}
+
+<div className="cs-split--even cs-split cs-block">
+  <div style={{ alignSelf: 'flex-start' }}>
+    <h3>Project Summary</h3>
+  </div>
+  <div className="flex-vertical gap-20">
+    <p className="body-md">APEX is a GE smart range that combines oven and cooktop smart features in one appliance. My team designed the experience for its 4.3-inch smart screen, giving customers a cooking experience equivalent to a high-end product at a lower price.</p>
+    <p className="body-md">Working with the engineering team, we started from scratch and set a new benchmark for the product line, aimed at bringing more medium-income customers to GE.</p>
+    <a href="#output" className="btn no-fade" style={{ alignSelf: 'flex-start' }}>Jump to Final Output ↓</a>
+  </div>
+</div>
+
+<div className="cs-split cs-block" style={{ alignItems: 'center' }}>
+  <div className="flex-vertical gap-20">
+    <h4 className="cs-h-sm">Background</h4>
+    <p className="body-md">GE Appliances has many successful ranges across its house of brands, all with VFD or PMVA displays. To elevate the experience, the product team chose an LCD for the new range. To keep costs down, it’s a 4.3-inch screen with limited resolution (128 pixels per inch) and low memory.</p>
+  </div>
+  <div className="cs-media"><img src={img('lcd-options.png')} alt="LCD screen options compared by size and price" /></div>
+</div>
+
+<div className="cs-media cs-block">
+  <img src={img('apex-range-look.png')} alt="The APEX range with oven and cooktop controls" />
+</div>
+
+{/* ---- 01 ---- */}
+
+<div id="brief" className="cs-section">
+  <SectionHeader number="01" title="Brief" />
+</div>
+
+<div className="cs-lead">
+  <h4>With a compromised screen resolution and limited memory on a 4.3-inch LCD, how can we still deliver a delightful user experience?</h4>
+</div>
+
+{/* ---- 02 ---- */}
+
+<div id="research" className="cs-section">
+  <SectionHeader number="02" title="Research" />
+</div>
+
+<div className="cs-split--even cs-split cs-lead">
+  <div className="flex-vertical gap-20" style={{ alignSelf: 'flex-start' }}>
+    <p className="t-meta no-margin">Setting our goal</p>
+    <h4>Limitations vs. user needs</h4>
+  </div>
+  <p className="body-md">We mapped out a user-need pyramid to set feature priorities. Technical constraints meant compromising on the top “delight” level: we couldn’t offer many high-res images or complex interactions that need memory and external APIs. We could still meet safety standards and the product team’s functional requirements, prioritised by level.</p>
+</div>
+
+<div className="cs-gap-sm">
+  <div className="cs-media"><img src={img('user-need-pyramid.png')} alt="User-need pyramid: safety and function prioritised over delight" /></div>
+</div>
+
+<div className="cs-block cs-ruled">
+  <div className="cs-intro">
+    <p className="t-meta no-margin">Research & analysis</p>
+    <h4>Competitors’ products & ergonomics</h4>
+    <p className="body-md">Few competitors make ranges with small LCD screens, and those that do share text-readability problems, with digit pads crowded into small touch areas. People often read a cooking appliance’s screen from a distance mid-task, so large touch targets and readable text matter. We also did desktop research on ergonomics and readability.</p>
+  </div>
+  <div className="cs-grid-2">
+    <div className="cs-media"><img src={img('competitive-analysis.png')} alt="Competitive analysis of ranges with small LCD screens" /></div>
+    <div className="cs-media"><img src={img('ergonomics-study.png')} alt="Ergonomics study: viewing distance and readability" /></div>
+  </div>
+</div>
+
+<div className="cs-split cs-split--wide-left cs-block">
+  <div className="cs-media"><img src={img('font-size-testing.png')} alt="Font size testing at the range's real viewing angle" /></div>
+  <div className="flex-vertical gap-20">
+    <h4 className="cs-h-sm">Font size testing</h4>
+    <p className="body-md">Before prototyping, I tested font sizes at the actual model’s viewing angle to set minimums: 22pt for Aktiv Grotesk Ex and 24pt for Nudista.</p>
+  </div>
+</div>
+
+{/* ---- 03 ---- */}
+
+<div id="explore" className="cs-section">
+  <SectionHeader number="03" title="Physical & digital explorations" />
+</div>
+
+<div className="cs-lead">
+  <div className="cs-intro">
+    <p className="body-md">We explored physical control layouts with cooktop controls on both sides as sliders or knobs, and oven features mostly on screen with capacitive-touch icons either side. Because the oven’s physical buttons are tightly tied to the screen, we prototyped the most basic flow, “start bake at 350°F”, against different physical layouts.</p>
+    <p className="body-md">That gave three directions for the oven screen and buttons: text-based, icon-based, and no physical buttons (a purely image-based screen).</p>
+  </div>
+  <div className="cs-media"><img src={img('in-front-of-whiteboard.png')} alt="The team mapping physical control layouts on a whiteboard" /></div>
+</div>
+
+<div className="cs-block">
+  <div className="cs-grid-2">
+    <figure className="cs-media no-margin">
+      <img src={img('ideas-hover.png')} alt="Layout ideas, with the selected directions highlighted" />
+      <figcaption className="t-meta cs-caption">Ideas we selected</figcaption>
+    </figure>
+    <figure className="cs-media no-margin">
+      <img src={img('range-layout-prototype.png')} alt="Range layout prototype" />
+      <figcaption className="t-meta cs-caption">Layout prototype</figcaption>
+    </figure>
+  </div>
+</div>
+
+<div className="cs-block">
+  <div className="cs-intro"><p className="body-md">We listed every physical capacitive-touch option and built layouts from that list.</p></div>
+  <div className="cs-media"><img src={img('physical-cap-touch-option-list.png')} alt="Physical capacitive-touch options and the layouts built from them" /></div>
+</div>
+
+<div className="cs-block cs-ruled">
+  <div className="cs-intro">
+    <h4>Screen layout explorations</h4>
+  </div>
+  <div className="cs-media"><img src={img('mid-fi-prototypes.png')} alt="Mid-fi screen layout prototypes, with the chosen ideas" /></div>
+</div>
+
+{/* ---- 04 ---- */}
+
+<div id="testing" className="cs-section">
+  <SectionHeader number="04" title="Testing & iterations" />
+</div>
+
+<div className="cs-split--even cs-split cs-lead">
+  <div className="flex-vertical gap-20" style={{ alignSelf: 'flex-start' }}>
+    <p className="t-meta no-margin">Our objective</p>
+    <h4>Can people finish the core cooking task with both the buttons and the screen?</h4>
+  </div>
+  <p className="body-md">We tested the core cooking flow for a double-cavity range, using an 11-inch iPad to show both the 4.3-inch screen area and the physical buttons beside it. If anyone failed the core cooking task, which is vital for daily use, we’d rethink the layout.</p>
+</div>
+
+<div className="cs-gap-sm">
+  <div className="cs-media"><img src={img('user-testing-img.png')} alt="A participant testing the prototype on an iPad" /></div>
+</div>
+
+<div className="cs-block">
+  <div className="cs-grid-2">
+    <div>
+      <VideoEmbed title="User testing flow" src={vimeo('847307838', 'aafcdc2faf')} />
+      <p className="t-meta cs-caption">User testing flow</p>
+    </div>
+    <div className="cs-media"><img src={img('testing-takeaway.png')} alt="Key takeaways from user testing" /></div>
+  </div>
+</div>
+
+<div className="cs-block cs-ruled">
+  <div className="cs-intro">
+    <h4>“Setting a timer” testing</h4>
+    <p className="body-md">We also tested ways to set a timer before and during cooking, with three designs: digit pad, stepper and slider.</p>
+  </div>
+  <VideoEmbed title="Testing different ways of setting a timer" src={vimeo('847864098', 'b0ce1cd999')} />
+</div>
+
+<div className="cs-split cs-block">
+  <div className="flex-vertical gap-20">
+    <p className="body-md">Figma limited the slider interaction, but more than 50% of participants preferred the slider timer if it scrolled as smoothly as on Apple products. More than 30% said the digit pad was the most efficient, yet still preferred the slider’s design, and nobody raised touch-area problems with the digit pad.</p>
+    <p className="body-md">We chose the slider timer, with a switch to the digit pad for people who want speed.</p>
+  </div>
+  <div className="cs-media"><img src={img('timer-iteration.png')} alt="Timer design iterations: slider with an option to switch to digit pad" /></div>
+</div>
+
+<div className="cs-gap-sm">
+  <div className="cs-media"><img src={img('timer-testing-notes.png')} alt="Timer testing notes" /></div>
+</div>
+
+{/* ---- 05 ---- */}
+
+<div id="output" className="cs-section">
+  <SectionHeader number="05" title="Final output" />
+</div>
+
+<div className="cs-lead">
+  <div className="cs-media"><img src={img('physical-control-layout-render-update.jpg')} alt="Final physical control layout render" /></div>
+</div>
+
+<div className="cs-block cs-ruled">
+  <div className="cs-intro">
+    <h4>Oven core activities</h4>
+    <p className="body-md">Choose an oven mode, get notified about oven activity, monitor cooking, and turn the oven off in one tap.</p>
+  </div>
+  <div className="cs-grid-2">
+    <div>
+      <VideoEmbed title="Select oven mode" src={vimeo('847864462', '3235fc48c4')} />
+      <p className="t-meta cs-caption">Select oven mode</p>
+    </div>
+    <div>
+      <VideoEmbed title="Start baking" src={vimeo('847865418', 'b00284f109')} />
+      <p className="t-meta cs-caption">Start baking</p>
+    </div>
+    <div>
+      <VideoEmbed title="Monitor cooking on the home screen" src={vimeo('847865185', '1c55184e6e')} />
+      <p className="t-meta cs-caption">Monitor cooking on the home screen</p>
+    </div>
+    <div>
+      <VideoEmbed title="One tap to turn the oven off" src={vimeo('847864649', 'ea053704d5')} />
+      <p className="t-meta cs-caption">One tap to turn the oven off</p>
+    </div>
+  </div>
+</div>
+
+<div className="cs-split cs-block" style={{ alignItems: 'center' }}>
+  <div className="flex-vertical gap-20">
+    <h4 className="cs-h-sm">Precision Cooking mode (oven)</h4>
+    <p className="body-md">A special mode where people choose a food and the oven calibrates the exact cooking time and temperature for the best doneness.</p>
+  </div>
+  <VideoEmbed title="Precision Cooking mode on the oven" src={vimeo('847864990', '06a7b5ef90')} />
+</div>
+
+<div className="cs-block cs-ruled">
+  <div className="cs-intro">
+    <h4>Cooktop activities</h4>
+    <p className="body-md">Technical limits mean the cooktop can’t be turned on or off from the screen. People can still monitor it, change burner levels and start Precision Cooking from the screen.</p>
+  </div>
+  <div className="cs-grid-3">
+    <div>
+      <VideoEmbed title="Cooktop slider activation notice" src={vimeo('847866027', '3c59a73a25')} />
+      <p className="t-meta cs-caption">Slider activation notice</p>
+    </div>
+    <div>
+      <VideoEmbed title="Heat level visualization and editing" src={vimeo('847865514', '413b62b34e')} />
+      <p className="t-meta cs-caption">Heat level visualization & edit</p>
+    </div>
+    <div>
+      <VideoEmbed title="Activate Precision Cooking mode" src={vimeo('847865660', '8b3caefad5')} />
+      <p className="t-meta cs-caption">Activate Precision Cooking</p>
+    </div>
+  </div>
+</div>
+
+<div className="cs-split cs-block" style={{ alignItems: 'center' }}>
+  <div className="flex-vertical gap-20">
+    <h4 className="cs-h-sm">Android integration</h4>
+    <p className="body-md">A concept for a future single-board-computer Android integration, with room for more memory, more creative UI and advanced features.</p>
+  </div>
+  <div className="cs-media"><img src={img('with-andriod-integration.gif')} alt="Concept: the range screen running an Android integration" /></div>
+</div>
+
+</div>
