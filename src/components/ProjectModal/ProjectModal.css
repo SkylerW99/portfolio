@@ -135,10 +135,10 @@
   text-transform: none;
   color: var(--text);
 }
-.artpop__cta-note { margin: 4px 0 -4px; font-size: 16px; line-height: 1.45; color: var(--text); }
+.artpop__cta-note { margin: 4px 0 -4px; font-size: var(--fs-body); line-height: 1.45; color: var(--text); }
 .artpop__para { display: flex; flex-direction: column; gap: 8px; }
 .artpop__para .t-meta { font-size: var(--fs-micro); }
-.artpop__para p { margin: 0; font-size: 16px; line-height: 1.55; color: var(--text-muted); }
+.artpop__para p { margin: 0; font-size: var(--fs-body); line-height: 1.55; color: var(--text-muted); }
 .artpop .popup__foot { grid-template-columns: 1fr; }
 .artpop .popup__foot .artpop__close { justify-content: center; border-right: 0; }
 .artpop__para .btn-group { margin-top: 4px; }

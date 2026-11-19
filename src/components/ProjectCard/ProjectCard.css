@@ -79,8 +79,8 @@ a.pcard:hover, .pcard:hover { opacity: 1; }
   border-top: 1px solid var(--border);
 }
 .pcard__foot--sm { gap: 8px; padding: 12px 12px; }
-.pcard__desc { font-size: 16px; line-height: 1.45; color: var(--text-muted); }
-.pcard__desc--sm { font-size: 16px; }
+.pcard__desc { font-size: var(--fs-body); line-height: 1.45; color: var(--text-muted); }
+.pcard__desc--sm { font-size: var(--fs-body); }
 .pcard__meta { display: flex; justify-content: space-between; gap: 12px; }
 .pcard__meta > span:last-child { white-space: nowrap; }
 
