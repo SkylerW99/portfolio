@@ -4,6 +4,14 @@
 import { useSearchParams } from 'react-router-dom'
 
 export const CATEGORY_PARAM = 'category'
+
+/** The Archive's filter chips. Projects opt in with `filters: [key, …]` in frontmatter;
+ *  `categories` still drive the card hashtags. */
+export const ARCHIVE_FILTERS = [
+  { key: 'ux', label: 'UX' },
+  { key: 'design-build', label: 'Design + Build' },
+  { key: 'visual', label: 'Visual / Motion / 3D' },
+] as const
 export const PROJECT_PARAM = 'project'
 /** Slug of a password-protected case study whose password pop-up is open (SiteShell). */
 export const UNLOCK_PARAM = 'unlock'

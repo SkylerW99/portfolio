@@ -4,30 +4,24 @@
 import { useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import './landing/Landing.css'
-import { CATEGORY_PARAM, getActiveCategory, useOpenProjectModal } from '../content/filters'
+import { ARCHIVE_FILTERS, CATEGORY_PARAM, getActiveCategory, useOpenProjectModal } from '../content/filters'
 import { pad2, projects } from '../content/projects'
-import { FEATURED_FILTER, FilterBar } from '../components/FilterBar'
+import { FilterBar } from '../components/FilterBar'
 import { ArchiveCard } from '../components/ProjectCard/ProjectCard'
 import { ProjectModal } from '../components/ProjectModal/ProjectModal'
-
-// Curated filter order from the design; any other category in the content is appended.
-const CATEGORY_ORDER = ['UX', 'Design System', 'Accessibility', 'AR/VR', 'AI/ML', 'Visual Design', 'Motion', 'Creative Coding', 'Web Dev', 'Game Dev', 'pComp']
 
 export function Component() {
   const [searchParams, setSearchParams] = useSearchParams()
   const active = getActiveCategory(searchParams)
   const openModal = useOpenProjectModal()
 
-  const categories = useMemo(() => {
-    const used = new Set(projects.flatMap((p) => p.categories))
-    return [...CATEGORY_ORDER.filter((c) => used.has(c)), ...[...used].filter((c) => !CATEGORY_ORDER.includes(c)).sort()]
-  }, [])
+  // An unknown ?category= (e.g. an old #hashtag link) falls back to All
+  const filter = ARCHIVE_FILTERS.some((f) => f.key === active) ? active : null
 
-  const visible = useMemo(() => {
-    if (!active) return projects
-    if (active === FEATURED_FILTER) return projects.filter((p) => p.featured)
-    return projects.filter((p) => p.categories.includes(active))
-  }, [active])
+  const visible = useMemo(
+    () => (filter ? projects.filter((p) => p.filters?.includes(filter)) : projects),
+    [filter],
+  )
 
   function handleSelect(category: string | null) {
     setSearchParams((prev) => {
@@ -45,10 +39,10 @@ export function Component() {
           <h2 className="feed-title">Archive</h2>
           <p>A running archive of product work, creative coding, generative motion, AR, games and visual work.</p>
         </div>
-        <span className="t-nav g">{visible.length} of {projects.length} projects</span>
+        <span className="t-nav g">{visible.length} of {projects.length}</span>
       </div>
 
-      <FilterBar categories={categories} active={active} onSelect={handleSelect} />
+      <FilterBar options={ARCHIVE_FILTERS} active={filter} onSelect={handleSelect} />
 
       <div className="grid-arch">
         {visible.map((p) => (

@@ -57,7 +57,8 @@
 .cs-brief { line-height: 1.4; max-width: 980px; text-wrap: pretty; }
 
 /* ---- Media -------------------------------------------------------------- */
-.cs-media { overflow: hidden; }
+/* Rounded corners on every case-study image and video; overflow clips the hover zoom too */
+.cs-media { overflow: hidden; border-radius: 12px; }
 .cs-media img { width: 100%; height: auto; display: block; }
 /* Uniform 16:10 frame so side-by-side images line up; the whole image stays visible */
 .cs-media--16x10 img { aspect-ratio: 16 / 10; object-fit: contain; background: #fff; }
@@ -119,6 +120,8 @@
 .video-embed {
   background: var(--bg-inverse);
   aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .video-embed iframe {

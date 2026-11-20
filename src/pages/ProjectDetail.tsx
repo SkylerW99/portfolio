@@ -2,7 +2,7 @@
 
 
 import { useCallback, useEffect, useRef, useState, type ComponentType } from 'react'
-import { Link, Navigate, useParams } from 'react-router-dom'
+import { Link, Navigate, useLocation, useParams } from 'react-router-dom'
 import type { ProjectFrontmatter } from '../content/types'
 import { caseLabel } from '../content/projects'
 import { UNLOCK_PARAM } from '../content/filters'
@@ -111,12 +111,26 @@ export function Component() {
 }
 
 // Sticky bar above every case study: "Case study 01 — Fast Launch · UX · Payments · 2025" + ✕ back home.
+// ✕ returns to the page the case study was opened from (Archive with its filter,
+// Home, …), passed as `state.from` by the card links; falls back to Home.
+// It's captured once and kept in sessionStorage, because in-page anchor links
+// ("Jump to … ↓") and reloads replace the location and drop its state.
 function CaseStudyBar({ slug }: { slug: string }) {
   const c = caseLabel(slug)
+  const stateFrom = (useLocation().state as { from?: string } | null)?.from
+  const [from] = useState(() => {
+    const key = `caseFrom:${slug}`
+    try {
+      if (stateFrom) sessionStorage.setItem(key, stateFrom)
+      return stateFrom ?? sessionStorage.getItem(key) ?? '/'
+    } catch {
+      return stateFrom ?? '/'
+    }
+  })
   return (
     <div className="t-nav case-bar">
       <span>{c?.label}{c?.meta && <span className="g case-bar__meta">&nbsp;· {c.meta}</span>}</span>
-      <Link to="/" className="btn btn--icon btn--filled" aria-label="Close case study">✕</Link>
+      <Link to={from} className="btn btn--icon btn--filled" aria-label="Close case study">✕</Link>
     </div>
   )
 }

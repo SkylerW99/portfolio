@@ -13,7 +13,7 @@ import { useHeroWarp } from './useHeroWarp'
 import { AboutModal } from '../AboutModal/AboutModal'
 import { ContactModal } from '../ContactModal/ContactModal'
 import { PasswordGate } from '../PasswordGate/PasswordGate'
-import { UNLOCK_PARAM } from '../../content/filters'
+import { PROJECT_PARAM, UNLOCK_PARAM } from '../../content/filters'
 import { passwordHashFor } from '../../content/unlock'
 import { projects } from '../../content/projects'
 import { EMAIL, GITHUB_URL, LINKEDIN_URL, RESUME_URL } from '../../content/contact'
@@ -30,10 +30,13 @@ function scrollToSection(id: string) {
 }
 
 export function Component() {
-  const { pathname } = useLocation()
+  const { pathname, search } = useLocation()
   const navigate = useNavigate()
   const isHome = pathname === '/' || pathname === '/about'
-  const aboutOpen = pathname === '/about'
+  // A project or password pop-up opened from About (/about?project= / ?unlock=) takes
+  // its place; closing that pop-up drops the param and About shows again.
+  const childParams = new URLSearchParams(search)
+  const aboutOpen = pathname === '/about' && !childParams.has(PROJECT_PARAM) && !childParams.has(UNLOCK_PARAM)
 
   const [collapsed, setCollapsed] = useState(() => {
     try { return localStorage.getItem(COLLAPSE_KEY) === '1' } catch { return false }
@@ -57,6 +60,15 @@ export function Component() {
     })
   }
 
+  // Entering the Archive from another shell page (Home, About) starts it at the top,
+  // whichever link got you there. Returning from a case study remounts the shell
+  // (prevPath is null then), so that path is left alone.
+  const prevPath = useRef<string | null>(null)
+  useEffect(() => {
+    if (pathname === '/archive' && prevPath.current !== null && prevPath.current !== '/archive') window.scrollTo({ top: 0 })
+    prevPath.current = pathname
+  }, [pathname])
+
   // Scroll-spy on the home feed: "Art & tech" is active once its heading passes mid-screen.
   useEffect(() => {
     if (!isHome) return
@@ -78,7 +90,7 @@ export function Component() {
   }, [contactOpen])
 
   function go(key: NavKey) {
-    if (key === 'archive') { navigate('/archive'); window.scrollTo({ top: 0 }); return }
+    if (key === 'archive') { navigate('/archive'); return }
     if (key === 'about') { navigate('/about'); return }
     if (pathname === '/') scrollToSection(key)
     else navigate(key === 'work' ? '/' : `/#${key}`)
@@ -228,6 +240,7 @@ export function Component() {
 function UnlockPopup() {
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
+  const location = useLocation()
   const slug = searchParams.get(UNLOCK_PARAM)
   const hash = passwordHashFor(slug)
   if (!slug || !hash) return null
@@ -244,7 +257,13 @@ function UnlockPopup() {
       title={title}
       hash={hash}
       onClose={close}
-      onUnlock={() => navigate(`/work/${slug}`, { replace: true })}
+      onUnlock={() => {
+        // Remember the page under the password pop-up so the case study's ✕ returns there
+        const rest = new URLSearchParams(searchParams)
+        rest.delete(UNLOCK_PARAM)
+        const qs = rest.toString()
+        navigate(`/work/${slug}`, { replace: true, state: { from: location.pathname + (qs ? `?${qs}` : '') } })
+      }}
     />
   )
 }

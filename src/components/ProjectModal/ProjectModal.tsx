@@ -55,7 +55,9 @@ export function ProjectModal({ section }: Props) {
       media={
         <div className="artpop__media">
           <div className="artpop__img">
-            {img?.video
+            {img?.video && /\.(mp4|webm)$/i.test(img.video)
+              ? <video key={img.video} src={img.video} poster={img.src} controls autoPlay muted loop playsInline aria-label={img.alt} style={{ objectFit: 'contain' }} />
+              : img?.video
               ? <iframe key={img.video} src={img.video} title={img.alt} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen />
               : img
                 ? <img src={img.src} alt={img.alt} style={{ objectFit: img.fit ?? 'cover' }} />
@@ -96,9 +98,9 @@ export function ProjectModal({ section }: Props) {
         {meta.map((m) => <div key={m.k}><dt className="g">{m.k}</dt><dd>{m.v}</dd></div>)}
       </dl>
       {project.paras?.map((pa) => (
-        <div key={pa.k} className="artpop__para">
+        <div key={pa.k} className={`artpop__para${pa.k === 'Impact' ? ' artpop__para--impact' : ''}`}>
           <div className="t-meta">{pa.k}</div>
-          {pa.t.split('\n\n').map((t, i) => <p key={i}>{t}</p>)}
+          {pa.t.split('\n\n').map((t, i) => <p key={i}>{withBold(t)}</p>)}
           {pa.link && (
             <div className="btn-group">
               <a className="btn btn--sm btn--filled" href={pa.link.href} target="_blank" rel="noopener noreferrer">{pa.link.label}</a>
@@ -113,4 +115,9 @@ export function ProjectModal({ section }: Props) {
       ) : null}
     </Popup>
   )
+}
+
+// Paragraph text may mark bold runs with **…** (e.g. a bullet's lead-in sentence).
+function withBold(t: string) {
+  return t.split(/\*\*(.+?)\*\*/g).map((part, i) => (i % 2 ? <strong key={i}>{part}</strong> : part))
 }

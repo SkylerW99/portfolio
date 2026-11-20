@@ -14,8 +14,8 @@ import { isLocked } from '../../content/unlock'
 // Link to a case study. Password-protected ones (not yet unlocked) stay on the
 // current page and set ?unlock=slug, so SiteShell shows the password pop-up over it.
 function CaseStudyLink({ project, children }: { project: ProjectFrontmatter; children: ReactNode }) {
-  const { search } = useLocation()
-  if (!isLocked(project)) return <Link to={`/work/${project.slug}`} className="pcard">{children}</Link>
+  const { pathname, search } = useLocation()
+  if (!isLocked(project)) return <Link to={`/work/${project.slug}`} state={{ from: pathname + search }} className="pcard">{children}</Link>
   const params = new URLSearchParams(search)
   params.set(UNLOCK_PARAM, project.slug)
   return <Link to={{ search: params.toString() }} className="pcard" aria-haspopup="dialog">{children}</Link>

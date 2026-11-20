@@ -4,7 +4,7 @@
 import './Landing.css'
 import { useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { useOpenProjectModal } from '../../content/filters'
+import { CATEGORY_PARAM, useOpenProjectModal } from '../../content/filters'
 import { pad2, stripProjects, workProjects } from '../../content/projects'
 import { ArtCard, WorkCard } from '../../components/ProjectCard/ProjectCard'
 import { ProjectModal } from '../../components/ProjectModal/ProjectModal'
@@ -38,7 +38,7 @@ export function Component() {
           <span className="t-nav g">Code, interactivity &amp; form</span>
         </div>
         <div className="art-head__actions">
-          <Link to="/archive" className="t-nav text-primary-col">Open the archive ↗</Link>
+          <Link to={`/archive?${CATEGORY_PARAM}=design-build`} className="t-nav text-primary-col">Open the archive ↗</Link>
           <button type="button" className="btn btn--icon" onClick={() => scrollStrip(-348)} aria-label="Scroll art projects left">←</button>
           <button type="button" className="btn btn--icon btn--filled" onClick={() => scrollStrip(348)} aria-label="Scroll art projects right">→</button>
         </div>

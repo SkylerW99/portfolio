@@ -70,6 +70,7 @@
 .artpop__media { display: flex; flex-direction: column; height: 100%; }
 .artpop__img { position: relative; flex: 1; min-height: 348px; overflow: hidden; }
 .artpop__img img,
+.artpop__img video,
 .artpop__img iframe { position: absolute; inset: 0; width: 100%; height: 100%; display: block; border: 0; }
 .artpop__cap { margin: 0; padding: 10px 12px; color: #a9adb0; background: var(--c-ink); text-transform: none; letter-spacing: .04em; }
 .artpop__ph {
@@ -147,3 +148,6 @@
   .artpop.popup__box { height: 100%; max-height: none; }
   .artpop__img { min-height: 0; }
 }
+
+/* Bold results in an "Impact" section pick up the accent */
+.artpop__para--impact strong { color: var(--accent); }

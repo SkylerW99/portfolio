@@ -21,6 +21,8 @@ export interface ProjectFrontmatter {
   summary?: string
   /** Doubles as the project's tags (#UX #Payments) and the Archive filters. */
   categories: string[]
+  /** Archive filter groups this project appears under (keys from ARCHIVE_FILTERS in filters.ts). */
+  filters?: string[]
   /** May be "" — cards then show a striped placeholder. */
   thumbnail: string
   date: string
