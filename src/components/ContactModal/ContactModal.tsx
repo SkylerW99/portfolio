@@ -5,7 +5,8 @@ import { useEffect, useRef } from 'react'
 import '../ProjectModal/ProjectModal.css'
 import './ContactModal.css'
 import { ArrowUp } from '../icons/ArrowUp'
-import { EMAIL, LINKEDIN_URL, RESUME_URL } from '../../content/contact'
+import { useCopyEmail } from '../useCopyEmail'
+import { EMAIL, GITHUB_URL, LINKEDIN_URL, RESUME_URL } from '../../content/contact'
 
 type Props = {
   open: boolean
@@ -14,6 +15,7 @@ type Props = {
 
 export function ContactModal({ open, onClose }: Props) {
   const closeRef = useRef<HTMLButtonElement>(null)
+  const { copied, copy: copyEmail } = useCopyEmail()
 
   useEffect(() => {
     if (!open) return
@@ -31,6 +33,7 @@ export function ContactModal({ open, onClose }: Props) {
   }, [open, onClose])
 
   if (!open) return null
+
 
   const linkedinHandle = LINKEDIN_URL.replace(/^https?:\/\/(www\.)?linkedin\.com/, '').replace(/\/$/, '')
 
@@ -50,10 +53,10 @@ export function ContactModal({ open, onClose }: Props) {
 
         <ul className="contact-modal__list">
           <li>
-            <a className="contact-modal__row" href={`mailto:${EMAIL}`}>
+            <button type="button" className="contact-modal__row" onClick={copyEmail}>
               <span className="contact-modal__label">Email</span>
-              <span className="t-meta contact-modal__value">{EMAIL}</span>
-            </a>
+              <span className="t-meta contact-modal__value" aria-live="polite">{copied ? 'Copied ✓' : EMAIL}</span>
+            </button>
           </li>
           <li>
             <a className="contact-modal__row" href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">
@@ -61,6 +64,14 @@ export function ContactModal({ open, onClose }: Props) {
               <span className="t-meta contact-modal__value">{linkedinHandle}<ArrowUp width="12" height="12" /></span>
             </a>
           </li>
+          {GITHUB_URL && (
+            <li>
+              <a className="contact-modal__row" href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
+                <span className="contact-modal__label">GitHub</span>
+                <span className="t-meta contact-modal__value">{GITHUB_URL.replace(/^https?:\/\/(www\.)?github\.com/, '')}<ArrowUp width="12" height="12" /></span>
+              </a>
+            </li>
+          )}
           <li>
             <a className="contact-modal__row" href={RESUME_URL} target="_blank" rel="noopener noreferrer">
               <span className="contact-modal__label">Résumé</span>

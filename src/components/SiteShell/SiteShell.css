@@ -267,7 +267,7 @@
 }
 .pcontact__btn:hover { opacity: .85; }
 .pcontact__btn:focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
-.pcontact__links { margin: 0; font-size: var(--fs-micro); }
+.pcontact__links { margin: 0; font-size: var(--fs-micro); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; white-space: nowrap; }
 .pcontact__links a { color: inherit; }
 
 /* ---- Right feed --------------------------------------------------------- */

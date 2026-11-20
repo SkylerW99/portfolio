@@ -107,8 +107,8 @@ export function Component() {
   const links = [
     { label: 'Email', href: `mailto:${EMAIL}` },
     { label: 'LinkedIn', href: LINKEDIN_URL },
-    ...(GITHUB_URL ? [{ label: 'GitHub', href: GITHUB_URL }] : []),
     { label: 'Résumé', href: RESUME_URL },
+    ...(GITHUB_URL ? [{ label: 'GitHub', href: GITHUB_URL }] : []),
   ]
 
   return (
@@ -206,11 +206,8 @@ export function Component() {
                 <span>Contact me</span><span aria-hidden="true">↗</span>
               </button>
               <p className="t-meta pcontact__links">
-                {links.map((l, i) => (
-                  <span key={l.label}>
-                    {i > 0 && ' · '}
-                    <a href={l.href} target={l.href.startsWith('mailto:') ? undefined : '_blank'} rel="noopener noreferrer">{l.label}</a>
-                  </span>
+                {links.map((l) => (
+                  <a key={l.label} href={l.href} target={l.href.startsWith('mailto:') ? undefined : '_blank'} rel="noopener noreferrer">{l.label}</a>
                 ))}
               </p>
             </div>

@@ -31,6 +31,9 @@
   transition: color .2s ease;
 }
 
+/* Email row is a copy button: strip button chrome so it matches the link rows */
+button.contact-modal__row { width: 100%; background: none; border-width: 0 0 1px; font: inherit; text-align: left; cursor: pointer; }
+
 .contact-modal__list li:last-child .contact-modal__row { border-bottom: none; }
 
 .contact-modal__row:hover { color: var(--accent); opacity: 1; }
