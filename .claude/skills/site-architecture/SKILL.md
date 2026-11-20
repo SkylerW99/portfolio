@@ -136,7 +136,7 @@ Not yet built: other `src/components/mdx/*` embeds (IframeEmbed, generic Interac
 
 ## Hosting / deploy
 
-**Vercel**, connected to the GitHub repo (`SkylerW99/portfolio`, private): every push to `main` deploys to production; other branches get preview URLs. Domain: `ziyijpg.com`.
+**Vercel**, connected to the GitHub repo (`SkylerW99/portfolio`, private): every push to `main` deploys to production; other branches get preview URLs. Domain: `www.skylarziyiwang.me` (apex redirects to www; the old Webflow site stays on ziyijpg.com). The OG tags in `index.html` must use this absolute domain or link previews lose their image.
 - `vercel.json` — runs `npm run build` (so the `prebuild` index step runs), serves `dist/`, and rewrites every extension-less path to `/index.html` so deep links like `/work/fast-launch` load the SPA instead of 404ing. Real files (anything with a `.`) are served as-is.
 - **Vercel builds on Linux, which is case-sensitive.** An import or `/images/...` path whose casing differs from the git-tracked file works on macOS but breaks in production (imports fail the build; images 404 silently). Git tracks `src/components/projectOverview/` (lowercase p) — always import that path. Image filenames with capitals or spaces (e.g. `Reconciliation-cover.png`) must be referenced exactly.
 
